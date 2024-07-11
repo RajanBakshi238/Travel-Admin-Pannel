@@ -1,6 +1,7 @@
 import './App.css'
 import {
   createBrowserRouter,
+  Outlet,
   RouterProvider,
 
 } from "react-router-dom";
@@ -9,6 +10,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Home from './pages/Home';
 import Welcome from './pages/Welcome';
 import store from './redux/store';
+import RouteProtect from './RouteProtected';
 
 
 const router = createBrowserRouter([
@@ -18,7 +20,16 @@ const router = createBrowserRouter([
 
   }, {
     path: "/welcome",
-    element: <Welcome />
+    element: <RouteProtect
+      element={<><Outlet /></>}
+    />,
+    children: [
+      {
+        path: '*',
+        index: true,
+        element: <Welcome />
+      }
+    ]
   }
 ])
 

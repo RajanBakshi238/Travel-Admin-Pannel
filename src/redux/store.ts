@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 import { TypedUseSelectorHook, useDispatch } from "react-redux";
 
 import { travelYatriApi } from "./services";
+import authSliceReducer from "./slices/auth";
 
  const store = configureStore({
   reducer: {
+    auth: authSliceReducer,
     [travelYatriApi.reducerPath]: travelYatriApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>getDefaultMiddleware().concat([travelYatriApi.middleware])

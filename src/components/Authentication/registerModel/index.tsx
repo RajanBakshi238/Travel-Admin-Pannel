@@ -1,11 +1,15 @@
-import React, { useState, forwardRef, useImperativeHandle, MutableRefObject } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
+import React, { useState, forwardRef, useImperativeHandle, MutableRefObject, useCallback } from 'react';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { InputGroup, Form, Modal } from 'react-bootstrap';
 import "./style.css"
 import { IChildRef } from '../../landingPage/Header';
+import { useLoginWithGoogleMutation } from '../../../redux/services';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef | undefined> }, ref) => {
     const [show, setShow] = useState(false);
+    const [loginWithGoogle] = useLoginWithGoogleMutation();
+    const navigate = useNavigate()
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
@@ -20,6 +24,16 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
         handleShow
     }))
 
+
+
+    const handleLogin = useCallback((credentialResponse: CredentialResponse) => {
+        loginWithGoogle({ id_token: credentialResponse.credential as string }).unwrap().then((response) => {
+            console.log(response, "of user login")
+            navigate('/welcome')
+        }).catch((error) => {
+            console.error(error, "Error while logging")
+        })
+    }, [])
 
 
 
@@ -63,7 +77,7 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
                     {/* <button className='btn btn-primary w-100 google-login-btn' onClick={() => handleLogin}>Login with Google</button> */}
                     <GoogleLogin
                         onSuccess={credentialResponse => {
-                            console.log(credentialResponse);
+                            handleLogin(credentialResponse)
                         }}
                         onError={() => {
                             console.log("Login failed");
