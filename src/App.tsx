@@ -4,9 +4,11 @@ import {
   RouterProvider,
 
 } from "react-router-dom";
-import {  GoogleOAuthProvider } from "@react-oauth/google";
+import { Provider } from 'react-redux';
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Home from './pages/Home';
 import Welcome from './pages/Welcome';
+import store from './redux/store';
 
 
 const router = createBrowserRouter([
@@ -24,9 +26,11 @@ function App() {
 
   return (
     <>
-      <GoogleOAuthProvider clientId='268770122624-igrqs8psmqocfu7pksaa4m2ab73bjt2t.apps.googleusercontent.com'>
-        <RouterProvider router={router} />
-      </GoogleOAuthProvider>
+      <Provider store={store}>
+        <GoogleOAuthProvider clientId='268770122624-igrqs8psmqocfu7pksaa4m2ab73bjt2t.apps.googleusercontent.com'>
+          <RouterProvider router={router} />
+        </GoogleOAuthProvider>
+      </Provider>
     </>
   )
 }
