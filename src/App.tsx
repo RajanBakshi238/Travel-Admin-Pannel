@@ -10,10 +10,9 @@ import {
 import { Provider } from 'react-redux';
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Home from './pages/Home';
-import Welcome from './pages/Welcome';
 import store from './redux/store';
 import RouteProtect from './RouteProtected';
-import Dashboard from './pages/Dashboard';
+import RegisterAs from './pages/Dashboard/RegisterAs';
 
 
 const router = createBrowserRouter([
@@ -22,7 +21,7 @@ const router = createBrowserRouter([
     element: <Home />
 
   }, {
-    path: "/welcome",
+    path: "/dashboard",
     element: <RouteProtect
       element={<><Outlet /></>}
     />,
@@ -30,12 +29,12 @@ const router = createBrowserRouter([
       {
         path: '*',
         index: true,
-        element: <Welcome />
+        element: <RegisterAs />
       },
-      {
-        path: 'test',
-        element: <Dashboard />
-      }
+      // {
+      //   path: 'test',
+      //   element: <Dashboard />
+      // }
     ]
   }
 ])
