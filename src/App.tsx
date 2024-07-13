@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import store from './redux/store';
 import RouteProtect from './RouteProtected';
 import RegisterAs from './pages/Dashboard/RegisterAs';
+import { UserContextProvider } from './context/User';
 
 
 const router = createBrowserRouter([
@@ -45,7 +46,10 @@ function App() {
     <>
       <Provider store={store}>
         <GoogleOAuthProvider clientId='268770122624-igrqs8psmqocfu7pksaa4m2ab73bjt2t.apps.googleusercontent.com'>
-          <RouterProvider router={router} />
+          <UserContextProvider>
+
+            <RouterProvider router={router} />
+          </UserContextProvider>
         </GoogleOAuthProvider>
       </Provider>
     </>
