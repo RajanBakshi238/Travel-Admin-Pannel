@@ -1,16 +1,18 @@
 import Sidebar from "react-bootstrap-sidebar-menu";
+import './layout.scss'
 
 const DashboardSidebar = () => {
     return <>
-        <Sidebar expand="md" className="vh-100">
-            <Sidebar.Collapse getScrollValue={500}>
+        <Sidebar expand="sm" className="vh-100 dashboard-sidebar">
+            <Sidebar.Collapse  className="sidebar-width" getScrollValue={200}>
                 <Sidebar.Header>
                     <Sidebar.Nav.Title><h1 className="text-primary m-0"><i className="fa fa-map-marker-alt me-3"></i></h1></Sidebar.Nav.Title>
                     <Sidebar.Toggle className="text-black btn common-ty-btn"><i className="fas fa-bars"></i></Sidebar.Toggle>
                 </Sidebar.Header>
-                <Sidebar.Body>
+                <Sidebar.Body className="sidebar-body">
                     <Sidebar.Nav>
-
+                        {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                        <Sidebar.Nav.Title className="sidebar-item">Create Trip</Sidebar.Nav.Title>
                     </Sidebar.Nav>
                 </Sidebar.Body>
             </Sidebar.Collapse>

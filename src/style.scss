@@ -85,7 +85,9 @@
   }
 
   .sidebar-menu-collapse.show {
-    width: $sidebar-menu-width-expanded;
+    // width: $sidebar-menu-width-expanded;
+    width: 200px;
+    // color: "red;"
   }
 
   .sidebar-menu-collapse.collapse {

@@ -4,7 +4,7 @@ import DashboardSidebar from "./Sidebar";
 import Main from "./Main";
 import { Outlet } from "react-router-dom";
 export default function Layout() {
-    return <div className="dashboard-ty"><div className="main-wrapper">
+    return <div className="dashboard-ty layout-ty"><div className="main-wrapper">
 
         <Navbar className="main-header" expand="lg" >
             <Container fluid>

@@ -11,9 +11,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Home from './pages/Home';
 import store from './redux/store';
 import RouteProtect from './RouteProtected';
-import RegisterAs from './pages/Dashboard/RegisterAs';
 import { UserContextProvider } from './context/User';
 import Layout from './components/Dashboard/Layout/Layout';
+import CreateTrip from './pages/Dashboard/CreateTrip';
 
 
 const router = createBrowserRouter([
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: '*',
         index: true,
-        element: <RegisterAs />
+        element: <CreateTrip />
       },
       // {
       //   path: 'test',
