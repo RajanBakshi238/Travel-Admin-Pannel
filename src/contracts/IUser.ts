@@ -5,4 +5,5 @@ export interface IUser {
   token: string;
   createdAt: string;
   updatedAt: string;
+  role: string
 }

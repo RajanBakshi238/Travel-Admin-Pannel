@@ -4,10 +4,11 @@ import { TRAVEL_YATRI_REDUCER_KEY } from "../reduxResourceTags";
 import { ILoginWithGoogleResponse } from "../../contracts/ILoginWithGoogleResponse";
 import { ILoginWithGoogleRequest } from "../../contracts/ILoginWithGoogleResquest";
 import { RootState } from "../store";
+import { UPDATE_ME } from "../travelYatriApiTags";
 
 export const travelYatriApi = createApi({
   reducerPath: TRAVEL_YATRI_REDUCER_KEY,
-  //   tagTypes: [],
+  tagTypes: [UPDATE_ME],
   baseQuery: fetchBaseQuery({
     baseUrl: `http://localhost:3005/api/v1/`,
     prepareHeaders: (headers, { getState }) => {
@@ -23,6 +24,7 @@ export const travelYatriApi = createApi({
       ILoginWithGoogleResponse,
       ILoginWithGoogleRequest
     >({
+      invalidatesTags: [UPDATE_ME],
       query: (body) => {
         return {
           url: "auth/google-login",
