@@ -1,3 +1,5 @@
+// import "./style.scss";
+
 import './App.css'
 import {
   createBrowserRouter,
@@ -11,6 +13,7 @@ import Home from './pages/Home';
 import Welcome from './pages/Welcome';
 import store from './redux/store';
 import RouteProtect from './RouteProtected';
+import Dashboard from './pages/Dashboard';
 
 
 const router = createBrowserRouter([
@@ -28,6 +31,10 @@ const router = createBrowserRouter([
         path: '*',
         index: true,
         element: <Welcome />
+      },
+      {
+        path: 'test',
+        element: <Dashboard />
       }
     ]
   }
