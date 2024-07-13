@@ -2,7 +2,7 @@ import Sidebar from "react-bootstrap-sidebar-menu";
 
 const DashboardSidebar = () => {
     return <>
-        <Sidebar expand="md">
+        <Sidebar expand="md" className="vh-100">
             <Sidebar.Collapse getScrollValue={500}>
                 <Sidebar.Header>
                     <Sidebar.Nav.Title><h1 className="text-primary m-0"><i className="fa fa-map-marker-alt me-3"></i></h1></Sidebar.Nav.Title>
@@ -10,7 +10,7 @@ const DashboardSidebar = () => {
                 </Sidebar.Header>
                 <Sidebar.Body>
                     <Sidebar.Nav>
-                       
+
                     </Sidebar.Nav>
                 </Sidebar.Body>
             </Sidebar.Collapse>

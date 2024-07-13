@@ -3,7 +3,6 @@
 import './App.css'
 import {
   createBrowserRouter,
-  Outlet,
   RouterProvider,
 
 } from "react-router-dom";
@@ -14,6 +13,7 @@ import store from './redux/store';
 import RouteProtect from './RouteProtected';
 import RegisterAs from './pages/Dashboard/RegisterAs';
 import { UserContextProvider } from './context/User';
+import Layout from './components/Dashboard/Layout/Layout';
 
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
   }, {
     path: "/dashboard",
     element: <RouteProtect
-      element={<><Outlet /></>}
+      element={<Layout />}
     />,
     children: [
       {
