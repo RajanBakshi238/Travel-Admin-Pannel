@@ -15,3 +15,5 @@ export const trip = travelYatriApi.injectEndpoints({
     }),
   }),
 });
+
+export const {useCreateTripMutation} = trip

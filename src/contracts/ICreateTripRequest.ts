@@ -3,15 +3,15 @@ export interface ICreateTripRequest {
   startDate: string;
   endDate: string;
   pickup: string;
-  termsAndConditions: [string];
+  termsAndConditions: string[];
   enquiryNumber: string;
-  price: number;
-  inclusions: [string];
-  exclusions: [string];
-  itinerary: Iitinerary;
+  price: number | null;
+  inclusions: string[];
+  exclusions: string[];
+//   itinerary: Iitinerary;
 }
 
-interface Iitinerary {
-  day: number;
-  description: [string];
-}
+// interface Iitinerary {
+//   day: number;
+//   description: [string];
+// }
