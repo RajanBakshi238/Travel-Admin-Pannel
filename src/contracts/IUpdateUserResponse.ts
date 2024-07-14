@@ -1,1 +1,5 @@
-export interface IUpdateUserResponse {}
+import { IUser } from "./IUser";
+
+export interface IUpdateUserResponse {
+  data: IUser;
+}

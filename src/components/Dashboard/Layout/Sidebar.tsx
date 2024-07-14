@@ -1,19 +1,44 @@
 import Sidebar from "react-bootstrap-sidebar-menu";
 import './layout.scss'
-
+import { useUserContext } from "../../../context/User";
+import { ORGANIZER } from "../../../contracts/constants/roleConstant";
+import { Link } from "react-router-dom";
 const DashboardSidebar = () => {
+    const { user } = useUserContext()
+
     return <>
         <Sidebar expand="sm" className="vh-100 dashboard-sidebar">
-            <Sidebar.Collapse  className="sidebar-width" getScrollValue={200}>
+            <Sidebar.Collapse className="sidebar-width" getScrollValue={200}>
                 <Sidebar.Header>
                     <Sidebar.Nav.Title><h1 className="text-primary m-0"><i className="fa fa-map-marker-alt me-3"></i></h1></Sidebar.Nav.Title>
                     <Sidebar.Toggle className="text-black btn common-ty-btn"><i className="fas fa-bars"></i></Sidebar.Toggle>
                 </Sidebar.Header>
                 <Sidebar.Body className="sidebar-body">
-                    <Sidebar.Nav>
-                        {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                        <Sidebar.Nav.Title className="sidebar-item">Create Trip</Sidebar.Nav.Title>
-                    </Sidebar.Nav>
+                    {user?.role === ORGANIZER ? <>
+                        <Sidebar.Nav>
+                            {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                            <Link to="/dashboard">
+                                <Sidebar.Nav.Title className="sidebar-item">Create Trip</Sidebar.Nav.Title>
+                            </Link>
+                        </Sidebar.Nav>
+                        <Sidebar.Nav className="mt-4">
+                            {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                            <Link to="/dashboard/my-trip">
+                                <Sidebar.Nav.Title className="sidebar-item">My Trip</Sidebar.Nav.Title>
+                            </Link>
+                        </Sidebar.Nav>
+                    </>
+
+                        : <>
+                            <Sidebar.Nav className="mt-4">
+                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                                <Link to="/dashboard/trip">
+                                    <Sidebar.Nav.Title className="sidebar-item">Trip</Sidebar.Nav.Title>
+                                </Link>
+                            </Sidebar.Nav>
+                        </>}
+
+
                 </Sidebar.Body>
             </Sidebar.Collapse>
         </Sidebar>

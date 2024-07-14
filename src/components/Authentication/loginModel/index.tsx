@@ -28,8 +28,13 @@ const LoginModal = forwardRef((props: { registerRef: MutableRefObject<IChildRef 
     }))
 
     const handleSubmit = () => {
-        updateUser({ role }).unwrap().then(() => {
-            navigate('/dashboard')
+        updateUser({ role }).unwrap().then((response) => {
+            if (response?.data?.role === ORGANIZER) {
+                navigate('/dashboard')
+            }
+            if (response?.data?.role === USER) {
+                navigate('/dashboard/trip')
+            }
         }).catch(() => {
 
         })

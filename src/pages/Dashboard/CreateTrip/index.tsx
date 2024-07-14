@@ -2,11 +2,14 @@ import { Form, InputGroup } from "react-bootstrap";
 import { useFormik, FormikProvider, Form as FormikForm, FieldArray } from 'formik'
 import "./style.scss"
 import { useCreateTripMutation } from "../../../redux/services/trip";
+import { useNavigate } from "react-router-dom";
 
 const CreateTrip = () => {
 
     const [createTrip] = useCreateTripMutation()
 
+    const navigate = useNavigate()
+    
     const formik = useFormik({
         initialValues: {
             place: "",
@@ -24,6 +27,7 @@ const CreateTrip = () => {
             createTrip({ ...values, price: values.price }).then((response) => {
                 console.log(response, ">>>>>>>>>>")
                 resetForm();
+                navigate('/dashboard/my-trip')
             }).catch(() => {
 
             })

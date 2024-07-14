@@ -14,6 +14,8 @@ import RouteProtect from './RouteProtected';
 import { UserContextProvider } from './context/User';
 import Layout from './components/Dashboard/Layout/Layout';
 import CreateTrip from './pages/Dashboard/CreateTrip';
+import GetTrip from './pages/Dashboard/GetTrip';
+import AllTrip from './pages/Dashboard/AllTrip';
 
 
 const router = createBrowserRouter([
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
         index: true,
         element: <CreateTrip />
       },
+      {
+        path: "my-trip",
+        element: <GetTrip />
+      },
+      {
+        path: "trip",
+        element: <AllTrip />
+      }
       // {
       //   path: 'test',
       //   element: <Dashboard />
