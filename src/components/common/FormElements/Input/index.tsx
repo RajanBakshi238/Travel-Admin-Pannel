@@ -1,21 +1,27 @@
 import React from 'react'
+import classNames from 'classnames';
 import "./style.scss"
+
 
 import { useFormikContext } from 'formik';
 
+
 interface IInput {
     name: string;
-    label: string;
+    label?: string;
     type: string;
+    className?: string,
+    value?: string | number
 }
 
-const Input: React.FC<IInput> = ({ name, label, type }) => {
+const Input: React.FC<IInput> = ({ name, label, type, className, value }) => {
 
     const { handleBlur, handleChange, values } = useFormikContext()
+    console.log(values, ">>>valies")
     return (
-        <div className='ty-input'>
-            <label>{label}</label>
-            <input onChange={handleChange} onBlur={handleBlur} name={name} type={type} value={(values as { [key: string]: string })?.[name]} />
+        <div className={classNames(['ty-input', className])}>
+            {!!label && <label>{label}</label>}
+            <input onChange={handleChange} onBlur={handleBlur} name={name} type={type} value={value ?? (values as { [key: string]: string })?.[name]} />
         </div>
     )
 }

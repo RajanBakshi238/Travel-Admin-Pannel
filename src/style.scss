@@ -2,6 +2,7 @@
 
 .dashboard-ty {
   @import "scss/variables";
+  @import "scss/common";
   @import "node_modules/bootstrap/scss/bootstrap";
   @import "react-bootstrap-sidebar-menu/dist/sidebar-menu";
 

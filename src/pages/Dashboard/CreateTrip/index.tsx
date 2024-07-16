@@ -1,9 +1,9 @@
-import { Form, InputGroup } from "react-bootstrap";
 import { useFormik, FormikProvider, Form as FormikForm, FieldArray } from 'formik'
 import "./style.scss"
 import { useCreateTripMutation } from "../../../redux/services/trip";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../components/common/FormElements/Input";
+import { Iitinerary } from '../../../contracts/ICreateTripRequest';
 
 const CreateTrip = () => {
 
@@ -21,11 +21,11 @@ const CreateTrip = () => {
             price: 0,
             inclusions: [''],
             exclusions: [''],
-            enquiryNumber: ""
-            // itinerary: [{ day: 1, description: [] }]
+            enquiryNumber: "",
+            itinerary: [{ day: 1, description: [''] }]
         },
         onSubmit: (values, { resetForm }) => {
-            createTrip({ ...values, price: values.price }).then((response) => {
+            createTrip({ ...values, price: values.price as number }).then((response) => {
                 console.log(response, ">>>>>>>>>>")
                 resetForm();
                 navigate('/dashboard/my-trip')
@@ -37,8 +37,7 @@ const CreateTrip = () => {
     })
 
 
-    const { handleChange, handleBlur, values } = formik
-    console.log(values, "........")
+    const { values } = formik
     return (
         <div className="register-as-page">
             <FormikProvider value={formik} >
@@ -48,77 +47,20 @@ const CreateTrip = () => {
                             <Input name="place" label="Place *" type="text" />
                         </div>
                         <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-truck-pickup"></i></InputGroup.Text>
-                                <Form.Control
-                                    name="pickUp"
-                                    value={values.pickUp}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    placeholder="Pick up"
-                                    aria-label="pick up"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Input name="pickUp" label="Pick Up *" type="text" />
                         </div>
 
                         <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-calendar-week"></i></InputGroup.Text>
-                                <Form.Control
-                                    name="startDate"
-                                    value={values.startDate}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    type="date"
-                                    placeholder="Start Date"
-                                    aria-label="start date"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Input name="startDate" label="Start Date *" type="text" />
                         </div>
                         <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-calendar-week"></i></InputGroup.Text>
-                                <Form.Control
-                                    name="endDate"
-                                    value={values.endDate}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    type="date"
-                                    placeholder="End Date"
-                                    aria-label="End date"
-                                    aria-describedby="end-date"
-                                />
-                            </InputGroup>
+                            <Input name="endDate" label="End Date *" type="text" />
                         </div>
                         <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-phone-volume"></i></InputGroup.Text>
-                                <Form.Control
-                                    name="enquiryNumber"
-                                    value={values.enquiryNumber}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    placeholder="Enquiry Number"
-                                    aria-label="pick up"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Input name="enquiryNumber" label="Enquiry Number *" type="text" />
                         </div>
                         <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-dollar-sign"></i></InputGroup.Text>
-                                <Form.Control
-                                    name="price"
-                                    value={values.price}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    placeholder="Price"
-                                    aria-label="pick up"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Input name="price" label="Price *" type="text" />
                         </div>
                         <div>
                             <FieldArray
@@ -127,17 +69,11 @@ const CreateTrip = () => {
                                     <div>
                                         {values.inclusions && values.inclusions.length > 0 ? <>
                                             {values.inclusions.map((inclusion, index) => {
-                                                return <InputGroup key={index} className="mb-3 dynamic-no-input">
-                                                    {/* <InputGroup.Text id="basic-addon1"><i className="fas fa-dollar-sign"></i></InputGroup.Text> */}
-                                                    <Form.Control
-                                                        name={`inclusions.${index}`}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        value={inclusion}
-                                                        placeholder="Inclusion"
-                                                        aria-label="pick up"
-                                                        aria-describedby="basic-addon1"
-                                                    />
+                                                return <div key={index} className="mb-3 dynamic-no-input">
+
+                                                    <Input value={inclusion} className='w-70' name={`inclusions.${index}`} type="text" {...(index === 0 ? { label: "Inclusion" } : {})} />
+
+
                                                     <button
                                                         type="button"
                                                         className="btn btn-outline-primary add-btn"
@@ -152,7 +88,7 @@ const CreateTrip = () => {
                                                     >
                                                         +
                                                     </button>
-                                                </InputGroup>
+                                                </div>
 
                                             })}
 
@@ -173,17 +109,9 @@ const CreateTrip = () => {
                                     <div>
                                         {values.exclusions && values.exclusions.length > 0 ? <>
                                             {values.exclusions.map((exclusion, index) => {
-                                                return <InputGroup key={index} className="mb-3 dynamic-no-input">
-                                                    {/* <InputGroup.Text id="basic-addon1"><i className="fas fa-dollar-sign"></i></InputGroup.Text> */}
-                                                    <Form.Control
-                                                        value={exclusion}
-                                                        name={`exclusions.${index}`}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        placeholder="Exclusion"
-                                                        aria-label="pick up"
-                                                        aria-describedby="basic-addon1"
-                                                    />
+                                                return <div key={index} className="mb-3 dynamic-no-input">
+                                                    <Input value={exclusion} className='w-70' name={`exclusions.${index}`} type="text" {...(index === 0 ? { label: "Exclusion" } : {})} />
+
                                                     <button
                                                         type="button"
                                                         className="btn btn-outline-primary add-btn"
@@ -198,7 +126,7 @@ const CreateTrip = () => {
                                                     >
                                                         +
                                                     </button>
-                                                </InputGroup>
+                                                </div >
 
                                             })}
 
@@ -219,17 +147,9 @@ const CreateTrip = () => {
                                     <div>
                                         {values.termsAndConditions && values.termsAndConditions.length > 0 ? <>
                                             {values.termsAndConditions.map((terms, index) => {
-                                                return <InputGroup key={index} className="mb-3 dynamic-no-input">
-                                                    {/* <InputGroup.Text id="basic-addon1"><i className="fas fa-dollar-sign"></i></InputGroup.Text> */}
-                                                    <Form.Control
-                                                        value={terms}
-                                                        name={`termsAndConditions.${index}`}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        placeholder="Terms and conditions"
-                                                        aria-label="pick up"
-                                                        aria-describedby="basic-addon1"
-                                                    />
+                                                return <div key={index} className="mb-3 dynamic-no-input">
+                                                    <Input value={terms} className="w-70" name={`termsAndConditions.${index}`} type="text" {...(index === 0 ? { label: "Terms and conditions" } : {})} />
+
                                                     <button
                                                         type="button"
                                                         className="btn btn-outline-primary add-btn"
@@ -244,7 +164,7 @@ const CreateTrip = () => {
                                                     >
                                                         +
                                                     </button>
-                                                </InputGroup>
+                                                </div>
 
                                             })}
 
@@ -258,50 +178,97 @@ const CreateTrip = () => {
                                 )}
                             />
                         </div>
-                        {/* <div>
-                            <FieldArray
-                                name="itinerary"
-                                render={arrayHelpers => (
-                                    <div>
-                                        {values.termsAndConditions && values.termsAndConditions.length > 0 ? <>
-                                            {values.termsAndConditions.map((terms, index) => {
-                                                return <InputGroup key={index} className="mb-3 dynamic-no-input">
-                                                    <Form.Control
-                                                        name={`termsAndConditions.${index}`}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        placeholder="Terms and conditions"
-                                                        aria-label="pick up"
-                                                        aria-describedby="basic-addon1"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-outline-primary add-btn"
-                                                        onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                                    >
-                                                        -
-                                                    </button>
-                                                    <button
-                                                        className="btn btn-outline-primary remove-btn"
-                                                        type="button"
-                                                        onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                                                    >
-                                                        +
-                                                    </button>
-                                                </InputGroup>
+                        <div>
+                            <FieldArray name="itinerary">
+                                {({ push, form, remove }) => {
+                                    return (
+                                        <>
+                                            {form.values.itinerary?.map((itinar: Iitinerary, index: number) => {
+                                                return <div className='itinerary-block'>
 
+                                                    {index === 0 && <div className='itinerary-label'><label >Itinerary</label>
+                                                        <div>
+
+                                                            <button
+                                                                className="btn btn-outline-primary remove-btn"
+                                                                type="button"
+                                                                onClick={() => push({ day: 1, description: [''] })}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
+                                                    </div>}
+                                                    <div className='itinerary-inner'>
+                                                        {index !== 0 && <div className='remove-itinerary'>
+                                                            <button
+                                                                type="button"
+                                                                className="btn add-btn"
+                                                                onClick={() => remove(index)}
+                                                            >
+                                                                X
+                                                            </button></div>}
+                                                        <Input
+                                                            type="text"
+                                                            // className="w-70"
+                                                            value={itinar.day}
+                                                            name={`itinerary.${index}.day`}
+                                                            // {...(index === 0 ? { label: "Day" } : {})}
+                                                            label='Day'
+                                                        />
+                                                        <div >
+                                                            <FieldArray
+                                                                name={`itinerary.${index}.description`}
+                                                                render={arrayHelpers => (<div>
+
+                                                                    {form?.values?.itinerary?.[index]?.description && form?.values?.itinerary?.[index]?.description.length > 0 ? <>
+                                                                        {form?.values?.itinerary?.[index]?.description.map((desc: string, descIndex: number) => {
+                                                                            return <div className="mb-3 dynamic-no-input">
+
+                                                                                <Input
+                                                                                    value={desc}
+                                                                                    type="text"
+                                                                                    className="w-70"
+                                                                                    name={`itinerary.${index}.description.${descIndex}`}
+                                                                                    {...(descIndex === 0 ? { label: "Description" } : {})}
+                                                                                />
+
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="btn btn-outline-primary add-btn"
+                                                                                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                                                                >
+                                                                                    -
+                                                                                </button>
+                                                                                <button
+                                                                                    className="btn btn-outline-primary remove-btn"
+                                                                                    type="button"
+                                                                                    onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                                                                                >
+                                                                                    +
+                                                                                </button>
+
+                                                                            </div>
+                                                                        })}
+                                                                    </> : <></>}
+                                                                </div>)}
+                                                            />
+
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
                                             })}
 
-                                        </> : <>
-                                            <button className="btn btn-outline-primary" type="button" onClick={() => arrayHelpers.push({ day: 1, description: [] })}>
-                                                Add a itinerary
-                                            </button>
-                                        </>}
 
-                                    </div>
-                                )}
-                            />
-                        </div> */}
+                                        </>
+                                    );
+                                }}
+                            </FieldArray>
+                        </div>
+
 
                     </div>
                     <div className="submit-box">

@@ -8,10 +8,11 @@ export interface ICreateTripRequest {
   price: number | null;
   inclusions: string[];
   exclusions: string[];
-//   itinerary: Iitinerary;
+  itinerary: Iitinerary[];
 }
 
-// interface Iitinerary {
-//   day: number;
-//   description: [string];
-// }
+export interface Iitinerary {
+  day: number;
+  // description: [string];
+  description: string[];
+}
