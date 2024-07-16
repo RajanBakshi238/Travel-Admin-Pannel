@@ -2,7 +2,7 @@ export interface ICreateTripRequest {
   place: string;
   startDate: string;
   endDate: string;
-  pickup: string;
+  pickUp: string;
   termsAndConditions: string[];
   enquiryNumber: string;
   price: number | null;

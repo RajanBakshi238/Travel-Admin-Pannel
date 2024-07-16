@@ -1,11 +1,11 @@
 // this scss file is for dashboard only.
 
 .dashboard-ty {
+  @import "scss/variables";
   @import "node_modules/bootstrap/scss/bootstrap";
   @import "react-bootstrap-sidebar-menu/dist/sidebar-menu";
 
-  $ty-primary: #86b817;
-  $ty-black: #222;
+
   //   $ty-secondary: ;
 
   // @copied form : https://codesandbox.io/s/react-bootstrap-sidebar-menu-ck23cz?file=/src/styles.scss:193-732

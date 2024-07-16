@@ -3,13 +3,14 @@ import { useFormik, FormikProvider, Form as FormikForm, FieldArray } from 'formi
 import "./style.scss"
 import { useCreateTripMutation } from "../../../redux/services/trip";
 import { useNavigate } from "react-router-dom";
+import Input from "../../../components/common/FormElements/Input";
 
 const CreateTrip = () => {
 
     const [createTrip] = useCreateTripMutation()
 
     const navigate = useNavigate()
-    
+
     const formik = useFormik({
         initialValues: {
             place: "",
@@ -44,18 +45,7 @@ const CreateTrip = () => {
                 <FormikForm onSubmit={formik.handleSubmit}>
                     <div className="form-box">
                         <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-map-marker-alt"></i></InputGroup.Text>
-                                <Form.Control
-                                    name="place"
-                                    value={values.place}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    placeholder="Place"
-                                    aria-label="Place"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Input name="place" label="Place *" type="text" />
                         </div>
                         <div>
                             <InputGroup className="mb-3">

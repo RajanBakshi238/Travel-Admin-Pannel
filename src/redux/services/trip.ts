@@ -16,7 +16,7 @@ export const trip = travelYatriApi.injectEndpoints({
         };
       },
     }),
-    getTrip: builder.query<IGetTripResponse, void>({
+    getTrip: builder.query<IGetTripResponse[], void>({
       providesTags:[GET_TRIP],
         query: () => {
         return {
