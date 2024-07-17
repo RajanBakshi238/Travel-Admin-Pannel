@@ -17,7 +17,6 @@ interface IInput {
 const Input: React.FC<IInput> = ({ name, label, type, className, value }) => {
 
     const { handleBlur, handleChange, values } = useFormikContext()
-    console.log(values, ">>>valies")
     return (
         <div className={classNames(['ty-input', className])}>
             {!!label && <label>{label}</label>}

@@ -4,6 +4,7 @@ import { useCreateTripMutation } from "../../../redux/services/trip";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../components/common/FormElements/Input";
 import { Iitinerary } from '../../../contracts/ICreateTripRequest';
+import ImageInput from '../../../components/common/FormElements/ImageInput';
 
 const CreateTrip = () => {
 
@@ -179,6 +180,9 @@ const CreateTrip = () => {
                             />
                         </div>
                         <div>
+                            <ImageInput name="photos" />
+                        </div>
+                        <div>
                             <FieldArray name="itinerary">
                                 {({ push, form, remove }) => {
                                     return (
@@ -268,6 +272,7 @@ const CreateTrip = () => {
                                 }}
                             </FieldArray>
                         </div>
+
 
 
                     </div>

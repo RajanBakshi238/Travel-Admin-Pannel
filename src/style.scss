@@ -6,7 +6,6 @@
   @import "node_modules/bootstrap/scss/bootstrap";
   @import "react-bootstrap-sidebar-menu/dist/sidebar-menu";
 
-
   //   $ty-secondary: ;
 
   // @copied form : https://codesandbox.io/s/react-bootstrap-sidebar-menu-ck23cz?file=/src/styles.scss:193-732
@@ -369,7 +368,8 @@
 
   .main-wrapper {
     width: 100%;
-    height: 100%;
+    // height: 100%;
+    height: 100vh;
     background: #f3f4f6;
     position: relative;
     display: grid;
@@ -411,12 +411,11 @@
     color: $ty-black;
   }
 
-  .common-ty-btn{
+  .common-ty-btn {
     border: none;
-    &:focus{
-        border: none;
-        box-shadow: none;
+    &:focus {
+      border: none;
+      box-shadow: none;
     }
   }
-
 }
