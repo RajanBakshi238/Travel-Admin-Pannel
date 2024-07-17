@@ -15,18 +15,20 @@ const DashboardSidebar = () => {
                 </Sidebar.Header>
                 <Sidebar.Body className="sidebar-body">
                     {user?.role === ORGANIZER ? <>
-                        <Sidebar.Nav>
-                            {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                            <Link to="/dashboard">
-                                <Sidebar.Nav.Title className="sidebar-item">Create Trip</Sidebar.Nav.Title>
-                            </Link>
-                        </Sidebar.Nav>
-                        <Sidebar.Nav className="mt-4">
-                            {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                            <Link to="/dashboard/my-trip">
-                                <Sidebar.Nav.Title className="sidebar-item">My Trip</Sidebar.Nav.Title>
-                            </Link>
-                        </Sidebar.Nav>
+                        {true ? <>
+                            <Sidebar.Nav>
+                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                                <Link to="/dashboard">
+                                    <Sidebar.Nav.Title className="sidebar-item">Create Trip</Sidebar.Nav.Title>
+                                </Link>
+                            </Sidebar.Nav>
+                            <Sidebar.Nav className="mt-4">
+                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                                <Link to="/dashboard/my-trip">
+                                    <Sidebar.Nav.Title className="sidebar-item">My Trip</Sidebar.Nav.Title>
+                                </Link>
+                            </Sidebar.Nav>
+                        </> : <></>}
                     </>
 
                         : <>
