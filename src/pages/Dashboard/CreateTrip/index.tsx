@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../../components/common/FormElements/Input";
 import { Iitinerary } from '../../../contracts/ICreateTripRequest';
 import ImageInput from '../../../components/common/FormElements/ImageInput';
+import { IFileResponse } from '../../../contracts/IFileResponse';
 
 const CreateTrip = () => {
 
@@ -23,14 +24,15 @@ const CreateTrip = () => {
             inclusions: [''],
             exclusions: [''],
             enquiryNumber: "",
-            itinerary: [{ day: 1, description: [''] }]
+            itinerary: [{ day: 1, description: [''] }],
+            photos: []
         },
         onSubmit: (values, { resetForm }) => {
-            createTrip({ ...values, price: values.price as number }).then((response) => {
+            createTrip({ ...values, price: values.price as number, photos: values?.photos?.map((item: IFileResponse) => item.id) }).unwrap().then((response) => {
                 console.log(response, ">>>>>>>>>>")
                 resetForm();
                 navigate('/dashboard/my-trip')
-            }).catch(() => {
+            }).catch((error) => {
 
             })
             console.log(values, "...... valuess")
@@ -52,10 +54,10 @@ const CreateTrip = () => {
                         </div>
 
                         <div>
-                            <Input name="startDate" label="Start Date *" type="text" />
+                            <Input name="startDate" label="Start Date *" type="date" />
                         </div>
                         <div>
-                            <Input name="endDate" label="End Date *" type="text" />
+                            <Input name="endDate" label="End Date *" type="date" />
                         </div>
                         <div>
                             <Input name="enquiryNumber" label="Enquiry Number *" type="text" />
@@ -180,7 +182,7 @@ const CreateTrip = () => {
                             />
                         </div>
                         <div>
-                            <ImageInput name="photos" />
+                            <ImageInput name="photos" inputLabel='upload files' multiple={true} />
                         </div>
                         <div>
                             <FieldArray name="itinerary">
