@@ -5,7 +5,7 @@ import { ORGANIZER } from "../../../contracts/constants/roleConstant";
 import { Link } from "react-router-dom";
 const DashboardSidebar = () => {
     const { user } = useUserContext()
-
+console.log(user, ">>>>> user")
     return <>
         <Sidebar expand="sm" className="vh-100 dashboard-sidebar">
             <Sidebar.Collapse className="sidebar-width" getScrollValue={200}>
@@ -15,7 +15,7 @@ const DashboardSidebar = () => {
                 </Sidebar.Header>
                 <Sidebar.Body className="sidebar-body">
                     {user?.role === ORGANIZER ? <>
-                        {true ? <>
+                        {user?.isVerified ? <>
                             <Sidebar.Nav>
                                 {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
                                 <Link to="/dashboard">
