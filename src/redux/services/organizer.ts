@@ -19,3 +19,5 @@ export const organizerApi = travelYatriApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useOrganizerFormMutation } = organizerApi;

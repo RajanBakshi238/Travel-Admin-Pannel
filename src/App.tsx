@@ -16,6 +16,8 @@ import Layout from './components/Dashboard/Layout/Layout';
 import CreateTrip from './pages/Dashboard/CreateTrip';
 import GetTrip from './pages/Dashboard/GetTrip';
 import AllTrip from './pages/Dashboard/AllTrip';
+import OrganizerPersonalForm from './pages/Dashboard/OrganizerPersonalForm';
+import AdminLogin from './pages/AdminLogin';
 
 
 const router = createBrowserRouter([
@@ -23,7 +25,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />
 
-  }, {
+  },
+  {
+    path: "/admin-login",
+    element: <AdminLogin />
+  },
+  {
     path: "/dashboard",
     element: <RouteProtect
       element={<Layout />}
@@ -41,6 +48,9 @@ const router = createBrowserRouter([
       {
         path: "trip",
         element: <AllTrip />
+      }, {
+        path: "organizer-verification",
+        element: <OrganizerPersonalForm />
       }
       // {
       //   path: 'test',

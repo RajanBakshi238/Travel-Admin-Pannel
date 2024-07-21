@@ -49,9 +49,9 @@ const ImageInput: React.FC<IImageInput> = ({ name, label, className, value, inpu
         <div className={classNames(['ty-input ty-image-input', className])}>
             {!!label && <label>{label}</label>}
             <div className='custom-image'>
-                <label htmlFor='ty-image-upload' className='btn btn-primary'>{inputLabel}</label>
+                <label htmlFor={name} className='btn btn-primary'>{inputLabel}</label>
             </div>
-            <input id="ty-image-upload" hidden type="file" onChange={handleUpload} onBlur={handleBlur} name={name} />
+            <input id={name} hidden type="file" onChange={handleUpload} onBlur={handleBlur} name={name} />
             <div className='image-list'>
                 {multiple ?
                     <>{((values as { [key: string]: string | [] })?.[name] as [])?.map((item: IFileResponse, index: number) => {
@@ -64,10 +64,10 @@ const ImageInput: React.FC<IImageInput> = ({ name, label, className, value, inpu
                         </>
                     })}</>
                     : <>
-                        <div>
+                        {!!(values as any)?.[name]?.id && <div>
                             <div className='cut' onClick={() => setFieldValue(name, null)}>X</div>
                             <img className='uploaded-img' src={`http://localhost:3005/${(values as any)?.[name]?.path}`} />
-                        </div>
+                        </div>}
                     </>
                 }
 
