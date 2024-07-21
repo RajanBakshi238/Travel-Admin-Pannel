@@ -5,6 +5,8 @@ import { ILoginWithGoogleResponse } from "../../contracts/ILoginWithGoogleRespon
 import { ILoginWithGoogleRequest } from "../../contracts/ILoginWithGoogleResquest";
 import { RootState } from "../store";
 import { GET_TRIP, UPDATE_ME } from "../travelYatriApiTags";
+import { IAdminLoginResponse } from "../../contracts/IAdminLoginResponse";
+import { IAdminLoginRequest } from "../../contracts/IAdminLoginRequest";
 
 export const travelYatriApi = createApi({
   reducerPath: TRAVEL_YATRI_REDUCER_KEY,
@@ -33,7 +35,16 @@ export const travelYatriApi = createApi({
         };
       },
     }),
+    adminLogin: builder.mutation<IAdminLoginResponse, IAdminLoginRequest>({
+      query: (body) => {
+        return {
+          url: "auth/login",
+          method: "POST",
+          body
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginWithGoogleMutation } = travelYatriApi;
+export const { useLoginWithGoogleMutation, useAdminLoginMutation } = travelYatriApi;
