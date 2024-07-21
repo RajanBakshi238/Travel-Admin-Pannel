@@ -18,6 +18,7 @@ import GetTrip from './pages/Dashboard/GetTrip';
 import AllTrip from './pages/Dashboard/AllTrip';
 import OrganizerPersonalForm from './pages/Dashboard/OrganizerPersonalForm';
 import AdminLogin from './pages/AdminLogin';
+import AdminOrganizerList from './pages/Dashboard/AdminOrganizerList';
 
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       }, {
         path: "organizer-verification",
         element: <OrganizerPersonalForm />
+      },
+      {
+        path: "admin-organizer",
+        element : <AdminOrganizerList />
       }
       // {
       //   path: 'test',

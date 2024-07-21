@@ -40,6 +40,19 @@ export const authSlice = createSlice({
         }
       }
     );
+    builder.addMatcher(
+      travelYatriApi.endpoints.adminLogin.matchFulfilled,
+      (state, { payload }) => {
+        if (payload.data) {
+          state.authenticated = payload.data;
+          sessionStorage.setItem(AUTH_KEY, JSON.stringify(payload.data));
+          localStorage.setItem(AUTH_KEY, JSON.stringify(payload.data));
+        } else {
+          sessionStorage.removeItem(AUTH_KEY);
+          localStorage.removeItem(AUTH_KEY);
+        }
+      }
+    );
   },
 });
 

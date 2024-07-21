@@ -1,11 +1,11 @@
 import Sidebar from "react-bootstrap-sidebar-menu";
 import './layout.scss'
 import { useUserContext } from "../../../context/User";
-import { ORGANIZER } from "../../../contracts/constants/roleConstant";
+import { ADMIN, ORGANIZER } from "../../../contracts/constants/roleConstant";
 import { Link } from "react-router-dom";
 const DashboardSidebar = () => {
     const { user } = useUserContext()
-console.log(user, ">>>>> user")
+    console.log(user, ">>>>> user")
     return <>
         <Sidebar expand="sm" className="vh-100 dashboard-sidebar">
             <Sidebar.Collapse className="sidebar-width" getScrollValue={200}>
@@ -29,16 +29,24 @@ console.log(user, ">>>>> user")
                                 </Link>
                             </Sidebar.Nav>
                         </> : <></>}
-                    </>
+                    </> :
+                        user?.role === ADMIN ? <>
 
-                        : <>
                             <Sidebar.Nav className="mt-4">
                                 {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                                <Link to="/dashboard/trip">
-                                    <Sidebar.Nav.Title className="sidebar-item">Trip</Sidebar.Nav.Title>
+                                <Link to="/dashboard/organizer">
+                                    <Sidebar.Nav.Title className="sidebar-item">Organizers</Sidebar.Nav.Title>
                                 </Link>
                             </Sidebar.Nav>
-                        </>}
+                        </>
+                            : <>
+                                <Sidebar.Nav className="mt-4">
+                                    {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                                    <Link to="/dashboard/trip">
+                                        <Sidebar.Nav.Title className="sidebar-item">Trip</Sidebar.Nav.Title>
+                                    </Link>
+                                </Sidebar.Nav>
+                            </>}
 
 
                 </Sidebar.Body>

@@ -2,9 +2,12 @@ import { Form, InputGroup } from "react-bootstrap"
 import "./style.scss"
 import { useAdminLoginMutation } from "../../redux/services"
 import { FormikProvider, Form as FormikForm, useFormik } from "formik"
+import { useNavigate } from "react-router-dom"
 
 const AdminLogin = () => {
     const [adminLoginMutation] = useAdminLoginMutation()
+
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -14,9 +17,11 @@ const AdminLogin = () => {
         onSubmit: (values, { resetForm }) => {
             adminLoginMutation(values).unwrap().then((response) => {
                 resetForm();
+                navigate('/dashboard/admin-organizer')
                 console.log(response, ">>>> response")
 
             }).catch((error) => {
+
 
             })
         }

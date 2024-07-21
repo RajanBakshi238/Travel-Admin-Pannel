@@ -4,4 +4,5 @@ export const RouteToPageMapper: { [key: string]: string } = {
   "/dashboard/trip": "Trip",
   "/dashboard/create-trip": "Create Trip",
   "/dashboard/organizer-verification": "Organizer Verification",
+  "/dashboard/admin-organizer": "Organizers",
 };
