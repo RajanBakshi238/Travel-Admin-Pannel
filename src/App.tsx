@@ -19,6 +19,7 @@ import AllTrip from './pages/Dashboard/AllTrip';
 import OrganizerPersonalForm from './pages/Dashboard/OrganizerPersonalForm';
 import AdminLogin from './pages/AdminLogin';
 import AdminOrganizerList from './pages/Dashboard/AdminOrganizerList';
+import { ADMIN, ORGANIZER } from './contracts/constants/roleConstant';
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <RouteProtect
+      authorizedRoles={[ORGANIZER]}
       element={<Layout />}
     />,
     children: [
@@ -53,14 +55,24 @@ const router = createBrowserRouter([
         path: "organizer-verification",
         element: <OrganizerPersonalForm />
       },
-      {
-        path: "admin-organizer",
-        element : <AdminOrganizerList />
-      }
+
       // {
       //   path: 'test',
       //   element: <Dashboard />
       // }
+    ]
+  },
+  {
+    path: "/dashboard",
+    element: <RouteProtect
+      authorizedRoles={[ADMIN]}
+      element={<Layout />}
+    />,
+    children: [
+      {
+        path: "admin-organizer",
+        element: <AdminOrganizerList />
+      }
     ]
   }
 ])
