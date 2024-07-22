@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import RegisterModal from "../Authentication/registerModel";
 import LoginModal from "../Authentication/loginModel";
+import { useUserContext } from "../../context/User";
 
 export interface IChildRef {
     handleClose: () => void;
@@ -12,6 +13,9 @@ const Header = () => {
     const [activeSection, setActiveSection] = useState("yatri-home")
     const registerChildRef = useRef<IChildRef>();
     const loginChildRef = useRef<IChildRef>();
+    const { user } = useUserContext()
+
+    console.log(user, ">>>>>> ser")
 
     const scrollToSection = useCallback((id: string) => {
         const element = document.getElementById(id);
@@ -59,11 +63,18 @@ const Header = () => {
                             <a href="#yatri-destination" className={`nav-item nav-link ${activeSection === "yatri-destination" ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollToSection('yatri-destination'); }}>Destination</a>
                             <a href="#yatri-contact-us" className={`nav-item nav-link ${activeSection === "yatri-contact-us" ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollToSection('yatri-contact-us'); }}>Contact Us</a>
                         </div>
-                        <a onClick={() => {
+                        {!user ? <a onClick={() => {
                             if (registerChildRef.current) {
                                 registerChildRef.current.handleShow()
                             }
-                        }} className="btn btn-primary rounded-pill py-2 px-4">Register</a>
+                        }} className="btn btn-primary rounded-pill py-2 px-4">Register</a> :
+                            <>
+                                <div className="user-icon-header">
+                                    {user?.fullName.charAt(0)}
+                                </div>
+                            </>
+                        }
+
                     </div>
                 </nav>
 
@@ -82,7 +93,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <RegisterModal ref={registerChildRef} loginRef={loginChildRef}  />
+            <RegisterModal ref={registerChildRef} loginRef={loginChildRef} />
             <LoginModal ref={loginChildRef} registerRef={registerChildRef} />
         </>
     )
