@@ -20,6 +20,7 @@ import OrganizerPersonalForm from './pages/Dashboard/OrganizerPersonalForm';
 import AdminLogin from './pages/AdminLogin';
 import AdminOrganizerList from './pages/Dashboard/AdminOrganizerList';
 import { ADMIN, ORGANIZER } from './contracts/constants/roleConstant';
+import SingleTripView from './pages/Dashboard/SingleTripView';
 
 
 const router = createBrowserRouter([
@@ -51,11 +52,15 @@ const router = createBrowserRouter([
       {
         path: "trip",
         element: <AllTrip />
-      }, {
+      },
+      {
         path: "organizer-verification",
         element: <OrganizerPersonalForm />
       },
-
+      {
+        path: "single-trip",
+        element: <SingleTripView />
+      }
       // {
       //   path: 'test',
       //   element: <Dashboard />
