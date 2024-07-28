@@ -1,3 +1,5 @@
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "./style.scss"
 
 const SingleTripView = () => {
@@ -56,6 +58,27 @@ const SingleTripView = () => {
             </div>
 
             <div className="itinerary">
+                <h1 className="trip-heading">Image Gallery</h1>
+                <div className=" image-carousel">
+                    
+                    <Carousel showThumbs={false} dynamicHeight={false} >
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-1.jpg" alt="trip" />
+                        </div>
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-2.jpg" alt="trip" />
+                        </div>
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-3.jpg" alt="trip" />
+                        </div>
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-4.jpg" alt="trip" />
+                        </div>
+                    </Carousel>
+                </div>
+            </div>
+
+            <div className="itinerary">
                 <h1 className="trip-heading">Batches</h1>
                 <div className="batches">
                     <div className="batches-dates">
@@ -102,6 +125,58 @@ const SingleTripView = () => {
                             <div>20-Aug to  24-Aug</div>
                             <div>27-Aug to  01-Sep</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="itinerary day-page-detail">
+                <div>
+                    <h1 className="trip-heading">Day 0</h1>
+                    <div className="inclusions">
+                        <ul>
+                            <li>Departure in the evening to Chopta.</li>
+                            <li>The group will assemble at the pickup point.</li>
+                            <li>Afterward, you'll be introduced to the team captains and the whole group.</li>
+                            <li>Halt for dinner in between (not on us).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <h1 className="exclusion-heading trip-heading">Day 1</h1>
+                    <div className="exclusions">
+                        <li>Reach Chopta, Swiss camp Check-in.</li>
+                        <li>Freshen up & rest for some time.</li>
+                        <li>Enjoy the views in the lap of nature.</li>
+                        <li>Followed by dinner and overnight stay.</li>
+                    </div>
+                </div>
+            </div>
+
+            <div className="itinerary day-page-detail">
+                <div>
+                    <h1 className="trip-heading">Day 2</h1>
+                    <div className="inclusions">
+                        <ul>
+                            <li>Wake up early & witness the beautiful sunrise. Start your day early today.</li>
+                            <li>Have breakfast and leave for Tungnath</li>
+                            <li>Start your trek to Tungnath (World’s highest Shiva temple)</li>
+                            <li>Reach Tungnath & pay your respect at the highest abode of Lord Shiva.</li>
+                            <li>Start your journey to Chandrashila peak (if weather permits).</li>
+                            <li>Come back by the evening.</li>
+                            <li>Dinner and overnight stay.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <h1 className="exclusion-heading trip-heading">Day 3</h1>
+                    <div className="exclusions">
+                        <li>Wake up and have your breakfast.</li>
+                        <li>Check-out and leave for Sari Village (Base point for Deoria Tal trek).</li>
+                        <li>Reach Deoria Tal and enjoy the picturesque views.</li>
+                        <li>Trek back to Sari Village.</li>
+                        <li>Departure from Deoria Tal in the evening.</li>
                     </div>
                 </div>
             </div>

@@ -1,15 +1,27 @@
 @import "./../../../scss/variables";
 
 .single-trip-view-modal {
+  //   @import "node_modules/bootstrap/scss/bootstrap";
+
+//   padding: 40px 0;
+
   .itinerary {
-    padding: 0px 40px 200px 40px;
-    width: 90%;
+    // padding: 0px 40px 200px 40px;
+    width: 100%;
     box-shadow: 3px 3px 17px 0px #d3cdcd;
-    margin: auto;
+    // margin: auto;
     color: #222;
-    margin-bottom: 20px; // to be commented
+    // margin-bottom: 20px; // to be commented
     min-height: 910px;
     //   font-family: "circular";
+
+    .image-carousel {
+        margin-top: 150px;
+      img {
+        width: 100%;
+        height: 400px;
+      }
+    }
 
     .trip-heading {
       font-family: "circular";
@@ -17,7 +29,7 @@
       width: fit-content;
       padding: 20px;
       font-weight: 600;
-      font-size: 42px;
+      font-size: 39px;
       letter-spacing: 2px;
       text-transform: uppercase;
       border-bottom-left-radius: 15px;
@@ -147,6 +159,12 @@
         font-weight: 600;
         letter-spacing: 1px;
       }
+    }
+
+    .day-page-detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 }
