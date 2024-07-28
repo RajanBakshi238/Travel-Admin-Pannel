@@ -15,7 +15,7 @@ const TripDetailModel = forwardRef((_props, ref) => {
 
 
     return (
-        <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal className="trip-detail-model" size="lg" show={show} onHide={handleClose}>
             {/* <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header> */}

@@ -5,8 +5,30 @@ import "./style.scss"
 const SingleTripView = () => {
     return (
         <div className="single-trip-view-modal">
-            <div className="itinerary">
-                <h1 className="trip-heading">Itinerary</h1>
+
+            <div className="itinerary-c">
+                <h1 className="trip-heading">Image Gallery</h1>
+                <div className=" image-carousel">
+
+                    <Carousel showThumbs={false} dynamicHeight={false} >
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-1.jpg" alt="trip" />
+                        </div>
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-2.jpg" alt="trip" />
+                        </div>
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-3.jpg" alt="trip" />
+                        </div>
+                        <div>
+                            <img src="/img/trip/trip-images/trip-image-4.jpg" alt="trip" />
+                        </div>
+                    </Carousel>
+                </div>
+            </div>
+
+            <div className="itinerary-c">
+                <h1 className="trip-heading exclusion-heading">Itinerary</h1>
                 <div className="itinerary-road-map">
                     <div className="bus-top">
                         <i className="fas fa-bus"></i>
@@ -57,29 +79,10 @@ const SingleTripView = () => {
                 </div>
             </div>
 
-            <div className="itinerary">
-                <h1 className="trip-heading">Image Gallery</h1>
-                <div className=" image-carousel">
-                    
-                    <Carousel showThumbs={false} dynamicHeight={false} >
-                        <div>
-                            <img src="/img/trip/trip-images/trip-image-1.jpg" alt="trip" />
-                        </div>
-                        <div>
-                            <img src="/img/trip/trip-images/trip-image-2.jpg" alt="trip" />
-                        </div>
-                        <div>
-                            <img src="/img/trip/trip-images/trip-image-3.jpg" alt="trip" />
-                        </div>
-                        <div>
-                            <img src="/img/trip/trip-images/trip-image-4.jpg" alt="trip" />
-                        </div>
-                    </Carousel>
-                </div>
-            </div>
 
-            <div className="itinerary">
-                <h1 className="trip-heading">Batches</h1>
+
+            <div className="itinerary-c">
+                <h1 className="trip-heading exclusion-heading">Batches</h1>
                 <div className="batches">
                     <div className="batches-dates">
                         <div className="month">
@@ -129,9 +132,9 @@ const SingleTripView = () => {
                 </div>
             </div>
 
-            <div className="itinerary day-page-detail">
+            <div className="itinerary-c day-page-detail">
                 <div>
-                    <h1 className="trip-heading">Day 0</h1>
+                    <h1 className="trip-heading exclusion-heading">Day 0</h1>
                     <div className="inclusions">
                         <ul>
                             <li>Departure in the evening to Chopta.</li>
@@ -151,20 +154,14 @@ const SingleTripView = () => {
                         <li>Followed by dinner and overnight stay.</li>
                     </div>
                 </div>
-            </div>
 
-            <div className="itinerary day-page-detail">
                 <div>
-                    <h1 className="trip-heading">Day 2</h1>
+                    <h1 className="trip-heading exclusion-heading">Day 2</h1>
                     <div className="inclusions">
                         <ul>
                             <li>Wake up early & witness the beautiful sunrise. Start your day early today.</li>
                             <li>Have breakfast and leave for Tungnath</li>
                             <li>Start your trek to Tungnath (World’s highest Shiva temple)</li>
-                            <li>Reach Tungnath & pay your respect at the highest abode of Lord Shiva.</li>
-                            <li>Start your journey to Chandrashila peak (if weather permits).</li>
-                            <li>Come back by the evening.</li>
-                            <li>Dinner and overnight stay.</li>
                         </ul>
                     </div>
                 </div>
@@ -181,8 +178,10 @@ const SingleTripView = () => {
                 </div>
             </div>
 
-            <div className="itinerary">
-                <h1 className="trip-heading">Inclusions</h1>
+
+
+            <div className="itinerary-c">
+                <h1 className="trip-heading exclusion-heading">Inclusions</h1>
                 <div className="inclusions">
                     <ul>
                         <li>Accomodation (2-night stay in chopta)</li>
@@ -203,15 +202,15 @@ const SingleTripView = () => {
                 </div>
             </div>
 
-            <div className="itinerary">
-                <h1 className="trip-heading">Terms and conditions</h1>
+            <div className="itinerary-c">
+                <h1 className="trip-heading exclusion-heading">Terms and conditions</h1>
                 <div className="terms-conditions">
                     <ul>
                         <li>The advance amount is non-refundable under any circumstances.</li>
                         <li>Full Payment of the trip cost must be made 24 hours before the trip begins. Pending Payments may eventually lead to the cancellation of your booking.</li>
                         <li>The IDs will be verified before boarding. No boarding shall be entertained without a valid Govt. ID.</li>
                         <li>The Transfer of the bookings is not permitted. Only the names mentioned at the time of confirmation shall be allowed to travel.</li>
-                        <li>No refunds shall be made towards any inclusion(s) not availed by the Client.</li>
+                        {/* <li>No refunds shall be made towards any inclusion(s) not availed by the Client.</li>
                         <li>Travelers must take care of their luggage & belongings. The management shall not be accountable for missing items along the tour.</li>
                         <li>The time of departure is stated & fixed. All travelers must update their status with the Trip Coordinator(s), & report at the pickup point 30 mins prior to the scheduled departure.</li>
                         <li>Drinking & Smoking are strictly prohibited during journey due to the health & safety of fellow passengers.</li>
@@ -220,10 +219,14 @@ const SingleTripView = () => {
                         <li>We do not provide any insurance policy to cover the expenditure on sickness or accidents or losses incurred due to theft or other reasons.</li>
                         <li>
                             Numerous factors such as weather and road conditions the physical ability of participants etc. may bring alteration in the itinerary. We reserve the right to make necessary changes in the schedule in the interest of safety, comfort, and general well-being!
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
 
+            </div>
+
+            <div className='book-trip-block'>
+                <button className='btn btn-primary '>Book trip</button>
             </div>
         </div>
     )
