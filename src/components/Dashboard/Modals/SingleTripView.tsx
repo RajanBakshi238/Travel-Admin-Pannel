@@ -2,7 +2,7 @@ import "./style.scss"
 
 const SingleTripView = () => {
     return (
-        <div className="single-trip-view">
+        <div className="single-trip-view-modal">
             <div className="itinerary">
                 <h1 className="trip-heading">Itinerary</h1>
                 <div className="itinerary-road-map">

@@ -2,11 +2,17 @@ import { useGetTripQuery } from '../../../redux/services/trip'
 import { Table } from 'react-bootstrap'
 
 import "./style.scss"
+import TripDetailModel from '../../../components/Dashboard/Modals/TripDetailModel'
+import { useRef } from 'react'
 
-
+export interface IChildRef {
+    handleClose: () => void;
+    handleShow: () => void;
+}
 
 const GetTrip = () => {
     const { data } = useGetTripQuery()
+    const singleTripRef = useRef<IChildRef>()
     console.log(data, ">>>>>>>")
     return (
         <>
@@ -312,6 +318,16 @@ const GetTrip = () => {
                     </tbody>
                 </Table>
             </div>
+
+
+            <TripDetailModel ref={singleTripRef} />
+
+            <button onClick={() => {
+                if (singleTripRef?.current) {
+                    singleTripRef?.current?.handleShow()
+                }
+            }}>Open Modal</button>
+
         </>
 
     )
