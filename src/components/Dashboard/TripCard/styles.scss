@@ -1,0 +1,80 @@
+.ty-card {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+
+  .view-card-details {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #111;
+    cursor: pointer;
+    background: #fff;
+    padding: 0px 4px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .ty-img-block {
+  }
+
+  .ty-card-img,
+  .ty-card-content {
+    width: 220px;
+  }
+
+  .ty-card-img {
+    border-radius: 10px;
+    height: 220px;
+  }
+
+  .ty-card-content {
+    margin-top: 10px;
+    color: #111;
+    // padding: 10px;
+    padding-left: 2px;
+    .card-heading {
+      display: flex;
+      justify-content: space-between;
+      color: #111;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      span {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+
+    .card-description {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #888;
+    }
+
+    .card-pickup {
+      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      span {
+        font-weight: 500;
+        font-size: 12px;
+      }
+    }
+
+    .card-date {
+      display: none;
+      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      span {
+        font-weight: 500;
+        font-size: 12px;
+      }
+    }
+  }
+}
