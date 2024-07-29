@@ -1,7 +1,8 @@
 @import "./../../../scss/variables";
 
 .trip-detail-model {
-  background: #00000078;
+  // background: #00000078;
+  backdrop-filter: blur(12px);
 }
 
 .single-trip-view-modal {

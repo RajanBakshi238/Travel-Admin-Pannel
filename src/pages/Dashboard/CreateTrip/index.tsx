@@ -22,10 +22,15 @@ const CreateTrip = () => {
         price: Yup.number().integer("Price must be number").required("Price is required"),
         enquiryNumber: Yup.number().required("Enquiry number is required"),
         inclusions: Yup.array(Yup.string().min(3, "Minimum 3 characters").required("Inclusion can't be empty")).min(1, "Minimum 1 inclusion is required.").required("Inclusion is required"),
-        exclusions: Yup.array(Yup.string().required()).min(1, "Minimum 1 exclusion is required."),
-        termsAndConditions: Yup.array(Yup.string().required()).min(1, "Minimum 1 term and condition is required."),
-        photos: Yup.array().min(1, "Minimum 1 Photo is required.")
-
+        exclusions: Yup.array(Yup.string().required("Exclusion can't be empty")).min(1, "Minimum 1 exclusion is required."),
+        termsAndConditions: Yup.array(Yup.string().required("Terms and condition can't be empty")).min(1, "Minimum 1 term and condition is required."),
+        photos: Yup.array().min(1, "Minimum 1 Photo is required."),
+        itinerary: Yup.array(
+            Yup.object().shape({
+                day: Yup.string().required("Day can't be empty"),
+                description: Yup.array(Yup.string().required("Itinerary description is required.")).min(1, "Minimum 1 itinerary description is required.")
+            })
+        ).min(1, "One itinerary is required.")
     })
 
 
@@ -260,6 +265,8 @@ const CreateTrip = () => {
                                                             // {...(index === 0 ? { label: "Day" } : {})}
                                                             label='Day'
                                                         />
+                                                        <CustomError name={`itinerary.${index}.day`} />
+
                                                         <div >
                                                             <FieldArray
                                                                 name={`itinerary.${index}.description`}
@@ -269,14 +276,16 @@ const CreateTrip = () => {
                                                                         {form?.values?.itinerary?.[index]?.description.map((desc: string, descIndex: number) => {
                                                                             return <div className="mb-3 dynamic-no-input">
 
-                                                                                <Input
-                                                                                    value={desc}
-                                                                                    type="text"
-                                                                                    className="w-70"
-                                                                                    name={`itinerary.${index}.description.${descIndex}`}
-                                                                                    {...(descIndex === 0 ? { label: "Description" } : {})}
-                                                                                />
-
+                                                                                <div className="w-70">
+                                                                                    <Input
+                                                                                        value={desc}
+                                                                                        type="text"
+                                                                                        className=""
+                                                                                        name={`itinerary.${index}.description.${descIndex}`}
+                                                                                        {...(descIndex === 0 ? { label: "Description" } : {})}
+                                                                                    />
+                                                                                    <CustomError name={`itinerary.${index}.description.${descIndex}`} />
+                                                                                </div>
                                                                                 <button
                                                                                     type="button"
                                                                                     className="btn btn-outline-primary add-btn"
@@ -312,6 +321,8 @@ const CreateTrip = () => {
                                     );
                                 }}
                             </FieldArray>
+                            <CustomError name="itinerary" showError={!values.itinerary.length} />
+
                         </div>
 
 

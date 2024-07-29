@@ -12,7 +12,7 @@ export const travelYatriApi = createApi({
   reducerPath: TRAVEL_YATRI_REDUCER_KEY,
   tagTypes: [UPDATE_ME, GET_TRIP],
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:3005/api/v1/`,
+    baseUrl: `http://localhost:3001/api/v1/`,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.authenticated;
       if (token) {
