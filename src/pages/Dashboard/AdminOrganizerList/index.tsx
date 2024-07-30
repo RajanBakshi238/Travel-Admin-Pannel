@@ -1,94 +1,40 @@
+import Form from 'react-bootstrap/Form';
 import CommonTable from "../../../components/common/Tables"
 import { ORGANIZER } from "../../../contracts/constants/roleConstant";
-import { useGetUsersQuery } from "../../../redux/services/admin";
+import { useGetUsersQuery, useVerifyOrganizerMutation } from "../../../redux/services/admin";
 import "./style.scss";
 
 const tableRow = {
     fullName: "Full Name",
     email: "Email",
     createdAt: "Created At",
+    isDeleted: "Deleted",
     isVerified: "Verified",
-    isDeleted: "Deleted"
 }
 
-const tableData = [
-    {
-        id: "1",
-        name: "Test",
-        description: "Test description lorem ipsum is a here we have a do will is go and secbea",
-        createdAt: "23-08-200",
-        owner: "Harish",
-        age: "12",
-        place: "New Delhi",
-        company: "chikky",
-        stamp: "gret"
-    },
-    {
-        id: "1",
-        name: "Test",
-        description: "Test description lorem ipsum is a here we have a do will is go and secbea",
-        createdAt: "23-08-200",
-        owner: "Harish",
-        age: "12",
-        place: "New Delhi",
-        company: "chikky",
-        stamp: "gret"
-    },
-    {
-        id: "1",
-        name: "Test",
-        description: "Test description lorem ipsum is a here we have a do will is go and secbea",
-        createdAt: "23-08-200",
-        owner: "Harish",
-        age: "12",
-        place: "New Delhi",
-        company: "chikky",
-        stamp: "gret"
-    },
-    {
-        id: "1",
-        name: "Test",
-        description: "Test description lorem ipsum is a here we have a do will is go and secbea",
-        createdAt: "23-08-200",
-        owner: "Harish",
-        age: "12",
-        place: "New Delhi",
-        company: "chikky",
-        stamp: "gret"
-    },
-    {
-        id: "1",
-        name: "Test",
-        description: "Test description lorem ipsum is a here we have a do will is go and secbea",
-        createdAt: "23-08-200",
-        owner: "Harish",
-        age: "12",
-        place: "New Delhi",
-        company: "chikky",
-        stamp: "gret"
-    },
-    {
-        id: "1",
-        name: "Test",
-        description: "Test description lorem ipsum is a here we have a do will is go and secbea",
-        createdAt: "23-08-200",
-        owner: "Harish",
-        age: "12",
-        place: "New Delhi",
-        company: "chikky",
-        stamp: "gret"
-    }
-]
-
-
 export const AdminOrganizerList = () => {
-    const { data } = useGetUsersQuery({ role: ORGANIZER })
+    const { data } = useGetUsersQuery({ role: ORGANIZER });
+    const [verifyOrganizer] = useVerifyOrganizerMutation()
 
     console.log(data, "........ data")
 
+    const tableData = data?.data?.map((tableRow) => {
+        return {
+            ...tableRow,
+            // isVerified: <span>{tableRow.isVerified.toString()}</span>,
+            isVerified: <Form.Check
+                type='switch'
+                className="bootstrap-switch"
+                onChange={(e) => { verifyOrganizer({ id: tableRow._id, isVerified: e.target.checked }) }}
+                defaultChecked={tableRow.isVerified}
+            />,
+            isDeleted: <span>{tableRow.isDeleted.toString()}</span>
+        }
+    })
+
     return <div className="register-as-page admin-organizer">
 
-        <CommonTable tableRow={tableRow} tableData={data?.data ?? []} />
+        <CommonTable tableRow={tableRow} tableData={tableData ?? []} />
 
 
     </div>
