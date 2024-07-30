@@ -17,21 +17,11 @@ const GetTrip = () => {
     return (
         <>
             <div className='ty-trip-card-list'>
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
-                <TripCard singleTripRef={singleTripRef} />
+                {data?.map((trip, index) => {
+                    return <>
+                        <TripCard key={index} trip={trip} singleTripRef={singleTripRef} />
+                    </>
+                })}
             </div>
 
             <TripDetailModel ref={singleTripRef} />
