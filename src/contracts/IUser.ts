@@ -10,4 +10,5 @@ export interface IUser {
   // role: string;
   role: TOrganizer | TUSER | TADMIN;
   isVerified: boolean;
+  isDeleted: boolean;
 }

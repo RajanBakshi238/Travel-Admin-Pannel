@@ -36,15 +36,17 @@ export const travelYatriApi = createApi({
       },
     }),
     adminLogin: builder.mutation<IAdminLoginResponse, IAdminLoginRequest>({
+      invalidatesTags: [UPDATE_ME],
       query: (body) => {
         return {
           url: "auth/login",
           method: "POST",
-          body
+          body,
         };
       },
     }),
   }),
 });
 
-export const { useLoginWithGoogleMutation, useAdminLoginMutation } = travelYatriApi;
+export const { useLoginWithGoogleMutation, useAdminLoginMutation } =
+  travelYatriApi;

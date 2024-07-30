@@ -13,7 +13,7 @@ export interface IChildRef {
 const GetTrip = () => {
     const { data } = useGetTripQuery()
     const singleTripRef = useRef<IChildRef>()
-    console.log(data, ">>>>>>>")
+    // console.log(data, ">>>>>>>")
     return (
         <>
             <div className='ty-trip-card-list'>
