@@ -19,8 +19,8 @@ import AllTrip from './pages/Dashboard/AllTrip';
 import OrganizerPersonalForm from './pages/Dashboard/OrganizerPersonalForm';
 import AdminLogin from './pages/AdminLogin';
 import AdminOrganizerList from './pages/Dashboard/AdminOrganizerList';
-import { ADMIN, ORGANIZER } from './contracts/constants/roleConstant';
-import SingleTripView from './pages/Dashboard/SingleTripView';
+import { ADMIN, ORGANIZER, USER } from './contracts/constants/roleConstant';
+// import SingleTripView from './pages/Dashboard/SingleTripView';
 
 
 const router = createBrowserRouter([
@@ -49,22 +49,25 @@ const router = createBrowserRouter([
         path: "my-trip",
         element: <GetTrip />
       },
-      {
-        path: "trip",
-        element: <AllTrip />
-      },
+
       {
         path: "organizer-verification",
         element: <OrganizerPersonalForm />
       },
+     
+    ]
+  },
+  {
+    path: "/dashboard",
+    element: <RouteProtect
+      authorizedRoles={[USER]}
+      element={<Layout />}
+    />,
+    children: [
       {
-        path: "single-trip",
-        element: <SingleTripView />
+        path: "trip",
+        element: <AllTrip />
       }
-      // {
-      //   path: 'test',
-      //   element: <Dashboard />
-      // }
     ]
   },
   {

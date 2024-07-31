@@ -1,6 +1,7 @@
 import { travelYatriApi } from ".";
 import { IOrganizerDetailFormRequest } from "../../contracts/IOrganizerDetailFormRequest";
 import { IOrganizerDetailFormResponse } from "../../contracts/IOrganizerDetailFormResponse";
+import { UPDATE_ME } from "../travelYatriApiTags";
 
 export const organizerApi = travelYatriApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +9,7 @@ export const organizerApi = travelYatriApi.injectEndpoints({
       IOrganizerDetailFormResponse,
       IOrganizerDetailFormRequest
     >({
-      invalidatesTags: [],
+      invalidatesTags: [UPDATE_ME],
       query: (body) => {
         return {
           url: "user/org-verify-submit",

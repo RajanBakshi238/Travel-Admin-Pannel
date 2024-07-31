@@ -96,6 +96,9 @@ const CreateTrip = () => {
                             <CustomError name="price" />
                         </div>
                         <div>
+                            
+                        </div>
+                        <div>
                             <FieldArray
                                 name="inclusions"
                                 render={arrayHelpers => (

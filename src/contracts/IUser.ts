@@ -11,4 +11,5 @@ export interface IUser {
   role: TOrganizer | TUSER | TADMIN;
   isVerified: boolean;
   isDeleted: boolean;
+  isVerificationSubmitted: boolean;
 }

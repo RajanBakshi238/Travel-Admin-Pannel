@@ -2,14 +2,18 @@ import { FormikProvider, useFormik, Form as FormikForm } from "formik"
 import Input from "../../../components/common/FormElements/Input"
 import ImageInput from "../../../components/common/FormElements/ImageInput"
 import { useOrganizerFormMutation } from "../../../redux/services/organizer"
-import { useState } from "react"
+// import { useState } from "react"
 
 import "./style.scss"
 import classNames from "classnames"
+import { useUserContext } from "../../../context/User"
 
 const OrganizerPersonalForm = () => {
 
-    const [underVerification, setUnderVerification] = useState(false)
+    // const [underVerification, setUnderVerification] = useState(false)
+    const { user } = useUserContext()
+    console.log(user, ">>>>>> underjjjjjjjjjjjjjjjjj")
+    const underVerification = user?.isVerificationSubmitted
     const [organizerForm] = useOrganizerFormMutation();
 
     const formik = useFormik({
@@ -30,7 +34,7 @@ const OrganizerPersonalForm = () => {
         onSubmit: (values, { resetForm }) => {
             organizerForm({ ...values, adhaarImage: values?.adhaarImage?.id, panImage: values?.panImage?.id }).unwrap().then(() => {
                 resetForm();
-                setUnderVerification(true)
+                // setUnderVerification(true)
             }).catch(() => {
 
             })
