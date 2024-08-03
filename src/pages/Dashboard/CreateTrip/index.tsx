@@ -8,6 +8,9 @@ import { Iitinerary } from '../../../contracts/ICreateTripRequest';
 import ImageInput from '../../../components/common/FormElements/ImageInput';
 import { IFileResponse } from '../../../contracts/IFileResponse';
 import CustomError from '../../../components/common/FormElements/CustomError';
+// import MapTest from './MapTest';
+
+import SelectPickup from './SelectPickup';
 
 const CreateTrip = () => {
 
@@ -16,6 +19,18 @@ const CreateTrip = () => {
     const navigate = useNavigate()
     const validationSchema = Yup.object().shape({
         place: Yup.string().min(3, "Minimum 3 characters").required("Place is required").trim(),
+        pickUpPointLat: Yup.string()
+            .matches(/^-?\d*\.?\d+$/, 'Invalid Latitude')
+            .required('Latitude is required'),
+        pickUpPointLong: Yup.string()
+            .matches(/^-?\d*\.?\d+$/, 'Invalid Longitude')
+            .required('Longitude is required'),
+        // pickUpPointLat: Yup.number()
+        //     .typeError('Latitude must be a number')
+        //     .required('Latitude is required'),
+        // pickUpPointLong: Yup.number()
+        //     .typeError('Longitude must be a number')
+        //     .required('Longitude is required'),
         startDate: Yup.string().required("Start date is required."),
         endDate: Yup.string().required("End date is required."),
         pickUp: Yup.string().min(3, "Minimum 3 characters").required("Pickup is required").trim(),
@@ -46,11 +61,19 @@ const CreateTrip = () => {
             exclusions: [''],
             enquiryNumber: "",
             itinerary: [{ day: 1, description: [''] }],
-            photos: []
+            photos: [],
+            pickUpPointLong: "",
+            pickUpPointLat: ""
         },
         validationSchema,
         onSubmit: (values, { resetForm }) => {
-            createTrip({ ...values, price: values.price as number, photos: values?.photos?.map((item: IFileResponse) => item.id) }).unwrap().then((response) => {
+            createTrip({
+                ...values,
+                price: values.price as number,
+                pickUpPointLat: +values.pickUpPointLat,
+                pickUpPointLong: +values.pickUpPointLong,
+                photos: values?.photos?.map((item: IFileResponse) => item.id)
+            }).unwrap().then((response) => {
                 console.log(response, ">>>>>>>>>>")
                 resetForm();
                 navigate('/dashboard/my-trip')
@@ -68,15 +91,21 @@ const CreateTrip = () => {
             <FormikProvider value={formik} >
                 <FormikForm onSubmit={formik.handleSubmit}>
                     <div className="form-box">
+                        
                         <div>
                             <Input name="place" label="Place *" type="text" />
                             <CustomError name="place" />
                         </div>
                         <div>
-                            <Input name="pickUp" label="Pick Up *" type="text" />
+                            <SelectPickup />
                             <CustomError name="pickUp" />
 
                         </div>
+                        {/* <div>
+                            <Input name="pickUp" label="Pick Up *" type="text" />
+                            <CustomError name="pickUp" />
+
+                        </div> */}
 
                         <div>
                             <Input name="startDate" label="Start Date *" type="date" />
@@ -96,7 +125,7 @@ const CreateTrip = () => {
                             <CustomError name="price" />
                         </div>
                         <div>
-                            
+
                         </div>
                         <div>
                             <FieldArray
@@ -338,6 +367,14 @@ const CreateTrip = () => {
                     </div>
                 </FormikForm>
             </FormikProvider>
+
+            {/* 
+            <h1>Create Trip Map</h1>
+            <MapTest /> */}
+
+
+
+
         </div>
     );
 }

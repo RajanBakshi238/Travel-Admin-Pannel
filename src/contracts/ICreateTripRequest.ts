@@ -9,7 +9,9 @@ export interface ICreateTripRequest {
   inclusions: string[];
   exclusions: string[];
   itinerary: Iitinerary[];
-  photos: string[]
+  photos: string[];
+  pickUpPointLong: number;
+  pickUpPointLat: number;
 }
 
 export interface Iitinerary {

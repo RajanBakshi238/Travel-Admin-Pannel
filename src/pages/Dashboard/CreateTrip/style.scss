@@ -86,3 +86,46 @@
     }
   }
 }
+.pickup-component {
+  label {
+    margin-bottom: 5px;
+  }
+  .async-select {
+    & > div{
+      border-radius: 13px;
+    }
+  }
+}
+
+.pickup-place-modal {
+  // width: 70;
+  .modal-lg {
+    justify-content: center;
+    .modal-content {
+      width: 70%;
+      div.modal-outer {
+        padding: 15px;
+        & :nth-child(1) {
+        }
+        .coord-block {
+          margin-top: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          & > div {
+            width: 50%;
+          }
+        }
+        button {
+          display: block;
+          margin-left: auto;
+          margin-top: 15px;
+          border-radius: 5px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+}

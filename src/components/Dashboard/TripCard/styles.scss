@@ -1,7 +1,9 @@
 .ty-card {
   margin: auto;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
+  justify-content: flex-start;
+  height: 100%;
   align-items: center;
   flex-direction: column;
   position: relative;
