@@ -12,6 +12,7 @@ export interface ICreateTripRequest {
   photos: string[];
   pickUpPointLong: number;
   pickUpPointLat: number;
+  totalSeats: number;
 }
 
 export interface Iitinerary {

@@ -25,6 +25,10 @@ const CreateTrip = () => {
         pickUpPointLong: Yup.string()
             .matches(/^-?\d*\.?\d+$/, 'Invalid Longitude')
             .required('Longitude is required'),
+        totalSeats: Yup.string()
+            .matches(/^\d+$/, 'Invalid total seats').required("Total seats is required"),
+        // leftSeats: Yup.string()
+        //     .matches(/^\d+$/, 'Invalid left seats').required("Left seats is required"),
         // pickUpPointLat: Yup.number()
         //     .typeError('Latitude must be a number')
         //     .required('Latitude is required'),
@@ -63,12 +67,14 @@ const CreateTrip = () => {
             itinerary: [{ day: 1, description: [''] }],
             photos: [],
             pickUpPointLong: "",
-            pickUpPointLat: ""
+            pickUpPointLat: "",
+            totalSeats: ''
         },
         validationSchema,
         onSubmit: (values, { resetForm }) => {
             createTrip({
                 ...values,
+                totalSeats: +values.totalSeats,
                 price: values.price as number,
                 pickUpPointLat: +values.pickUpPointLat,
                 pickUpPointLong: +values.pickUpPointLong,
@@ -91,7 +97,7 @@ const CreateTrip = () => {
             <FormikProvider value={formik} >
                 <FormikForm onSubmit={formik.handleSubmit}>
                     <div className="form-box">
-                        
+
                         <div>
                             <Input name="place" label="Place *" type="text" />
                             <CustomError name="place" />
@@ -106,6 +112,11 @@ const CreateTrip = () => {
                             <CustomError name="pickUp" />
 
                         </div> */}
+                        <div>
+                            <Input name="totalSeats" label="Total Seats *" type="text" />
+                            <CustomError name="totalSeats" />
+
+                        </div>
 
                         <div>
                             <Input name="startDate" label="Start Date *" type="date" />
