@@ -1,8 +1,9 @@
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "./style.scss"
+import { IGetTripResponse } from '../../../contracts/IGetTripResponse';
 
-const SingleTripView = () => {
+const SingleTripView = ({ trip }: { trip: IGetTripResponse }) => {
     return (
         <div className="single-trip-view-modal">
 
@@ -11,7 +12,12 @@ const SingleTripView = () => {
                 <div className=" image-carousel">
 
                     <Carousel showThumbs={false} dynamicHeight={false} >
-                        <div>
+                        {trip?.photos?.map((photo, index) => {
+                            return <div key={index}>
+                                <img src={`${import.meta.env.VITE_BACKEND_URL}${photo?.path}`} alt="trip" />
+                            </div>
+                        })}
+                        {/* <div>
                             <img src="/img/trip/trip-images/trip-image-1.jpg" alt="trip" />
                         </div>
                         <div>
@@ -22,7 +28,7 @@ const SingleTripView = () => {
                         </div>
                         <div>
                             <img src="/img/trip/trip-images/trip-image-4.jpg" alt="trip" />
-                        </div>
+                        </div> */}
                     </Carousel>
                 </div>
             </div>
@@ -33,15 +39,25 @@ const SingleTripView = () => {
                     <div className="bus-top">
                         <i className="fas fa-bus"></i>
                     </div>
-                    <div className="itinerary-map-item">
+                    {trip?.itinerary?.map((itiner, index) => {
+                        return <div className="itinerary-map-item" key={index}>
+                            <div className="left-item">
+                                Day {itiner?.day}
+                            </div>
+                            <div className="right-item">
+                                {itiner?.description?.[0]}
+                            </div>
+                        </div>
+                    })}
+                    {/* <div className="itinerary-map-item">
                         <div className="left-item">
                             Day 0
                         </div>
                         <div className="right-item">
                             Departure to chopta in the evening
                         </div>
-                    </div>
-                    <div className="itinerary-map-item">
+                    </div> */}
+                    {/* <div className="itinerary-map-item">
                         <div className="left-item">
                             Day 1
                         </div>
@@ -72,7 +88,7 @@ const SingleTripView = () => {
                         <div className="right-item">
                             Reach back in the early morning.
                         </div>
-                    </div>
+                    </div> */}
                     <div className="bus-top bottom">
                         <i className="fas fa-bus"></i>
                     </div>
@@ -81,7 +97,7 @@ const SingleTripView = () => {
 
 
 
-            <div className="itinerary-c">
+            {/* <div className="itinerary-c">
                 <h1 className="trip-heading exclusion-heading">Batches</h1>
                 <div className="batches">
                     <div className="batches-dates">
@@ -130,10 +146,31 @@ const SingleTripView = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="itinerary-c day-page-detail">
-                <div>
+                {
+                    trip?.itinerary?.map((itiner, index) => {
+                        return <div key={index}>
+                            <h1 className="trip-heading exclusion-heading">Day {itiner?.day}</h1>
+                            <div className="inclusions">
+                                <ul>
+                                    {itiner?.description?.map((desc, idx) => {
+                                        return <li key={idx}>{desc}</li>
+                                    })}
+                                    {/* <li>Departure in the evening to Chopta.</li>
+                                    <li>The group will assemble at the pickup point.</li>
+                                    <li>Afterward, you'll be introduced to the team captains and the whole group.</li>
+                                    <li>Halt for dinner in between (not on us).</li> */}
+                                </ul>
+                            </div>
+                        </div>
+
+                    })
+                }
+
+
+                {/* <div>
                     <h1 className="trip-heading exclusion-heading">Day 0</h1>
                     <div className="inclusions">
                         <ul>
@@ -143,9 +180,9 @@ const SingleTripView = () => {
                             <li>Halt for dinner in between (not on us).</li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
 
-                <div>
+                {/* <div>
                     <h1 className="exclusion-heading trip-heading">Day 1</h1>
                     <div className="exclusions">
                         <li>Reach Chopta, Swiss camp Check-in.</li>
@@ -175,7 +212,7 @@ const SingleTripView = () => {
                         <li>Trek back to Sari Village.</li>
                         <li>Departure from Deoria Tal in the evening.</li>
                     </div>
-                </div>
+                </div> */}
             </div>
 
 
@@ -184,21 +221,28 @@ const SingleTripView = () => {
                 <h1 className="trip-heading exclusion-heading">Inclusions</h1>
                 <div className="inclusions">
                     <ul>
-                        <li>Accomodation (2-night stay in chopta)</li>
+                        {trip?.inclusions?.map((inclusion, index) => {
+                            return <li key={index}>{inclusion}</li>
+                        })}
+
+                        {/* <li>Accomodation (2-night stay in chopta)</li>
                         <li>4 Meals (2 breakfast + 2 dinners)</li>
                         <li>Transfer to/from in AC Traveler</li>
                         <li>All sightseeing mentioned in the itinerary</li>
                         <li>Trekking to Tungnath chandrashilla</li>
-                        <li>Trip Captain</li>
+                        <li>Trip Captain</li> */}
                     </ul>
                 </div>
 
                 <h1 className="exclusion-heading trip-heading">Exclusions</h1>
                 <div className="exclusions">
-                    <li>Any other Food and Beverage charge that is not included in the package.</li>
-                    <li>Any other expense not included in the inclusion column.</li>
+                    {trip?.exclusions?.map((exclusion, index) => {
+                        return <li key={index}>{exclusion}</li>
+                    })}
+                    {/* <li>Any other Food and Beverage charge that is not included in the package.</li> */}
+                    {/* <li>Any other expense nsot included in the inclusion column.</li>
                     <li>Any other costing involved due to natural calamity forced circumstances which are out of our control.</li>
-                    <li>Any entry tickets to the viewpoints.</li>
+                    <li>Any entry tickets to the viewpoints.</li> */}
                 </div>
             </div>
 
@@ -206,10 +250,13 @@ const SingleTripView = () => {
                 <h1 className="trip-heading exclusion-heading">Terms and conditions</h1>
                 <div className="terms-conditions">
                     <ul>
-                        <li>The advance amount is non-refundable under any circumstances.</li>
+                        {trip?.termsAndConditions?.map((term, index) => {
+                            return <li key={index}>{term}</li>
+                        })}
+                        {/* <li>The advance amount is non-refundable under any circumstances.</li>
                         <li>Full Payment of the trip cost must be made 24 hours before the trip begins. Pending Payments may eventually lead to the cancellation of your booking.</li>
                         <li>The IDs will be verified before boarding. No boarding shall be entertained without a valid Govt. ID.</li>
-                        <li>The Transfer of the bookings is not permitted. Only the names mentioned at the time of confirmation shall be allowed to travel.</li>
+                        <li>The Transfer of the bookings is not permitted. Only the names mentioned at the time of confirmation shall be allowed to travel.</li> */}
                         {/* <li>No refunds shall be made towards any inclusion(s) not availed by the Client.</li>
                         <li>Travelers must take care of their luggage & belongings. The management shall not be accountable for missing items along the tour.</li>
                         <li>The time of departure is stated & fixed. All travelers must update their status with the Trip Coordinator(s), & report at the pickup point 30 mins prior to the scheduled departure.</li>

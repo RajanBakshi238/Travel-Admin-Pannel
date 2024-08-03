@@ -1,8 +1,9 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { Modal } from "react-bootstrap"
 import SingleTripView from "./SingleTripView";
+import { IGetTripResponse } from "../../../contracts/IGetTripResponse";
 
-const TripDetailModel = forwardRef((_props, ref) => {
+const TripDetailModel = forwardRef(({ trip }: { trip: IGetTripResponse | null }, ref) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -13,13 +14,13 @@ const TripDetailModel = forwardRef((_props, ref) => {
         handleShow
     }))
 
-
+    console.log(trip, ">>>>>>>>>>>>>>> ref")
     return (
         <Modal className="trip-detail-model" size="lg" show={show} onHide={handleClose}>
             {/* <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header> */}
-            <SingleTripView />
+            <SingleTripView trip={trip as IGetTripResponse } />
         </Modal>
     )
 })

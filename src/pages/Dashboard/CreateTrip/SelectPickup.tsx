@@ -15,7 +15,6 @@ export type OptionType = {
 
 
 const SelectPickup = () => {
-    // const [value, setValue] = useState<OptionType | null>(null)
     const [show, setShow] = useState(false);
 
     const { setFieldTouched, errors, values, setFieldValue, handleBlur } = useFormikContext<any>();
@@ -27,7 +26,6 @@ const SelectPickup = () => {
         const response = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${encodeURIComponent(search)}&polygon_geojson=1&format=jsonv2`);
         const responseJSON = await response.json();
 
-        console.log(responseJSON, ">>>>> reponse")
 
         if (responseJSON.length === 0) {
             return {
@@ -58,9 +56,7 @@ const SelectPickup = () => {
             setFieldValue("pickUp", value?.display_name)
             setFieldValue("pickUpPointLong", value?.lon)
             setFieldValue("pickUpPointLat", value?.lat)
-            // setValue(value);
         }
-
     }
 
     const handleAddAddress = () => {
@@ -70,13 +66,7 @@ const SelectPickup = () => {
         if (!errors?.['pickUpPointLat'] && !errors?.["pickUpPointLong"] && !errors?.["pickUp"] && values?.['pickUpPointLat'] && values?.['pickUpPointLong'] && values?.['pickUp']) {
             handleClose();
         }
-
     }
-
-
-
-
-    // console.log(value, ">>>>>> value")
 
     return (
         <div className='pickup-component'>

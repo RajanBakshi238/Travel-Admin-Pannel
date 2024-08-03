@@ -1,18 +1,22 @@
-import { MutableRefObject } from "react"
+import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react"
 import "./styles.scss"
 import { IChildRef } from "../../../pages/Dashboard/GetTrip"
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse"
 
 interface ITripCard {
     singleTripRef: MutableRefObject<IChildRef | undefined>,
-    trip?: IGetTripResponse
+    trip?: IGetTripResponse,
+    setCurrentTrip: Dispatch<SetStateAction<IGetTripResponse | null>>
+
 }
 
-const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip }) => {
+const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) => {
+
 
     const handleViewTripDetails = () => {
         if (singleTripRef?.current) {
             singleTripRef?.current?.handleShow();
+            setCurrentTrip(trip as IGetTripResponse)
         }
     }
 
@@ -22,7 +26,8 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip }) => {
                 <i className='fas fa-eye'></i>
             </div>
             <div className="ty-img-block">
-                <img className='ty-card-img' src='/img/trip/trip.jpg' />
+                {/* <img className='ty-card-img' src='/img/trip/trip.jpg' /> */}
+                <img className='ty-card-img' src={`${import.meta.env.VITE_BACKEND_URL}${trip?.photos[0]?.path}`} />
             </div>
             <div className='ty-card-content'>
                 <h3 className='card-heading'>{trip?.place} <span>${trip?.price}</span></h3>
