@@ -2,6 +2,8 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "./style.scss"
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse';
+import RenderContent from '../../Authentication/RenderContent';
+import { USER } from '../../../contracts/constants/roleConstant';
 
 const SingleTripView = ({ trip }: { trip: IGetTripResponse }) => {
     return (
@@ -272,9 +274,12 @@ const SingleTripView = ({ trip }: { trip: IGetTripResponse }) => {
 
             </div>
 
-            <div className='book-trip-block'>
-                <button className='btn btn-primary '>Book trip</button>
-            </div>
+
+            <RenderContent authorizedRole={[USER]}>
+                <div className='book-trip-block'>
+                    <button className='btn btn-primary '>Book trip</button>
+                </div>
+            </RenderContent>
         </div>
     )
 }
