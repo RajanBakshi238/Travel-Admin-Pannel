@@ -62,7 +62,7 @@ const AdminLogin = () => {
                             />
                         </InputGroup>
 
-                        <button type="submit" className='btn btn-primary w-100'>Create My Account</button>
+                        <button type="submit" className='btn btn-primary w-100'>Log in</button>
 
                     </div>
                 </FormikForm>
