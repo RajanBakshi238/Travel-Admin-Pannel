@@ -1,4 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react"
+import {format} from "date-fns"
 import "./styles.scss"
 import { IChildRef } from "../../../pages/Dashboard/GetTrip"
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse"
@@ -39,12 +40,12 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
                 <div className="date-block">
                     <p className='card-date'> Date :</p>
                     <p className='card-date'>
-                        <span>{trip?.startDate}</span>
+                        <span>{format(trip?.endDate as string, "LLL dd, yyyy")}</span>
                         {/* <span>Aug 23, 2024</span> */}
                     </p>
                     <p>-</p>
                     <p className='card-date'>
-                        <span>{trip?.endDate}</span>
+                        <span>{format(trip?.endDate as string, "LLL dd, yyyy")}</span>
                         {/* <span>Aug 23, 2024</span> */}
                     </p>
                 </div>

@@ -1,18 +1,19 @@
 import React from "react";
+import * as Yup from 'yup';
+
 import { Modal } from "react-bootstrap"
 import "./style.scss"
 import { FieldArray, FormikProvider, useFormik, Form as FormikForm } from "formik";
 import Input from "../../common/FormElements/Input";
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse";
 import { useCreateBookingMutation, useEvaluateBookingMutation } from "../../../redux/services/booking";
+import CustomError from "../../common/FormElements/CustomError";
 
 interface IBookingModal {
     show: boolean,
     handleClose: () => void,
     trip: IGetTripResponse
 }
-
-
 
 function loadScript(src: any) {
     return new Promise((resolve) => {
@@ -28,14 +29,22 @@ function loadScript(src: any) {
     });
 }
 
-
-
-
 const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
 
     const [createBooking, { isLoading }] = useCreateBookingMutation()
-    const [evaluateBooking, {isLoading: evaluateLoading}] = useEvaluateBookingMutation()
+    const [evaluateBooking, { isLoading: evaluateLoading }] = useEvaluateBookingMutation()
 
+    const validationSchema = Yup.object().shape({
+        note: Yup.string(),
+        users: Yup.array(
+            Yup.object().shape({
+                name: Yup.string().required("Name is required."),
+                email: Yup.string().required("email is required"),
+                contactNumber: Yup.string().required("contact is required"),
+                age: Yup.string().required("age is required")
+            })
+        ).min(1, "One user is minimum required.")
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -49,6 +58,7 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
             ],
             note: ""
         },
+        validationSchema,
         onSubmit: async (values) => {
             try {
 
@@ -102,7 +112,7 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
     const { values } = formik;
 
     return (
-        <Modal className="booking-modal pickup-place-modal" size="lg" show={show} onHide={handleClose} centered>
+        <Modal className="booking-modal pickup-place-modal" size="lg" show={show} onHide={() => { formik.resetForm(); handleClose() }} centered>
             <div className="modal-outer">
                 <FormikProvider value={formik} >
                     <FormikForm onSubmit={formik.handleSubmit}>
@@ -133,10 +143,22 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                                                 >
                                                     X
                                                 </button></div>}
-                                            <Input name={`users.${index}.name`} type="text" label="Name" />
-                                            <Input name={`users.${index}.email`} type="text" label="Email" />
-                                            <Input name={`users.${index}.contactNumber`} type="text" label="Contact Number" />
-                                            <Input name={`users.${index}.age`} type="text" label="Age" />
+                                            <div>
+                                                <Input name={`users.${index}.name`} type="text" label="Name" />
+                                                <CustomError name={`users.${index}.name`} />
+                                            </div>
+                                            <div>
+                                                <Input name={`users.${index}.email`} type="text" label="Email" />
+                                                <CustomError name={`users.${index}.email`} />
+                                            </div>
+                                            <div>
+                                                <Input name={`users.${index}.contactNumber`} type="text" label="Contact Number" />
+                                                <CustomError name={`users.${index}.contactNumber`} />
+                                            </div>
+                                            <div>
+                                                <Input name={`users.${index}.age`} type="text" label="Age" />
+                                                <CustomError name={`users.${index}.age`} />
+                                            </div>
                                         </div>
 
                                     </div>
@@ -146,6 +168,7 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                         />
                         <div className="booking-input">
                             <Input name="note" type="text" label="Notes (optional)" />
+                            <CustomError name="note" />
                         </div>
 
                         <div className="seprator"></div>
