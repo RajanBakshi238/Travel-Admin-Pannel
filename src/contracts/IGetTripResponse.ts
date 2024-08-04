@@ -6,6 +6,7 @@ type Photo = {
 
 export interface IGetTripResponse {
   _id: string;
+  organizerId: string;
   place: string;
   photos: Photo[];
   startDate: string;

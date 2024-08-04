@@ -4,6 +4,7 @@ import { IChildRef } from '../GetTrip'
 import TripDetailModel from '../../../components/Dashboard/Modals/TripDetailModel'
 import TripCard from '../../../components/Dashboard/TripCard'
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse'
+import BookingModal from '../../../components/Dashboard/Booking/BookingModal'
 
 const AllTrip = () => {
     const { data } = useGetTripQuery()
@@ -11,18 +12,22 @@ const AllTrip = () => {
     console.log(data, ">>>>>>>")
     const singleTripRef = useRef<IChildRef>()
 
+    const [showBooking, setShowBooking] = useState(false);
+
+
     return (
         <>
             <div className='ty-trip-card-list'>
                 {data?.map((trip, index) => {
                     return <>
-                        <TripCard key={index} trip={trip} singleTripRef={singleTripRef} setCurrentTrip={setCurrentTrip}  />
+                        <TripCard key={index} trip={trip} singleTripRef={singleTripRef} setCurrentTrip={setCurrentTrip} />
                     </>
                 })}
             </div>
 
-            <TripDetailModel ref={singleTripRef} trip={trip} />
+            <TripDetailModel setShowBooking={setShowBooking} ref={singleTripRef} trip={trip} />
 
+            <BookingModal show={showBooking} trip={trip as IGetTripResponse} handleClose={() => setShowBooking(false)} />
 
 
         </>

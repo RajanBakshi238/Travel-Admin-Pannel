@@ -39,11 +39,13 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
                 <div className="date-block">
                     <p className='card-date'> Date :</p>
                     <p className='card-date'>
-                        <span>Aug 23, 2024</span>
+                        <span>{trip?.startDate}</span>
+                        {/* <span>Aug 23, 2024</span> */}
                     </p>
                     <p>-</p>
                     <p className='card-date'>
-                        <span>Aug 23, 2024</span>
+                        <span>{trip?.endDate}</span>
+                        {/* <span>Aug 23, 2024</span> */}
                     </p>
                 </div>
                 {/* <p className='card-date'>
