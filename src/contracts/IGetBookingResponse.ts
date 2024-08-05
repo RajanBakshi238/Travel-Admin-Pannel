@@ -2,6 +2,6 @@ import { IBooking } from "./IBookingResponse";
 import { IPaginationMeta } from "./IPaginationMeta";
 
 export interface IGetBookingResponse{
-    data: IBooking ,
+    data: IBooking[] ,
     meta: IPaginationMeta    
 }

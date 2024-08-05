@@ -1,12 +1,21 @@
+import { ITripResponse } from "./ICreateTripResponse";
+import { IGetTripResponse } from "./IGetTripResponse";
+import { IUser } from "./IUser";
+
 export interface IBooking {
   bookingStatus: string;
   createdAt: string;
-  organizerId: string;
-  tripId: string;
+  organizerId: string | IUser;
+  tripId: string | IGetTripResponse;
   updatedAt: string;
   user: string;
   users: ITripUsers[];
   _id: string;
+  costPerPerson: number;
+  totalCost: number;
+  razorpayOrderId: number;
+  orderCreationId: number;
+  razorpayPaymentId: number;
 }
 
 interface IOrder {

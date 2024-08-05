@@ -35,7 +35,7 @@ export const booking = travelYatriApi.injectEndpoints({
     getBooking: builder.query<IGetBookingResponse, IGetBookingQuery>({
       providesTags: [GET_BOOKING],
       query: (query) => {
-        return { url: "booking", method: "GET" };
+        return { url: `booking?date=${JSON.stringify(query?.dateRange)}&search=${query.search}`, method: "GET" };
       },
     }),
   }),

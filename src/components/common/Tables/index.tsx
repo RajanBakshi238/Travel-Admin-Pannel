@@ -95,7 +95,9 @@ interface ICommontable {
 const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData }) => {
 
     return <div className="common-table">
-        <table>
+        <table style={{
+            ...(tableData.length === 0 ? { minHeight: "500px" } : {})
+        }}>
 
             <thead>
                 <tr>
@@ -115,6 +117,8 @@ const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData }) => {
                         </tr>
                     })
                 }
+                {tableData.length === 0 && <tr className="no-data-row"><h4>No data found !</h4></tr>}
+
             </tbody>
 
         </table>

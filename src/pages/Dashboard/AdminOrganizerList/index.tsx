@@ -16,7 +16,6 @@ export const AdminOrganizerList = () => {
     const { data } = useGetUsersQuery({ role: ORGANIZER });
     const [verifyOrganizer] = useVerifyOrganizerMutation()
 
-    console.log(data, "........ data")
 
     const tableData = data?.data?.map((tableRow) => {
         return {

@@ -1,0 +1,36 @@
+@import "./../../../scss/variables";
+
+.filters {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .custom-date-picker {
+    .react-daterange-picker__wrapper {
+      border: 1px solid rgba(110, 110, 110, 0.4);
+      border-radius: 10px;
+    }
+  }
+
+  .search-input {
+    position: relative;
+    input {
+      padding: 3px;
+      padding-right: 29px;
+      border: 1px solid rgba(110, 110, 110, 0.4);
+      border-radius: 10px;
+      &:hover {
+        border-color: $ty-primary;
+      }
+    }
+    .search-icon {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+  }
+}

@@ -82,7 +82,7 @@ const CreateTrip = () => {
             }).unwrap().then((response) => {
                 console.log(response, ">>>>>>>>>>")
                 resetForm();
-                navigate('/dashboard/my-trip')
+                navigate('/dashboard/all-trip')
             }).catch((error) => {
 
             })

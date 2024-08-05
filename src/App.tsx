@@ -47,11 +47,6 @@ const router = createBrowserRouter([
         element: <CreateTrip />
       },
       {
-        path: "my-trip",
-        element: <GetTrip />
-      },
-
-      {
         path: "organizer-verification",
         element: <OrganizerPersonalForm />
       },
@@ -94,7 +89,11 @@ const router = createBrowserRouter([
       {
         path: "bookings",
         element: <GetBooking />
-      }
+      },
+      {
+        path: "all-trip",
+        element: <GetTrip />
+      },
     ]
   }
 ])

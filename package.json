@@ -13,6 +13,7 @@
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "https://pkg.csb.dev/reduxjs/redux-toolkit/commit/06a30ee4/@reduxjs/toolkit",
     "@types/react-redux": "^7.1.33",
+    "@wojtekmaj/react-daterange-picker": "^6.0.0",
     "bootstrap": "^5.3.3",
     "cdbreact": "^1.2.1",
     "classnames": "^2.5.1",

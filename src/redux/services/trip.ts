@@ -1,6 +1,7 @@
 import { travelYatriApi } from ".";
 import { ICreateTripRequest } from "../../contracts/ICreateTripRequest";
 import { ITripResponse } from "../../contracts/ICreateTripResponse";
+import { IGetTripQuery } from "../../contracts/IGetTripQuery";
 import { IGetTripResponse } from "../../contracts/IGetTripResponse";
 import { GET_TRIP } from "../travelYatriApiTags";
 
@@ -16,11 +17,11 @@ export const trip = travelYatriApi.injectEndpoints({
         };
       },
     }),
-    getTrip: builder.query<IGetTripResponse[], void>({
+    getTrip: builder.query<IGetTripResponse[], IGetTripQuery>({
       providesTags:[GET_TRIP],
-        query: () => {
+        query: (query) => {
         return {
-          url: "trip",
+          url: `trip?place=${query?.place ?? ""}`,
           method: "GET",
         };
       },
