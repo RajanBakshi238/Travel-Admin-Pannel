@@ -1,11 +1,11 @@
-interface IBooking {
+export interface IBooking {
   bookingStatus: string;
   createdAt: string;
   organizerId: string;
   tripId: string;
   updatedAt: string;
   user: string;
-  users: string;
+  users: ITripUsers[];
   _id: string;
 }
 

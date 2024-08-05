@@ -62,8 +62,6 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
         onSubmit: async (values) => {
             try {
 
-                console.log({ ...values, organizerId: trip.organizerId, tripId: trip._id }, ">>>>>> booking values")
-
                 const res = await loadScript(
                     "https://checkout.razorpay.com/v1/checkout.js"
                 );
@@ -90,25 +88,16 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                             bookingId: booking._id
                         }
                         evaluateBooking(data).unwrap().then((res) => {
-                            console.log(res,">>>>> final response")
                             handleClose();
                             formik.resetForm()
                         }).catch((error) => {
 
                         });
-                        // console.log(evaluateResponse)
                     },
                 }
                 const paymentObject = new window.Razorpay(options);
 
                 paymentObject.open();
-
-                // createBooking({ ...values, organizerId: trip.organizerId, tripId: trip._id }).unwrap().then((response) => {
-                //     console.log(response, "<<<<<<<< create booking response")
-                // }).catch((error) => {
-                //     console.log(error, "<<<<<<<< create booking response")
-
-                // })
             } catch (error) {
 
             }

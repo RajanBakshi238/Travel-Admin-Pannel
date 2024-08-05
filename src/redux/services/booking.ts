@@ -3,10 +3,14 @@ import { IBookingResponse } from "../../contracts/IBookingResponse";
 import { ICreateBookingRequest } from "../../contracts/ICreateBookingRequest";
 import { IEvaluateBookingRequest } from "../../contracts/IEvaluateBookingRequest";
 import { IEvaluateBookingResponse } from "../../contracts/IEvaluateBookingResponse";
+import { IGetBookingQuery } from "../../contracts/IGetBookingQuery";
+import { IGetBookingResponse } from "../../contracts/IGetBookingResponse";
+import { GET_BOOKING } from "../travelYatriApiTags";
 
 export const booking = travelYatriApi.injectEndpoints({
   endpoints: (builder) => ({
     createBooking: builder.mutation<IBookingResponse, ICreateBookingRequest>({
+      invalidatesTags: [GET_BOOKING],
       query: (body) => {
         return {
           url: "booking",
@@ -19,6 +23,7 @@ export const booking = travelYatriApi.injectEndpoints({
       IEvaluateBookingResponse,
       IEvaluateBookingRequest
     >({
+      invalidatesTags: [GET_BOOKING],
       query: (body) => {
         return {
           url: "booking/evaluate",
@@ -27,7 +32,13 @@ export const booking = travelYatriApi.injectEndpoints({
         };
       },
     }),
+    getBooking: builder.query<IGetBookingResponse, IGetBookingQuery>({
+      providesTags: [GET_BOOKING],
+      query: (query) => {
+        return { url: "booking", method: "GET" };
+      },
+    }),
   }),
 });
 
-export const { useCreateBookingMutation, useEvaluateBookingMutation } = booking;
+export const { useCreateBookingMutation, useEvaluateBookingMutation, useGetBookingQuery } = booking;

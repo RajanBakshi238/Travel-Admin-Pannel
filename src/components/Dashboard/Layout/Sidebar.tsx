@@ -28,6 +28,11 @@ const DashboardSidebar = () => {
                                     <Sidebar.Nav.Title className="sidebar-item">My Trip</Sidebar.Nav.Title>
                                 </Link>
                             </Sidebar.Nav>
+                            <Sidebar.Nav className="mt-4">
+                                <Link to="/dashboard/bookings">
+                                    <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
+                                </Link>
+                            </Sidebar.Nav>
                         </> : <></>}
                     </> :
                         user?.role === ADMIN ? <>
@@ -38,6 +43,11 @@ const DashboardSidebar = () => {
                                     <Sidebar.Nav.Title className="sidebar-item">Organizers</Sidebar.Nav.Title>
                                 </Link>
                             </Sidebar.Nav>
+                            <Sidebar.Nav className="mt-4">
+                                <Link to="/dashboard/bookings">
+                                    <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
+                                </Link>
+                            </Sidebar.Nav>
                         </>
                             : <>
                                 <Sidebar.Nav className="mt-4">
@@ -46,6 +56,11 @@ const DashboardSidebar = () => {
                                         <Sidebar.Nav.Title className="sidebar-item">Trip</Sidebar.Nav.Title>
                                     </Link>
                                 </Sidebar.Nav>
+                                <Sidebar.Nav className="mt-4">
+                                <Link to="/dashboard/bookings">
+                                    <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
+                                </Link>
+                            </Sidebar.Nav>
                             </>}
 
 

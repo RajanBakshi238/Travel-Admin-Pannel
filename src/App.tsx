@@ -20,6 +20,7 @@ import OrganizerPersonalForm from './pages/Dashboard/OrganizerPersonalForm';
 import AdminLogin from './pages/AdminLogin';
 import AdminOrganizerList from './pages/Dashboard/AdminOrganizerList';
 import { ADMIN, ORGANIZER, USER } from './contracts/constants/roleConstant';
+import GetBooking from './pages/Dashboard/GetBooking';
 // import SingleTripView from './pages/Dashboard/SingleTripView';
 
 
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
         path: "organizer-verification",
         element: <OrganizerPersonalForm />
       },
-     
+
     ]
   },
   {
@@ -80,6 +81,19 @@ const router = createBrowserRouter([
       {
         path: "admin-organizer",
         element: <AdminOrganizerList />
+      }
+    ]
+  },
+  {
+    path: "/dashboard",
+    element: <RouteProtect
+      authorizedRoles={[ADMIN, ORGANIZER, USER]}
+      element={<Layout />}
+    />,
+    children: [
+      {
+        path: "bookings",
+        element: <GetBooking />
       }
     ]
   }
