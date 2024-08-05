@@ -35,8 +35,6 @@ const GetBooking = () => {
     })
     const { data } = useGetBookingQuery({...query})
 
-    console.log(data, ">>>>>>>> data ")
-
     const tableData = data?.data?.map((data) => {
         return {
             ...data,

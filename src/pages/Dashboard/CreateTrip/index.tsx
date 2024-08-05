@@ -2,7 +2,7 @@ import { useFormik, FormikProvider, Form as FormikForm, FieldArray } from 'formi
 import * as Yup from 'yup';
 import "./style.scss"
 import { useCreateTripMutation } from "../../../redux/services/trip";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../components/common/FormElements/Input";
 import { Iitinerary } from '../../../contracts/ICreateTripRequest';
 import ImageInput from '../../../components/common/FormElements/ImageInput';
@@ -15,7 +15,7 @@ import SelectPickup from './SelectPickup';
 const CreateTrip = () => {
 
     const [createTrip] = useCreateTripMutation()
-
+    const { id } = useParams()
     const navigate = useNavigate()
     const validationSchema = Yup.object().shape({
         place: Yup.string().min(3, "Minimum 3 characters").required("Place is required").trim(),
@@ -53,23 +53,25 @@ const CreateTrip = () => {
     })
 
 
+    let initialValues = {
+        place: "",
+        startDate: "",
+        endDate: "",
+        pickUp: "",
+        termsAndConditions: [''],
+        price: 0,
+        inclusions: [''],
+        exclusions: [''],
+        enquiryNumber: "",
+        itinerary: [{ day: 1, description: [''] }],
+        photos: [],
+        pickUpPointLong: "",
+        pickUpPointLat: "",
+        totalSeats: ''
+    }
+
     const formik = useFormik({
-        initialValues: {
-            place: "",
-            startDate: "",
-            endDate: "",
-            pickUp: "",
-            termsAndConditions: [''],
-            price: 0,
-            inclusions: [''],
-            exclusions: [''],
-            enquiryNumber: "",
-            itinerary: [{ day: 1, description: [''] }],
-            photos: [],
-            pickUpPointLong: "",
-            pickUpPointLat: "",
-            totalSeats: ''
-        },
+        initialValues,
         validationSchema,
         onSubmit: (values, { resetForm }) => {
             createTrip({

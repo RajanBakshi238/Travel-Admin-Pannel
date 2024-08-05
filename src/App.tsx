@@ -1,5 +1,6 @@
 // import "./style.scss";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import {
   createBrowserRouter,
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '*',
         index: true,
+        element: <CreateTrip />
+      },
+      {
+        path: "trip/:id",
         element: <CreateTrip />
       },
       {
@@ -107,6 +112,7 @@ function App() {
           <UserContextProvider>
 
             <RouterProvider router={router} />
+            <ToastContainer />
           </UserContextProvider>
         </GoogleOAuthProvider>
       </Provider>

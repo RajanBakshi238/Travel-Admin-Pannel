@@ -3,6 +3,7 @@ import CommonTable from "../../../components/common/Tables"
 import { ORGANIZER } from "../../../contracts/constants/roleConstant";
 import { useGetUsersQuery, useVerifyOrganizerMutation } from "../../../redux/services/admin";
 import "./style.scss";
+import { format } from 'date-fns';
 
 const tableRow = {
     fullName: "Full Name",
@@ -20,6 +21,7 @@ export const AdminOrganizerList = () => {
     const tableData = data?.data?.map((tableRow) => {
         return {
             ...tableRow,
+            createdAt: format((tableRow.createdAt) as string, "LLL dd, yyyy"),
             // isVerified: <span>{tableRow.isVerified.toString()}</span>,
             isVerified: <Form.Check
                 type='switch'

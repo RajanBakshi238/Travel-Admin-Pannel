@@ -24,4 +24,5 @@ export interface IGetTripResponse {
   createdAt: string;
   updatedAt: string;
   leftSeats: number;
+  totalSeats: number;
 }

@@ -7,6 +7,8 @@ import RenderContent from "../../Authentication/RenderContent"
 import { ADMIN, ORGANIZER } from "../../../contracts/constants/roleConstant"
 import Confirmation from "../../common/Popups/Confirmation"
 import { useDeleteTripMutation } from "../../../redux/services/trip"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 interface ITripCard {
     singleTripRef: MutableRefObject<IChildRef | undefined>,
@@ -17,8 +19,8 @@ interface ITripCard {
 
 const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) => {
     const [showModal, setShowModal] = useState(false);
-
     const [deleteTrip] = useDeleteTripMutation()
+    const navigate = useNavigate();
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
@@ -31,28 +33,49 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
     }
 
     const handleDelete = () => {
-        deleteTrip({id: trip?._id as string}).unwrap().then((res) => {
+        deleteTrip({ id: trip?._id as string }).unwrap().then((res) => {
             console.log(res, ">>>>>>>response ")
         }).catch((error) => {
             console.log(error, ">?>>>>>>>> error")
-        }).finally(() =>{
+        }).finally(() => {
             handleClose()
         })
     }
 
+
+
+    const handleEdit = () => {
+        if (trip?.leftSeats === trip?.totalSeats) {
+            navigate(`/dashboard/trip/${trip?._id}`)
+        } else {
+            // error
+            toast("Can't edit trips, as booking is started. Please contact admin!", {
+                type: "error",
+                theme: "colored"
+            })
+        }
+    }
+
     return (
         <>
-
             <div className='ty-card'>
-                <div className="view-card-details" onClick={handleViewTripDetails}>
-                    <i className='fas fa-eye'></i>
-                </div>
-                <RenderContent authorizedRole={[ADMIN, ORGANIZER]}>
-
-                    <div className="delete-trip" onClick={handleShow}>
-                        <i className="fas fa-trash-alt"></i>
+                <div className="action-icons">
+                    <div className="view-card-details" onClick={handleViewTripDetails}>
+                        <i className='fas fa-eye'></i>
                     </div>
-                </RenderContent>
+                    <RenderContent authorizedRole={[ADMIN, ORGANIZER]}>
+
+                        <div className="delete-trip" onClick={handleShow}>
+                            <i className="fas fa-trash-alt"></i>
+                        </div>
+                    </RenderContent>
+                    <RenderContent authorizedRole={[ORGANIZER]}>
+                        <div className="edit-trip" onClick={handleEdit}>
+                            <i className="fas fa-edit"></i>
+                        </div>
+                    </RenderContent>
+                </div>
+
                 <div className="ty-img-block">
                     {/* <img className='ty-card-img' src='/img/trip/trip.jpg' /> */}
                     <img className='ty-card-img' src={`${import.meta.env.VITE_BACKEND_URL}${trip?.photos[0]?.path}`} />
