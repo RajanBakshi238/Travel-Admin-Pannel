@@ -23,4 +23,5 @@ export interface IGetTripResponse {
   termsAndConditions: string[];
   createdAt: string;
   updatedAt: string;
+  leftSeats: number;
 }

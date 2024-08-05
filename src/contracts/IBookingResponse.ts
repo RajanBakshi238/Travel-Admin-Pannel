@@ -36,4 +36,5 @@ export interface IBookingResponse {
     booking: IBooking;
     order: IOrder;
   };
+  message: string;
 }

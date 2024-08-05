@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react"
-import {format} from "date-fns"
+import { format } from "date-fns"
 import "./styles.scss"
 import { IChildRef } from "../../../pages/Dashboard/GetTrip"
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse"
@@ -32,6 +32,7 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
             </div>
             <div className='ty-card-content'>
                 <h3 className='card-heading'>{trip?.place} <span>${trip?.price}</span></h3>
+                <h3 className='seats-desc'>{trip?.leftSeats} <span>Seats Left</span> </h3>
                 {/* <p className='card-description'>Great place to visit (description)</p> */}
                 <p className='card-description'></p>
                 {/* <p className='card-pickup'>

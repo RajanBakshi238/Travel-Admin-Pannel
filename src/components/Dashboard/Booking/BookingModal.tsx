@@ -89,8 +89,14 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                             razorpaySignature: response.razorpay_signature,
                             bookingId: booking._id
                         }
-                        const evaluateResponse = await evaluateBooking(data).unwrap();
-                        console.log(evaluateResponse)
+                        evaluateBooking(data).unwrap().then((res) => {
+                            console.log(res,">>>>> final response")
+                            handleClose();
+                            formik.resetForm()
+                        }).catch((error) => {
+
+                        });
+                        // console.log(evaluateResponse)
                     },
                 }
                 const paymentObject = new window.Razorpay(options);
@@ -120,7 +126,7 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                             render={arrayHelpers => (<div>
                                 {values.users.map((user, index) => {
                                     return <div key={index}>
-                                        {index === 0 && <div className='user-label'><label >Users</label>
+                                        {index === 0 && <div className='user-label'><label >Add users</label>
                                             <div>
 
                                                 <button
@@ -128,12 +134,20 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                                                     
                                                     "
                                                     type="button"
-                                                    onClick={() => arrayHelpers.push({ name: "", email: "", contactNumber: "", age: "" })}
+                                                    onClick={() => {
+                                                        if (values.users.length <= trip.leftSeats) {
+                                                            arrayHelpers.push({ name: "", email: "", contactNumber: "", age: "" })
+                                                        }else {
+                                                            // show toast
+                                                        }
+                                                    }}
                                                 >
                                                     +
                                                 </button>
                                             </div>
                                         </div>}
+
+
                                         <div className="user-details-fields">
                                             {index !== 0 && <div className='remove-user'>
                                                 <button
@@ -166,10 +180,14 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
 
                             </div>)}
                         />
+                        <div className="seats-available">
+                            <h5>Only {trip?.leftSeats} seats left*</h5>
+                        </div>
                         <div className="booking-input">
                             <Input name="note" type="text" label="Notes (optional)" />
                             <CustomError name="note" />
                         </div>
+
 
                         <div className="seprator"></div>
 
