@@ -27,7 +27,7 @@ export const AdminOrganizerList = () => {
                 onChange={(e) => { verifyOrganizer({ id: tableRow._id, isVerified: e.target.checked }) }}
                 defaultChecked={tableRow.isVerified}
             />,
-            isDeleted: <span>{tableRow.isDeleted.toString()}</span>
+            isDeleted: <span>{tableRow.isDeleted ? "Yes" : "No"}</span>
         }
     })
 

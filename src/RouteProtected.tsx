@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useTypedSelector } from "./redux/store";
 import { selectAuthUser } from "./redux/slices/auth";
-import { AuthorizedRoles, ORGANIZER } from "./contracts/constants/roleConstant";
+import { ADMIN, AuthorizedRoles, ORGANIZER } from "./contracts/constants/roleConstant";
 import { useUserContext } from "./context/User";
 
 interface IRouteProtect {
@@ -13,9 +13,9 @@ export const RouteProtect = ({ element, authorizedRoles }: IRouteProtect) => {
     // const user = useTypedSelector(selectAuthUser)
     const { user, isLoading } = useUserContext()
     const location = useLocation()
-    console.log(user, ">>>>>>>>>>>>>>>>uuuuu", location)
+    // console.log(user, ">>>>>>>>>>>>>>>>uuuuu", location)
 
-    if(isLoading){
+    if (isLoading) {
         return <>Loading</>
     }
 
@@ -23,14 +23,24 @@ export const RouteProtect = ({ element, authorizedRoles }: IRouteProtect) => {
         if (user?.role === ORGANIZER && !user?.isVerified && location.pathname != "/dashboard/organizer-verification") {
             return <Navigate to="/dashboard/organizer-verification" />
         }
-        if(user?.role === ORGANIZER && user?.isVerified && location.pathname === "/dashboard/organizer-verification"){
+        if (user?.role === ORGANIZER && user?.isVerified && location.pathname === "/dashboard/organizer-verification") {
             return <Navigate to="/dashboard" />
-
         }
 
         return element
 
-    } else {
+    }
+    else if (user) {
+        if (user?.role === ORGANIZER) {
+           return <Navigate to="/dashboard" />
+        } else if (user?.role === ADMIN) {
+            return <Navigate to="/dashboard/admin-organizer" />
+        } else {
+           return <Navigate to="/dashboard/trip" />
+        }
+
+    }
+    else {
         return <Navigate to="/" />
     }
 }
