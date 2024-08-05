@@ -4,10 +4,10 @@ import "./style.scss"
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse';
 import RenderContent from '../../Authentication/RenderContent';
 import { USER } from '../../../contracts/constants/roleConstant';
-import { useState } from 'react';
-import BookingModal from '../Booking/BookingModal';
 
-const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTripResponse, handleShowBooking: any, handleClose: any}) => {
+import { toast } from 'react-toastify';
+
+const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTripResponse, handleShowBooking: any, handleClose: any }) => {
 
     // const [show, setShow] = useState(false);
 
@@ -15,7 +15,13 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
     // const handleShow = () => setShow(true);
 
     const handleBookTrip = () => {
-        console.log(2232121212121212)
+        if (trip.leftSeats == 0) {
+            toast("No seats left", {
+                type: "error",
+                theme: "colored"
+            })
+            return
+        }
         handleShowBooking()
         handleClose();
     }

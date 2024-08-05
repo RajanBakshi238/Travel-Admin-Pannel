@@ -6,3 +6,50 @@
   font-size: 26px;
   font-weight: 700;
 }
+
+.button--loading::after {
+  content: "";
+  position: absolute;
+  width: 23px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+.button--loading{
+  position: relative;
+}
+
+.button--loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+@keyframes button-loading-spinner {
+  10% {
+    transform: rotate(0turn);
+  }
+
+  25%{
+    transform: rotate(0.5turn);
+
+  }
+  50%{
+    transform: rotate(1turn);
+
+  }
+  75%{
+    transform: rotate(1.5turn);
+
+  }
+
+  100% {
+    transform: rotate(2turn);
+  }
+}

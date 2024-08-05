@@ -1,7 +1,9 @@
+import { startOfDay, endOfDay } from "date-fns"
+
 import CommonTable from "../../../components/common/Tables"
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse"
 import { IUser } from "../../../contracts/IUser"
-import { booking, useGetBookingQuery } from "../../../redux/services/booking"
+import { useGetBookingQuery } from "../../../redux/services/booking"
 import { format } from "date-fns"
 import { truncateString } from "../../../utils/truncateString"
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
@@ -30,7 +32,7 @@ const tableRow = {
 }
 const GetBooking = () => {
     const [query, setQuery] = useState<{ dateRange: Value, search: string }>({
-        dateRange: [new Date(), new Date()],
+        dateRange: [startOfDay(new Date()), endOfDay(new Date())],
         search: ""
     })
     const { data } = useGetBookingQuery({...query})

@@ -8,6 +8,9 @@ import Input from "../../common/FormElements/Input";
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse";
 import { useCreateBookingMutation, useEvaluateBookingMutation } from "../../../redux/services/booking";
 import CustomError from "../../common/FormElements/CustomError";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
 
 interface IBookingModal {
     show: boolean,
@@ -33,6 +36,7 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
 
     const [createBooking, { isLoading }] = useCreateBookingMutation()
     const [evaluateBooking, { isLoading: evaluateLoading }] = useEvaluateBookingMutation()
+    const navigate = useNavigate()
 
     const validationSchema = Yup.object().shape({
         note: Yup.string(),
@@ -88,10 +92,20 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                             bookingId: booking._id
                         }
                         evaluateBooking(data).unwrap().then((res) => {
+                            toast(res.message ?? "Trip booked successfully.", {
+                                type: "success",
+                                theme: "colored"
+                            })
                             handleClose();
                             formik.resetForm()
+                            navigate("/dashboard/bookings")
                         }).catch((error) => {
-
+                            toast(error.message ?? "Some thing went wrong.", {
+                                type: "error",
+                                theme: "colored"
+                            })
+                            handleClose();
+                            formik.resetForm()
                         });
                     },
                 }
@@ -99,7 +113,10 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
 
                 paymentObject.open();
             } catch (error) {
-
+                toast((error as any)?.message ?? "Something went wrong.", {
+                    type: "error",
+                    theme: "colored"
+                })
             }
         }
     })
@@ -126,8 +143,11 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                                                     onClick={() => {
                                                         if (values.users.length <= trip.leftSeats) {
                                                             arrayHelpers.push({ name: "", email: "", contactNumber: "", age: "" })
-                                                        }else {
-                                                            // show toast
+                                                        } else {
+                                                            toast("zero seats left", {
+                                                                type: "error",
+                                                                theme: "colored"
+                                                            })
                                                         }
                                                     }}
                                                 >
@@ -199,7 +219,18 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                             </div>
                         </div>
                         <div className='book-trip-block'>
-                            <button type="submit" className='btn btn-primary'>Checkout</button>
+                            <button
+                                type="submit"
+                                className={classNames('btn btn-primary ', {
+                                    "button--loading": isLoading
+                                })}
+                                disabled={isLoading}
+                            >
+
+                                <span className="button__text">Checkout</span>
+
+
+                            </button>
                         </div>
 
                     </FormikForm>
