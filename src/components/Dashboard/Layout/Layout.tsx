@@ -14,7 +14,7 @@ export default function Layout() {
         <Navbar className="main-header" expand="lg" >
             <Container fluid>
                 <Navbar.Brand href="#home" className="text-primary">
-                {RouteToPageMapper?.[pathname] ?? "Lost"}
+                {RouteToPageMapper(pathname) ?? "Lost"}
                 </Navbar.Brand>
             </Container>
         </Navbar>

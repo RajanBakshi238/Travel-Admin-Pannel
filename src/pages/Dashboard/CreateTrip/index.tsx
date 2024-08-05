@@ -11,6 +11,7 @@ import CustomError from '../../../components/common/FormElements/CustomError';
 // import MapTest from './MapTest';
 
 import SelectPickup from './SelectPickup';
+import { toast } from 'react-toastify';
 
 const CreateTrip = () => {
 
@@ -82,11 +83,18 @@ const CreateTrip = () => {
                 pickUpPointLong: +values.pickUpPointLong,
                 photos: values?.photos?.map((item: IFileResponse) => item.id)
             }).unwrap().then((response) => {
+                toast(response.message ?? "Trip created successfully .", {
+                    type: "success",
+                    theme: "colored"
+                })
                 console.log(response, ">>>>>>>>>>")
                 resetForm();
                 navigate('/dashboard/all-trip')
             }).catch((error) => {
-
+                toast(error?.message ?? "Something went  wrong ..", {
+                    type: "error",
+                    theme: "colored"
+                })
             })
             console.log(values, "...... valuess")
         }
