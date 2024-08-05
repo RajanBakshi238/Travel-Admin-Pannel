@@ -2,6 +2,7 @@ import { Iitinerary } from "./ICreateTripRequest";
 
 type Photo = {
   path: string;
+  _id: string
 }
 
 export interface IGetTripResponse {
@@ -25,4 +26,7 @@ export interface IGetTripResponse {
   updatedAt: string;
   leftSeats: number;
   totalSeats: number;
+  pickUpPointLong: string;
+  pickUpPointLat: string  
+
 }

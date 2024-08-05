@@ -1,7 +1,7 @@
 import { travelYatriApi } from ".";
 import { ICommonRequest } from "../../contracts/ICommonRequest";
 import { ICommonResponse } from "../../contracts/ICommonResponse";
-import { ICreateTripRequest } from "../../contracts/ICreateTripRequest";
+import { ICreateTripRequest, IUpdateTripRequest } from "../../contracts/ICreateTripRequest";
 import { ITripResponse } from "../../contracts/ICreateTripResponse";
 import { IGetTripQuery } from "../../contracts/IGetTripQuery";
 import { IGetTripResponse } from "../../contracts/IGetTripResponse";
@@ -28,6 +28,15 @@ export const trip = travelYatriApi.injectEndpoints({
         };
       },
     }),
+    getTripById: builder.query<IGetTripResponse, ICommonRequest>({
+      providesTags: [GET_TRIP],
+      query: (query) => {
+        return {
+          url: `trip/${query?.id}`,
+          method: "GET",
+        };
+      },
+    }),
     deleteTrip: builder.mutation<ICommonResponse, ICommonRequest>({
       invalidatesTags: [GET_TRIP],
       query: (args) => {
@@ -37,7 +46,23 @@ export const trip = travelYatriApi.injectEndpoints({
         };
       },
     }),
+    editTrip: builder.mutation<ITripResponse, IUpdateTripRequest>({
+      invalidatesTags: [GET_TRIP],
+      query: (body) => {
+        return {
+          url: `trip/${body._id}`,
+          method: "POST",
+          body
+        };
+      },
+    }),
   }),
 });
 
-export const { useCreateTripMutation, useGetTripQuery, useDeleteTripMutation } = trip;
+export const {
+  useCreateTripMutation,
+  useGetTripQuery,
+  useDeleteTripMutation,
+  useGetTripByIdQuery,
+  useEditTripMutation
+} = trip;

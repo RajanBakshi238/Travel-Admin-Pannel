@@ -1,7 +1,7 @@
 import { useFormik, FormikProvider, Form as FormikForm, FieldArray } from 'formik'
 import * as Yup from 'yup';
 import "./style.scss"
-import { useCreateTripMutation } from "../../../redux/services/trip";
+import { useCreateTripMutation, useEditTripMutation, useGetTripByIdQuery } from "../../../redux/services/trip";
 import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../components/common/FormElements/Input";
 import { Iitinerary } from '../../../contracts/ICreateTripRequest';
@@ -12,11 +12,32 @@ import CustomError from '../../../components/common/FormElements/CustomError';
 
 import SelectPickup from './SelectPickup';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 
 const CreateTrip = () => {
 
-    const [createTrip] = useCreateTripMutation()
     const { id } = useParams()
+    const skip = id == null;
+    const { data } = useGetTripByIdQuery({ id: id as string }, { skip })
+    const [initialValues, setInitialValues] = useState({
+        place: "",
+        startDate: "",
+        endDate: "",
+        pickUp: "",
+        termsAndConditions: [''],
+        price: 0,
+        inclusions: [''],
+        exclusions: [''],
+        enquiryNumber: "",
+        itinerary: [{ day: 1, description: [''] }],
+        photos: [],
+        pickUpPointLong: "",
+        pickUpPointLat: "",
+        totalSeats: ''
+    })
+    const [createTrip] = useCreateTripMutation()
+    const [editTrip] = useEditTripMutation()
     const navigate = useNavigate()
     const validationSchema = Yup.object().shape({
         place: Yup.string().min(3, "Minimum 3 characters").required("Place is required").trim(),
@@ -54,51 +75,93 @@ const CreateTrip = () => {
     })
 
 
-    let initialValues = {
-        place: "",
-        startDate: "",
-        endDate: "",
-        pickUp: "",
-        termsAndConditions: [''],
-        price: 0,
-        inclusions: [''],
-        exclusions: [''],
-        enquiryNumber: "",
-        itinerary: [{ day: 1, description: [''] }],
-        photos: [],
-        pickUpPointLong: "",
-        pickUpPointLat: "",
-        totalSeats: ''
-    }
+    console.log(data, ">>>>> data")
+
+
 
     const formik = useFormik({
         initialValues,
+        enableReinitialize: true,
         validationSchema,
         onSubmit: (values, { resetForm }) => {
-            createTrip({
-                ...values,
-                totalSeats: +values.totalSeats,
-                price: values.price as number,
-                pickUpPointLat: +values.pickUpPointLat,
-                pickUpPointLong: +values.pickUpPointLong,
-                photos: values?.photos?.map((item: IFileResponse) => item.id)
-            }).unwrap().then((response) => {
-                toast(response.message ?? "Trip created successfully .", {
-                    type: "success",
-                    theme: "colored"
+            if (id) {
+                editTrip({
+                    ...values,
+                    _id: id,
+                    totalSeats: +values.totalSeats,
+                    price: values.price as number,
+                    pickUpPointLat: +values.pickUpPointLat,
+                    pickUpPointLong: +values.pickUpPointLong,
+                    photos: values?.photos?.map((item: IFileResponse) => item.id)
+                }).unwrap().then((response) => {
+                    toast(response.message ?? "Trip updated successfully .", {
+                        type: "success",
+                        theme: "colored"
+                    })
+                    console.log(response, ">>>>>>>>>>")
+                    resetForm();
+                    navigate('/dashboard/all-trip')
+                }).catch((error) => {
+                    toast(error?.message ?? "Something went  wrong ..", {
+                        type: "error",
+                        theme: "colored"
+                    })
                 })
-                console.log(response, ">>>>>>>>>>")
-                resetForm();
-                navigate('/dashboard/all-trip')
-            }).catch((error) => {
-                toast(error?.message ?? "Something went  wrong ..", {
-                    type: "error",
-                    theme: "colored"
+            } else {
+
+
+                createTrip({
+                    ...values,
+                    totalSeats: +values.totalSeats,
+                    price: values.price as number,
+                    pickUpPointLat: +values.pickUpPointLat,
+                    pickUpPointLong: +values.pickUpPointLong,
+                    photos: values?.photos?.map((item: IFileResponse) => item.id)
+                }).unwrap().then((response) => {
+                    toast(response.message ?? "Trip created successfully .", {
+                        type: "success",
+                        theme: "colored"
+                    })
+                    console.log(response, ">>>>>>>>>>")
+                    resetForm();
+                    navigate('/dashboard/all-trip')
+                }).catch((error) => {
+                    toast(error?.message ?? "Something went  wrong ..", {
+                        type: "error",
+                        theme: "colored"
+                    })
                 })
-            })
+            }
+
             console.log(values, "...... valuess")
         }
     })
+
+
+    useEffect(() => {
+        if (data) {
+            setInitialValues({
+                ...initialValues,
+                place: data.place,
+                pickUp: data.pickUp,
+                startDate: format(data.startDate, "yyyy-MM-dd"),
+                endDate: format(data.endDate, "yyyy-MM-dd"),
+                termsAndConditions: data.termsAndConditions,
+                price: data.price,
+                inclusions: data.inclusions,
+                exclusions: data.exclusions,
+                enquiryNumber: data.enquiryNumber,
+                itinerary: data.itinerary,
+                pickUpPointLong: data.pickUpPointLong + "",
+                pickUpPointLat: data.pickUpPointLat + "",
+                totalSeats: data.totalSeats + "",
+                //@ts-ignore
+                photos: data?.photos?.map((photo) => ({ ...photo, id: photo._id }))
+
+            })
+        }
+    }, [data])
+
 
     console.log(formik.errors, "errors")
     const { values } = formik
@@ -383,7 +446,7 @@ const CreateTrip = () => {
                     </div>
                     <div className="submit-box">
                         <button type="submit" className="btn btn-primary">
-                            Create trip
+                            {id ? "Update Trip" : "Create trip"}
                         </button>
                     </div>
                 </FormikForm>

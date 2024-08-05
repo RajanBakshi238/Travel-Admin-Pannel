@@ -20,3 +20,8 @@ export interface Iitinerary {
   // description: [string];
   description: string[];
 }
+
+
+export interface IUpdateTripRequest extends Partial<ICreateTripRequest> {
+  _id: string;
+}
