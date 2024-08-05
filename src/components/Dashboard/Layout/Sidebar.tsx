@@ -51,7 +51,7 @@ const DashboardSidebar = () => {
                             <Sidebar.Nav className="mt-4">
                                 {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
                                 <Link to="/dashboard/all-trip">
-                                    <Sidebar.Nav.Title className="sidebar-item">My Trip</Sidebar.Nav.Title>
+                                    <Sidebar.Nav.Title className="sidebar-item">Trips</Sidebar.Nav.Title>
                                 </Link>
                             </Sidebar.Nav>
                         </>
