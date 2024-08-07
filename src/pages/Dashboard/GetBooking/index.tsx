@@ -12,6 +12,7 @@ import 'react-calendar/dist/Calendar.css';
 
 import "./style.scss"
 import { useState } from "react"
+import classNames from "classnames"
 
 type ValuePiece = Date | null;
 
@@ -20,9 +21,9 @@ export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const tableRow = {
     bookingStatus: "Status",
-    organizerName: "Organizer",
+    // organizerName: "Organizer",
     place: "Trip",
-    pickUp: "Pick up",
+    // pickUp: "Pick up",
     usersNo: "Users",
     startDate: "Start",
     endDate: "End",
@@ -35,11 +36,15 @@ const GetBooking = () => {
         dateRange: [startOfDay(new Date()), endOfDay(new Date())],
         search: ""
     })
-    const { data } = useGetBookingQuery({...query})
+    const { data } = useGetBookingQuery({ ...query })
 
     const tableData = data?.data?.map((data) => {
         return {
             ...data,
+            bookingStatus: <div className={classNames({
+                "text-danger-cust": data.bookingStatus === "Failed",
+                "text-success-cust": data.bookingStatus === "Accepted"
+            })}>{data.bookingStatus}</div>,
             organizerName: (data?.organizerId as IUser)?.fullName ?? '-',
             place: (data?.tripId as IGetTripResponse)?.place ?? '-',
             pickUp: truncateString((data?.tripId as IGetTripResponse)?.pickUp, 15) ?? '-',
@@ -47,7 +52,7 @@ const GetBooking = () => {
             startDate: format((data?.tripId as IGetTripResponse)?.startDate as string, "LLL dd, yyyy") ?? '-',
             endDate: format((data?.tripId as IGetTripResponse)?.endDate as string, "LLL dd, yyyy") ?? '-',
             booking: format((data?.createdAt) as string, "LLL dd, yyyy") ?? '-',
-            
+
         }
     })
 

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import RegisterModal from "../Authentication/registerModel";
 import LoginModal from "../Authentication/loginModel";
 import { useUserContext } from "../../context/User";
+import { Dropdown, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export interface IChildRef {
     handleClose: () => void;
@@ -69,9 +71,20 @@ const Header = () => {
                             }
                         }} className="btn btn-primary rounded-pill py-2 px-4">Register</a> :
                             <>
-                                <div className="user-icon-header">
-                                    {user?.fullName.charAt(0)}
-                                </div>
+                                <NavDropdown
+                                    className="nav-drop-down"
+                                    id="nav-dropdown-dark-example"
+                                    title={<div className="user-icon-header">
+                                        {user?.fullName.charAt(0)}
+                                    </div>}
+                                    menuVariant="dark"
+                                >
+                                    <NavDropdown.Item href="#action/3.1">
+                                        <Link to="/dashboard">Dashboard</Link>
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+
+
                             </>
                         }
 

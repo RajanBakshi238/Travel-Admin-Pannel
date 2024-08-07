@@ -22,7 +22,7 @@
   border-radius: 50%;
   animation: button-loading-spinner 1s ease infinite;
 }
-.button--loading{
+.button--loading {
   position: relative;
 }
 
@@ -36,20 +36,21 @@
     transform: rotate(0turn);
   }
 
-  25%{
+  25% {
     transform: rotate(0.5turn);
-
   }
-  50%{
+  50% {
     transform: rotate(1turn);
-
   }
-  75%{
+  75% {
     transform: rotate(1.5turn);
-
   }
 
   100% {
     transform: rotate(2turn);
   }
+}
+
+.nav-drop-down .nav-link {
+  display: inline;
 }
