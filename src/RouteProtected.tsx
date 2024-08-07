@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useTypedSelector } from "./redux/store";
-import { selectAuthUser } from "./redux/slices/auth";
+
 import { ADMIN, AuthorizedRoles, ORGANIZER } from "./contracts/constants/roleConstant";
 import { useUserContext } from "./context/User";
 

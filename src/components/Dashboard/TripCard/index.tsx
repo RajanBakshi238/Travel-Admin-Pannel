@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, MutableRefObject, SetStateAction, useState } from "react"
 import { format } from "date-fns"
 import "./styles.scss"
 import { IChildRef } from "../../../pages/Dashboard/GetTrip"

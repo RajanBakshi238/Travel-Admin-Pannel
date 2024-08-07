@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import RegisterModal from "../Authentication/registerModel";
 import LoginModal from "../Authentication/loginModel";
 import { useUserContext } from "../../context/User";
-import { Dropdown, NavDropdown } from "react-bootstrap";
+import { NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export interface IChildRef {

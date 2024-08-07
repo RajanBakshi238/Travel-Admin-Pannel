@@ -7,7 +7,7 @@ import { IGetTripResponse } from '../../../contracts/IGetTripResponse'
 import BookingModal from '../../../components/Dashboard/Booking/BookingModal'
 
 const AllTrip = () => {
-    const { data } = useGetTripQuery()
+    const { data } = useGetTripQuery({})
     const [trip, setCurrentTrip] = useState<IGetTripResponse | null>(null)
     console.log(data, ">>>>>>>")
     const singleTripRef = useRef<IChildRef>()

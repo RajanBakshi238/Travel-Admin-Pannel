@@ -20,7 +20,7 @@ const AdminLogin = () => {
                 navigate('/dashboard/admin-organizer')
                 console.log(response, ">>>> response")
 
-            }).catch((error) => {
+            }).catch(() => {
 
 
             })

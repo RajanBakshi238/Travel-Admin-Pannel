@@ -5,7 +5,6 @@ import TripDetailModel from '../../../components/Dashboard/Modals/TripDetailMode
 import { useRef, useState } from 'react'
 import TripCard from '../../../components/Dashboard/TripCard'
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse'
-import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 
 export interface IChildRef {
     handleClose: () => void;

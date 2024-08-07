@@ -35,7 +35,7 @@ function loadScript(src: any) {
 const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
 
     const [createBooking, { isLoading }] = useCreateBookingMutation()
-    const [evaluateBooking, { isLoading: evaluateLoading }] = useEvaluateBookingMutation()
+    const [evaluateBooking] = useEvaluateBookingMutation()
     const navigate = useNavigate()
 
     const validationSchema = Yup.object().shape({
@@ -130,7 +130,7 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                     <FormikForm onSubmit={formik.handleSubmit}>
                         <FieldArray name="users"
                             render={arrayHelpers => (<div>
-                                {values.users.map((user, index) => {
+                                {values.users.map((_user, index) => {
                                     return <div key={index}>
                                         {index === 0 && <div className='user-label'><label >Add users</label>
                                             <div>

@@ -1,4 +1,3 @@
-import { ITripResponse } from "./ICreateTripResponse";
 import { IGetTripResponse } from "./IGetTripResponse";
 import { IUser } from "./IUser";
 

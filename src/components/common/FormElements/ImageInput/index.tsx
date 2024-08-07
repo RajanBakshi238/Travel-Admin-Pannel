@@ -18,7 +18,7 @@ interface IImageInput {
     multiple?: boolean
 }
 
-const ImageInput: React.FC<IImageInput> = ({ name, label, className, value, inputLabel, multiple = false }) => {
+const ImageInput: React.FC<IImageInput> = ({ name, label, className, inputLabel, multiple = false }) => {
     const [uploadFile] = useUploadFileMutation()
 
     const { handleBlur, setFieldValue, values } = useFormikContext()

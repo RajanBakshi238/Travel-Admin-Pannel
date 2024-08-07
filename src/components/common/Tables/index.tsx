@@ -108,7 +108,7 @@ const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData }) => {
             </thead>
             <tbody>
                 {
-                    tableData.map((rowData: ITableRow, index) => {
+                    tableData.map((rowData: ITableRow, _index) => {
                         return <tr>
                             {Object.entries(tableRow).map(([key, _value]: [string, string], index: number) => {
                                 return <td key={index}>{rowData?.[key]}</td>;

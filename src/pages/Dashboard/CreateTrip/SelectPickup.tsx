@@ -22,7 +22,7 @@ const SelectPickup = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    async function loadOptions(search: string, _loadedOptions: OptionsOrGroups<OptionType, GroupBase<OptionType>>, { page }: any) {
+    async function loadOptions(search: string, _loadedOptions: OptionsOrGroups<OptionType, GroupBase<OptionType>>, {  }: any) {
         const response = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${encodeURIComponent(search)}&polygon_geojson=1&format=jsonv2`);
         const responseJSON = await response.json();
 
