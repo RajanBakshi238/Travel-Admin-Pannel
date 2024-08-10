@@ -54,6 +54,7 @@ const AdminLogin = () => {
                             <InputGroup.Text id="basic-addon2"><i className="fas fa-lock"></i></InputGroup.Text>
                             <Form.Control
                                 name="password"
+                                type="password"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="Password"
