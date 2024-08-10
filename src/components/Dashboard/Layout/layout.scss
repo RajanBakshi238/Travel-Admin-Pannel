@@ -1,4 +1,16 @@
 .layout-ty {
+
+  .main-header{
+    .responsive-bar{
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 2px solid #99999924;
+      border-radius: 5px;
+      display: none;
+    }
+  }
+
+
   .dashboard-sidebar {
     // width: 250px;
     .sidebar-width {
@@ -49,4 +61,24 @@
       bottom: 0;
     }
   }
+
+
+  
 }
+
+
+
+
+
+
+
+@media only screen and (max-width: 600px) {
+  .dashboard-sidebar{
+    display: none !important;
+  }
+  .responsive-bar{
+    display: block !important;
+  }
+  
+}
+

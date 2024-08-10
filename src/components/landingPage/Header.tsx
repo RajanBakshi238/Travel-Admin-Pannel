@@ -26,6 +26,7 @@ const Header = () => {
     const [isRightDisabled, setIsRightDisabled] = useState(false);
     const [showSearchedTrips, setShowSearchedTrips] = useState(false)
     const [place, setPlace] = useState("")
+
     const [fetchTrips, { data }] = useLazyGetTripQuery()
 
     const handleScrollBtnCheck = () => {
@@ -125,6 +126,8 @@ const Header = () => {
     }
 
 
+    
+
     return (
         <>
             <div className="container-fluid position-relative p-0" id="yatri-home">
@@ -209,7 +212,7 @@ const Header = () => {
                                                             <h6 onClick={() => {
                                                                 if (registerChildRef.current && !user) {
                                                                     registerChildRef.current.handleShow()
-                                                                }else{
+                                                                } else {
                                                                     navigate("/dashboard/all-trip")
                                                                 }
                                                             }}>View details</h6>
@@ -219,7 +222,7 @@ const Header = () => {
                                                 })
                                             }
 
-                         
+
                                         </div>
                                     </div>}
                             </div>
@@ -229,6 +232,13 @@ const Header = () => {
             </div>
             <RegisterModal ref={registerChildRef} loginRef={loginChildRef} />
             <LoginModal ref={loginChildRef} registerRef={registerChildRef} />
+
+
+            
+
+
+
+
         </>
     )
 }

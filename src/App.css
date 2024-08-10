@@ -54,3 +54,28 @@
 .nav-drop-down .nav-link {
   display: inline;
 }
+
+/* canvas styling */
+
+.offcanvas-end {
+  width: 200px;
+}
+
+.canvas-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.canvas-item i {
+  color: #00000048;
+}
+.sidebar-item {
+  color: #86b817;
+}
+.offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
