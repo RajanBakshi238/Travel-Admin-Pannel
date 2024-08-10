@@ -1,13 +1,15 @@
 .layout-ty {
   .dashboard-sidebar {
-        // width: 250px;
+    // width: 250px;
     .sidebar-width {
-    //   width: 250px;
+
+      //   width: 250px;
+      position: relative;
     }
     .sidebar-body {
-        a{
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
       margin-top: 10px;
       .sidebar-item {
@@ -16,6 +18,11 @@
         color: #86b817;
         cursor: pointer;
       }
+    }
+
+    .sidebar-footer{
+      position: absolute;
+      bottom: 0;;
     }
   }
 }

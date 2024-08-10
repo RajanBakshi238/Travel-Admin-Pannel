@@ -2,10 +2,22 @@ import Sidebar from "react-bootstrap-sidebar-menu";
 import './layout.scss'
 import { useUserContext } from "../../../context/User";
 import { ADMIN, ORGANIZER } from "../../../contracts/constants/roleConstant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/store";
+import { logout } from "../../../redux/slices/auth";
+import userApi from "../../../redux/services/user";
 const DashboardSidebar = () => {
     const { user } = useUserContext()
     console.log(user, ">>>>> user")
+    const navigate = useNavigate();
+    const appDispatcher = useAppDispatch()
+    const handleLogout = () => {
+        appDispatcher(logout())
+        navigate("/");
+        appDispatcher(userApi.util.resetApiState())
+    }
+
+
     return <>
         <Sidebar expand="sm" className="vh-100 dashboard-sidebar">
             <Sidebar.Collapse className="sidebar-width" getScrollValue={200}>
@@ -63,14 +75,20 @@ const DashboardSidebar = () => {
                                     </Link>
                                 </Sidebar.Nav>
                                 <Sidebar.Nav className="mt-4">
-                                <Link to="/dashboard/bookings">
-                                    <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
+                                    <Link to="/dashboard/bookings">
+                                        <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
+                                    </Link>
+                                </Sidebar.Nav>
                             </>}
 
 
                 </Sidebar.Body>
+                <Sidebar.Footer className="sidebar-body sidebar-footer">
+                    <Sidebar.Nav onClick={handleLogout}>
+                        {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                        <Sidebar.Nav.Title className="sidebar-item">Logout</Sidebar.Nav.Title>
+                    </Sidebar.Nav>
+                </Sidebar.Footer>
             </Sidebar.Collapse>
         </Sidebar>
     </>
