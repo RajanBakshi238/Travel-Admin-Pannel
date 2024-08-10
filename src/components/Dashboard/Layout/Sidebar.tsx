@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../../redux/store";
 import { logout } from "../../../redux/slices/auth";
 import userApi from "../../../redux/services/user";
 const DashboardSidebar = () => {
-    const { user } = useUserContext()
+    const { user, setUser } = useUserContext()
     console.log(user, ">>>>> user")
     const navigate = useNavigate();
     const appDispatcher = useAppDispatch()
@@ -15,6 +15,7 @@ const DashboardSidebar = () => {
         appDispatcher(logout())
         navigate("/");
         appDispatcher(userApi.util.resetApiState())
+        setUser(null)
     }
 
 

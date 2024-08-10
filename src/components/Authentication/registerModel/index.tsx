@@ -4,12 +4,14 @@ import { InputGroup, Form, Modal } from 'react-bootstrap';
 import "./style.css"
 import { IChildRef } from '../../landingPage/Header';
 import { useLoginWithGoogleMutation } from '../../../redux/services';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../context/User';
 
 const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef | undefined> }, ref) => {
     const [show, setShow] = useState(false);
     const [loginWithGoogle] = useLoginWithGoogleMutation();
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
+    const { setUser } = useUserContext();
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
@@ -30,8 +32,15 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
         loginWithGoogle({ id_token: credentialResponse.credential as string }).unwrap().then((response) => {
             console.log(response, "of user login")
             // navigate('/welcome')
-            if (props.loginRef.current) {
+            if (props.loginRef.current && !response.data.role) {
                 props.loginRef.current.handleShow()
+            } else {
+                setUser(response?.data)
+
+                // just a hack 
+                setTimeout(() => {
+                    navigate('/dashboard/all-trip')
+                }, 10)
             }
         }).catch((error) => {
             console.error(error, "Error while logging")

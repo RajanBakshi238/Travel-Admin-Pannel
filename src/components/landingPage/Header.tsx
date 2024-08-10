@@ -3,7 +3,7 @@ import RegisterModal from "../Authentication/registerModel";
 import LoginModal from "../Authentication/loginModel";
 import { useUserContext } from "../../context/User";
 import { NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export interface IChildRef {
     handleClose: () => void;
@@ -16,6 +16,7 @@ const Header = () => {
     const registerChildRef = useRef<IChildRef>();
     const loginChildRef = useRef<IChildRef>();
     const { user } = useUserContext()
+    const navigate = useNavigate()
 
     console.log(user, ">>>>>> ser")
 
@@ -47,6 +48,15 @@ const Header = () => {
     }, []);
 
 
+    const handleDashboardRedirection = () => {
+        if (user?.role) {
+            navigate("/dashboard")
+        } else {
+            loginChildRef.current?.handleShow();
+        }
+
+
+    }
 
     return (
         <>
@@ -79,8 +89,8 @@ const Header = () => {
                                     </div>}
                                     menuVariant="dark"
                                 >
-                                    <NavDropdown.Item href="#action/3.1">
-                                        <Link to="/dashboard">Dashboard</Link>
+                                    <NavDropdown.Item onClick={handleDashboardRedirection} >
+                                        <span >Dashboard</span>
                                     </NavDropdown.Item>
                                 </NavDropdown>
 
