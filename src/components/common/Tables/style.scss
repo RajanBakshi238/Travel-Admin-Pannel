@@ -2,6 +2,7 @@
 
 .common-table {
   // padding: 0px 10px;
+  overflow: auto;
   table {
     overflow-x: auto;
     // width: 100%; // this width can be managed from parent component

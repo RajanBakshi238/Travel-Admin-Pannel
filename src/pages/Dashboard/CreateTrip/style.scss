@@ -129,3 +129,12 @@
     }
   }
 }
+
+
+@media  (max-width: 860px) {
+  .register-as-page{
+    .form-box{
+      grid-template-columns: 1fr ;
+    }
+  }
+}
