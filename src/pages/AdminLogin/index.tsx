@@ -3,10 +3,11 @@ import "./style.scss"
 import { useAdminLoginMutation } from "../../redux/services"
 import { FormikProvider, Form as FormikForm, useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
+import { useUserContext } from "../../context/User"
 
 const AdminLogin = () => {
     const [adminLoginMutation] = useAdminLoginMutation()
-
+    const {setUser} = useUserContext()
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -19,7 +20,7 @@ const AdminLogin = () => {
                 resetForm();
                 navigate('/dashboard/admin-organizer')
                 console.log(response, ">>>> response")
-
+                setUser(response.data)
             }).catch(() => {
 
 

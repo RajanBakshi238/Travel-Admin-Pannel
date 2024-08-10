@@ -29,69 +29,72 @@ const DashboardSidebar = () => {
                 <Sidebar.Body className="sidebar-body">
                     {user?.role === ORGANIZER ? <>
                         {user?.isVerified ? <>
-                            <Sidebar.Nav>
-                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                                <Link to="/dashboard">
+                            <Link to="/dashboard">
+                                <Sidebar.Nav className="side-nav-group">
+                                    <Sidebar.Nav.Icon><i className="fas fa-plus-square"></i></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title className="sidebar-item">Create Trip</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
-                            <Sidebar.Nav className="mt-4">
-                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                                <Link to="/dashboard/all-trip">
+                                </Sidebar.Nav>
+                            </Link>
+                            <Link to="/dashboard/all-trip">
+                                <Sidebar.Nav className="mt-4 side-nav-group">
+                                    <Sidebar.Nav.Icon><i className="fas fa-plane-departure"></i></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title className="sidebar-item">My Trip</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
-                            <Sidebar.Nav className="mt-4">
-                                <Link to="/dashboard/bookings">
+                                </Sidebar.Nav>
+                            </Link>
+                            <Link to="/dashboard/bookings">
+                                <Sidebar.Nav className="mt-4 side-nav-group">
+                                    <Sidebar.Nav.Icon><i className="fas fa-history"></i></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
+                                </Sidebar.Nav>
+                            </Link>
                         </> : <></>}
                     </> :
                         user?.role === ADMIN ? <>
 
-                            <Sidebar.Nav className="mt-4">
-                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                                <Link to="/dashboard/admin-organizer">
+                            <Link to="/dashboard/admin-organizer">
+                                <Sidebar.Nav className="side-nav-group">
+                                    <Sidebar.Nav.Icon><i className="fas fa-user-lock"></i></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title className="sidebar-item">Organizers</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
-                            <Sidebar.Nav className="mt-4">
-                                <Link to="/dashboard/bookings">
+                                </Sidebar.Nav>
+                            </Link>
+                            <Link to="/dashboard/bookings">
+                                <Sidebar.Nav className="mt-4 side-nav-group">
+                                    <Sidebar.Nav.Icon><i className="fas fa-history"></i></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
-                            <Sidebar.Nav className="mt-4">
-                                {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                                <Link to="/dashboard/all-trip">
+                                </Sidebar.Nav>
+                            </Link>
+                            <Link to="/dashboard/all-trip">
+                                <Sidebar.Nav className="mt-4 side-nav-group">
+                                    <Sidebar.Nav.Icon><i className="fas fa-plane-departure"></i></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title className="sidebar-item">Trips</Sidebar.Nav.Title>
-                                </Link>
-                            </Sidebar.Nav>
+                                </Sidebar.Nav>
+                            </Link>
                         </>
                             : <>
-                                <Sidebar.Nav className="mt-4">
-                                    {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
-                                    <Link to="/dashboard/trip">
+                                <Link to="/dashboard/trip">
+                                    <Sidebar.Nav className="side-nav-group">
+                                        <Sidebar.Nav.Icon><i className="fas fa-plane-departure"></i></Sidebar.Nav.Icon>
                                         <Sidebar.Nav.Title className="sidebar-item">Trip</Sidebar.Nav.Title>
-                                    </Link>
-                                </Sidebar.Nav>
-                                <Sidebar.Nav className="mt-4">
-                                    <Link to="/dashboard/bookings">
+                                    </Sidebar.Nav>
+                                </Link>
+                                <Link to="/dashboard/bookings">
+                                    <Sidebar.Nav className="mt-4 side-nav-group">
+                                        <i className="fas fa-history"></i>
                                         <Sidebar.Nav.Title className="sidebar-item">Bookings</Sidebar.Nav.Title>
-                                    </Link>
-                                </Sidebar.Nav>
+                                    </Sidebar.Nav>
+                                </Link>
                             </>}
 
 
                 </Sidebar.Body>
                 <Sidebar.Footer className="sidebar-body sidebar-footer">
-                    <Sidebar.Nav onClick={handleLogout}>
-                        {/* <Sidebar.Nav.Icon>1</Sidebar.Nav.Icon> */}
+                    <Sidebar.Nav className="side-nav-group" onClick={handleLogout}>
+                        <Sidebar.Nav.Icon><i className="fas fa-sign-out-alt"></i></Sidebar.Nav.Icon>
                         <Sidebar.Nav.Title className="sidebar-item">Logout</Sidebar.Nav.Title>
                     </Sidebar.Nav>
                 </Sidebar.Footer>
             </Sidebar.Collapse>
-        </Sidebar>
+        </Sidebar >
     </>
 }
 
