@@ -64,5 +64,6 @@ export const {
   useGetTripQuery,
   useDeleteTripMutation,
   useGetTripByIdQuery,
-  useEditTripMutation
+  useEditTripMutation,
+  useLazyGetTripQuery
 } = trip;

@@ -6,6 +6,9 @@ import { NavDropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./style.css"
 import classNames from "classnames";
+import { useLazyGetTripQuery } from "../../redux/services/trip";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
 export interface IChildRef {
     handleClose: () => void;
     handleShow: () => void;
@@ -21,8 +24,9 @@ const Header = () => {
     const tripRef = useRef<HTMLDivElement | null>(null)
     const [isLeftDisabled, setIsLeftDisabled] = useState(true);
     const [isRightDisabled, setIsRightDisabled] = useState(false);
-    const [showSearchedTrips, setShowSearchedTrips] = useState(true)
-
+    const [showSearchedTrips, setShowSearchedTrips] = useState(false)
+    const [place, setPlace] = useState("")
+    const [fetchTrips, { data }] = useLazyGetTripQuery()
 
     const handleScrollBtnCheck = () => {
         const container = tripRef.current;
@@ -32,7 +36,6 @@ const Header = () => {
             setIsRightDisabled(container.scrollLeft >= maxScrollLeft);
         }
     };
-
 
     const scrollToSection = useCallback((id: string) => {
         const element = document.getElementById(id);
@@ -70,8 +73,6 @@ const Header = () => {
         }
     }
 
-
-
     const scrollLeft = () => {
         if (tripRef.current) {
             tripRef.current.scrollBy({
@@ -103,6 +104,25 @@ const Header = () => {
             }
         };
     }, []);
+
+    const onTripInputChange = (place: string) => {
+        setPlace(place)
+    }
+
+    const handleSubmit = () => {
+        fetchTrips({ place }).unwrap().then((response) => {
+            console.log(response, ">>>>>>>>")
+            if (response?.length === 0) {
+                toast(`No trips are available for ${place}`, {
+                    type: "default",
+                    theme: "colored"
+                })
+                setShowSearchedTrips(false)
+            } else {
+                setShowSearchedTrips(true)
+            }
+        })
+    }
 
 
     return (
@@ -155,109 +175,53 @@ const Header = () => {
                                 <h1 className="display-3 text-white mb-3 animated slideInDown">Enjoy Your Vacation With Us</h1>
                                 <p className="fs-4 text-white mb-4 animated slideInDown">Tempor erat elitr rebum at clita diam amet diam et eos erat ipsum lorem sit</p>
                                 <div className="position-relative w-75 mx-auto animated slideInDown">
-                                    <input className="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand" />
-                                    <button type="button" className="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style={{ "marginTop": "7px" }}>Search</button>
+                                    <input name="place" onChange={(e) => onTripInputChange(e.target.value)} className="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Manali" />
+                                    <button type="button" className="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style={{ "marginTop": "7px" }} onClick={handleSubmit}>Search</button>
                                 </div>
-                                <div className={classNames("position-absolute searched-cards-section", {
-                                    "d-none": !showSearchedTrips
-                                })}>
-                                    <div className="cancel-trip" onClick={() => setShowSearchedTrips(false)}>X</div>
+                                {!!data?.length &&
+                                    <div className={classNames("position-absolute searched-cards-section", {
+                                        "d-none": !showSearchedTrips
+                                    })}>
+                                        <div className="cancel-trip" onClick={() => setShowSearchedTrips(false)}>X</div>
 
-                                    <div className="searched-headers">
-                                        <p>Top trips to Manali </p>
-                                        <div className="more-btn">
-                                            <i className={classNames("fas fa-chevron-left", {
-                                                "scroll-btn-disable": isLeftDisabled
-                                            })} onClick={scrollLeft}></i>
-                                            <i className={classNames("fas fa-chevron-right", {
-                                                "scroll-btn-disable": isRightDisabled
-                                            })} onClick={scrollRight}></i>
-                                        </div>
-                                    </div>
-                                    <div className="searched-body" ref={tripRef}>
-                                        <div className="searched-card">
-                                            <img src="img/destination-1.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6 onClick={() => {
-                                                    if (registerChildRef.current) {
-                                                        registerChildRef.current.handleShow()
-                                                    }
-                                                }}>View details</h6>
+                                        <div className="searched-headers">
+                                            <p>Top trips to Manali </p>
+                                            <div className="more-btn">
+                                                <i className={classNames("fas fa-chevron-left", {
+                                                    "scroll-btn-disable": isLeftDisabled
+                                                })} onClick={scrollLeft}></i>
+                                                <i className={classNames("fas fa-chevron-right", {
+                                                    "scroll-btn-disable": isRightDisabled
+                                                })} onClick={scrollRight}></i>
                                             </div>
                                         </div>
-                                        <div className="searched-card">
-                                            <img src="img/destination-2.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6>View details</h6>
-                                            </div>
+                                        <div className="searched-body" ref={tripRef}>
+                                            {
+                                                data?.map((trip, index) => {
+                                                    return <div className="searched-card" key={index}>
+                                                        <img src={`${import.meta.env.VITE_BACKEND_URL}${trip?.photos?.[0]?.path}`} alt="card_img" />
+                                                        <div className="trip-detail">
+                                                            <h4>Place</h4>
+                                                            <div className="date-seats">
+                                                                <p>Starts from {format((trip.startDate) as string, "LLL dd, yyyy")}</p>
+                                                                <p> {trip?.leftSeats} Seats left</p>
+                                                            </div>
+                                                            <h6 onClick={() => {
+                                                                if (registerChildRef.current && !user) {
+                                                                    registerChildRef.current.handleShow()
+                                                                }else{
+                                                                    navigate("/dashboard/all-trip")
+                                                                }
+                                                            }}>View details</h6>
+                                                        </div>
+                                                    </div>
+
+                                                })
+                                            }
+
+                         
                                         </div>
-                                        <div className="searched-card">
-                                            <img src="img/destination-3.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6>View details</h6>
-                                            </div>
-                                        </div>
-                                        <div className="searched-card">
-                                            <img src="img/destination-4.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6>View details</h6>
-                                            </div>
-                                        </div>
-                                        <div className="searched-card">
-                                            <img src="img/destination-1.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6>View details</h6>
-                                            </div>
-                                        </div>
-                                        <div className="searched-card">
-                                            <img src="img/destination-2.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6>View details</h6>
-                                            </div>
-                                        </div>
-                                        <div className="searched-card">
-                                            <img src="img/destination-3.jpg" alt="card_img" />
-                                            <div className="trip-detail">
-                                                <h4>Place</h4>
-                                                <div className="date-seats">
-                                                    <p>Starts from Aug,5,2024</p>
-                                                    <p> 24 Seats</p>
-                                                </div>
-                                                <h6>View details</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </div>}
                             </div>
                         </div>
                     </div>
