@@ -9,6 +9,7 @@ import "./style.scss"
 import classNames from "classnames"
 import { useUserContext } from "../../../context/User"
 import CustomError from "../../../components/common/FormElements/CustomError";
+import { toast } from "react-toastify";
 
 const OrganizerPersonalForm = () => {
 
@@ -19,7 +20,7 @@ const OrganizerPersonalForm = () => {
     const validationSchema = Yup.object().shape({
         agencyName: Yup.string().required("Agency name is required").trim(),
         email: Yup.string().email("Enter valid email").required("Agency name is required").trim(),
-        address: Yup.string().required("Addressnis required").trim(),
+        address: Yup.string().required("Address is required").trim(),
         website: Yup.string().required("Website is required").trim(),
         contactNumber: Yup.string()
             .matches(/^\d+$/, 'Invalid contact number').required("Contact number is required"),
@@ -27,7 +28,7 @@ const OrganizerPersonalForm = () => {
         aadhaarNumber: Yup.string()
             .matches(/^\d+$/, 'Invalid addhar number').required("Addhaar number is required"),
         panNumber: Yup.string().required("Pancard is required"),
-        gstNumber: Yup.string().required("GST number is required"),
+        // gstNumber: Yup.string().required("GST number is required"),
         description: Yup.string().required("Description is required"),
         adhaarImage: Yup.object({
             path: Yup.string(),
@@ -58,11 +59,19 @@ const OrganizerPersonalForm = () => {
         },
         validationSchema,
         onSubmit: (values, { resetForm }) => {
-            organizerForm({ ...values, adhaarImage: values?.adhaarImage?.id, panImage: values?.panImage?.id }).unwrap().then(() => {
+            organizerForm({ ...values, adhaarImage: values?.adhaarImage?.id, panImage: values?.panImage?.id }).unwrap().then((res) => {
                 resetForm();
-                // setUnderVerification(true)
-            }).catch(() => {
 
+                toast(res.message ?? "Organizer detailed successfully.", {
+                    type: "success",
+                    theme: "colored"
+                })
+                // setUnderVerification(true)
+            }).catch((err) => {
+                toast(err?.message ?? "Something went wrong.", {
+                    type: "error",
+                    theme: "colored"
+                })
             })
         }
     })
@@ -132,7 +141,7 @@ const OrganizerPersonalForm = () => {
                             </div>
                             <div>
                                 <Input name="description" label="Description *" type="text" />
-                                <CustomError name="description" /> 
+                                <CustomError name="description" />
                             </div>
                         </div>
                         <div className="submit-box">

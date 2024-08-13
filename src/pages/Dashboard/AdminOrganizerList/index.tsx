@@ -4,6 +4,7 @@ import { ORGANIZER } from "../../../contracts/constants/roleConstant";
 import { useGetUsersQuery, useVerifyOrganizerMutation } from "../../../redux/services/admin";
 import "./style.scss";
 import { format } from 'date-fns';
+import { toast } from 'react-toastify';
 
 const tableRow = {
     fullName: "Full Name",
@@ -26,8 +27,21 @@ export const AdminOrganizerList = () => {
             isVerified: <Form.Check
                 type='switch'
                 className="bootstrap-switch"
-                onChange={(e) => { verifyOrganizer({ id: tableRow._id, isVerified: e.target.checked }) }}
+                onChange={(e) => {
+                    verifyOrganizer({ id: tableRow._id, isVerified: e.target.checked }).unwrap().then((res  ) => {
+                        toast(res.message ?? "Organizer detailed successfully.", {
+                            type: "success",
+                            theme: "colored"
+                        })
+                    }).catch((err) => {
+                        toast(err?.message ?? "Something went wrong.", {
+                            type: "error",
+                            theme: "colored"
+                        })
+                    })
+                }}
                 defaultChecked={tableRow.isVerified}
+                disabled={!tableRow.isVerificationSubmitted}
             />,
             isDeleted: <span>{tableRow.isDeleted ? "Yes" : "No"}</span>
         }

@@ -88,6 +88,7 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
 
                     {/* <button className='btn btn-primary w-100 google-login-btn' onClick={() => handleLogin}>Login with Google</button> */}
                     <GoogleLogin
+                        width="100%"
                         onSuccess={credentialResponse => {
                             handleLogin(credentialResponse)
                         }}

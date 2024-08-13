@@ -80,14 +80,14 @@ const ImageInput: React.FC<IImageInput> = ({ name, label, className, inputLabel,
 
                             <div key={index}>
                                 <div className='cut' onClick={() => handleRemove(item.id)}>X</div>
-                                <img className='uploaded-img' src={`http://localhost:3001/${item.path}`} />
+                                <img className='uploaded-img' src={`${import.meta.env.VITE_BACKEND_URL}${item.path}`} />
                             </div>
                         </>
                     })}</>
                     : <>
                         {!!(values as any)?.[name]?.id && <div>
                             <div className='cut' onClick={() => setFieldValue(name, null)}>X</div>
-                            <img className='uploaded-img' src={`http://localhost:3001/${(values as any)?.[name]?.path}`} />
+                            <img className='uploaded-img' src={`${import.meta.env.VITE_BACKEND_URL}${(values as any)?.[name]?.path}`} />
                         </div>}
                     </>
                 }
