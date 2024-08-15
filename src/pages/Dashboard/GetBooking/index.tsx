@@ -96,7 +96,7 @@ const GetBooking = () => {
             </div>
             <div className="register-as-page admin-organizer">
 
-                <CommonTable tableRow={tableRow} tableData={tableData ?? []} />
+                <CommonTable noData="No Bookings found, Hurry up , Book your first adventure." tableRow={tableRow} tableData={tableData ?? []} />
 
 
             </div>

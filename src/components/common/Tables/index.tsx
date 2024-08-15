@@ -90,9 +90,10 @@ type ITableRow = {
 interface ICommontable {
     tableRow: ITableRow;
     tableData: any[];
+    noData?: string;
 }
 
-const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData }) => {
+const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData, noData }) => {
 
     return <div className="common-table">
         <table style={{
@@ -117,7 +118,10 @@ const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData }) => {
                         </tr>
                     })
                 }
-                {tableData.length === 0 && <tr className="no-data-row"><h4>No data found !</h4></tr>}
+                {tableData.length === 0 && <tr className="no-data-row"><h4>
+                    {noData ? noData : "No data found !"}
+
+                </h4></tr>}
 
             </tbody>
 

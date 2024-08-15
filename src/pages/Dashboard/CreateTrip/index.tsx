@@ -65,7 +65,7 @@ const CreateTrip = () => {
         inclusions: Yup.array(Yup.string().min(3, "Minimum 3 characters").required("Inclusion can't be empty")).min(1, "Minimum 1 inclusion is required.").required("Inclusion is required"),
         exclusions: Yup.array(Yup.string().required("Exclusion can't be empty")).min(1, "Minimum 1 exclusion is required."),
         termsAndConditions: Yup.array(Yup.string().required("Terms and condition can't be empty")).min(1, "Minimum 1 term and condition is required."),
-        photos: Yup.array().min(1, "Minimum 1 Photo is required."),
+        photos: Yup.array().min(1, "Minimum 1 Photo is required.").max(6, "Maximum 6 photos can be uploaded"),
         itinerary: Yup.array(
             Yup.object().shape({
                 day: Yup.string().required("Day can't be empty"),
