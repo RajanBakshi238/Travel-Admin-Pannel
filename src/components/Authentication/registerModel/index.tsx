@@ -1,6 +1,6 @@
 import { useState, forwardRef, useImperativeHandle, MutableRefObject, useCallback } from 'react';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
-import { InputGroup, Form, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import "./style.css"
 import { IChildRef } from '../../landingPage/Header';
 import { useLoginWithGoogleMutation } from '../../../redux/services';
@@ -57,7 +57,8 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
                 <p className='sub-heading'>Become a member to enjoy special tours and offers.</p>
 
                 <div>
-                    <InputGroup className="mb-3">
+                    <img src="/img/login-model.jpeg" width="100%" height="100%" alt="image_login" />
+                    {/* <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1"><i className="fas fa-envelope"></i></InputGroup.Text>
                         <Form.Control
                             placeholder="Email"
@@ -80,11 +81,11 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
                             aria-label="confirm your password"
                             aria-describedby="basic-addon3"
                         />
-                    </InputGroup>
+                    </InputGroup> */}
 
-                    <button className='btn btn-primary w-100'>Create My Account</button>
+                    {/* <button className='btn btn-primary w-100'>Create My Account</button>
 
-                    <p className='sub-heading continue'>or continue with</p>
+                    <p className='sub-heading continue'>or continue with</p> */}
 
                     {/* <button className='btn btn-primary w-100 google-login-btn' onClick={() => handleLogin}>Login with Google</button> */}
                     <GoogleLogin
@@ -96,11 +97,11 @@ const RegisterModal = forwardRef((props: { loginRef: MutableRefObject<IChildRef 
                             console.log("Login failed");
                         }}
                     />
-                    <p className='already-registered'>Already have an account? <a href="#" className='text-primary' onClick={() => {
+                    {/* <p className='already-registered'>Already have an account? <a href="#" className='text-primary' onClick={() => {
                         if (props.loginRef.current) {
                             props.loginRef.current.handleShow()
                         }
-                    }} >Login</a></p>
+                    }} >Login</a></p> */}
 
                     <p className='privacy-text'>Your privacy matters. we keep your data secure and never share it.</p>
 

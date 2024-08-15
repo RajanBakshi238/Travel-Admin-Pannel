@@ -7,14 +7,14 @@ const ContactUs = () => {
                     <div className="booking p-5">
                         <div className="row g-5 align-items-center">
                             <div className="col-md-6 text-white">
-                                <h6 className="text-white text-uppercase">Query</h6>
+                                {/* <h6 className="text-white text-uppercase">Query</h6> */}
                                 <h1 className="text-white mb-4">Contact Us</h1>
                                 <p className="mb-4">At travelYatri, we know that every traveler is unique. That’s why we offer the option to design your own tour package tailored to your preferences. Whether you’re looking to explore hidden gems, indulge in local cuisine, or embark on an adventure, we’re here to make it happen.</p>
                                 <p className="mb-4">Simply fill out the form below and our team will get in touch to craft the perfect itinerary for you. Let’s make your dream trip a reality</p>
                                 {/* <a className="btn btn-outline-light py-3 px-5 mt-2" href="">Read More</a> */}
                             </div>
                             <div className="col-md-6">
-                                <h1 className="text-white mb-4">Raise A Query</h1>
+                                <h1 className="text-white mb-4">Customize your trip</h1>
                                 <form>
                                     <div className="row g-3">
                                         <div className="col-md-6">
@@ -52,7 +52,7 @@ const ContactUs = () => {
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            <button className="btn btn-outline-light w-100 py-3" type="submit">Book Now</button>
+                                            <button className="btn btn-outline-light w-100 py-3" type="submit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
