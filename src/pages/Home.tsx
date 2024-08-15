@@ -4,6 +4,7 @@ import Destination from '../components/landingPage/Destination'
 import ContactUs from '../components/landingPage/ContactUs'
 import Footer from '../components/landingPage/Footer'
 import Travellers from '../components/landingPage/travellers'
+import Why from '../components/landingPage/Why'
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <Travellers />
             <Destination />
             <ContactUs />
+            <Why />
             <Footer />
         </>
     )

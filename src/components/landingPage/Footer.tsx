@@ -3,16 +3,16 @@ const Footer = () => {
         <div className="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div className="container py-5">
                 <div className="row g-5">
-                    <div className="col-lg-3 col-md-6">
-                        <h4 className="text-white mb-3">Company</h4>
-                        <p className="text-left">At travelYatri, we believe that every journey should be an adventure, whether you’re exploring a new city or revisiting a favorite destination. Our platform connects passionate travelers with experienced trip organizers, making it easier than ever to find, plan, and embark on the perfect getaway.</p>
+                    {/* <div className="col-lg-3 col-md-6">
+                        <h4 className="text-white mb-3">Company</h4> */}
+                        {/* <p className="text-left">At travelYatri, we believe that every journey should be an adventure, whether you’re exploring a new city or revisiting a favorite destination. Our platform connects passionate travelers with experienced trip organizers, making it easier than ever to find, plan, and embark on the perfect getaway.</p> */}
                         {/* <a className="btn btn-link" href="">About Us</a>
                         <a className="btn btn-link" href="">Contact Us</a>
                         <a className="btn btn-link" href="">Privacy Policy</a>
                         <a className="btn btn-link" href="">Terms & Condition</a>
                         <a className="btn btn-link" href="">FAQs & Help</a> */}
-                    </div>
-                    <div className="col-lg-3 col-md-6">
+                    {/* </div> */}
+                    <div className="col-lg-4 col-md-6">
                         <h4 className="text-white mb-3">Contact</h4>
                         <p className="mb-2"><i className="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                         <p className="mb-2"><i className="fa fa-phone-alt me-3"></i>+012 345 67890</p>
@@ -24,7 +24,7 @@ const Footer = () => {
                             <a className="btn btn-outline-light btn-social" href=""><i className="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
-                    <div className="col-lg-3 col-md-6">
+                    <div className="col-lg-4 col-md-6">
                         <h4 className="text-white mb-3">Gallery</h4>
                         <div className="row g-2 pt-2">
                             <div className="col-4">
@@ -47,7 +47,7 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-3 col-md-6">
+                    <div className="col-lg-4 col-md-6">
                         <h4 className="text-white mb-3">Newsletter</h4>
                         <p>Subscribe now for the latest travel tips, destination guides, and exclusive offers.</p>
                         <div className="position-relative mx-auto" style={{ maxWidth: "400px" }}>

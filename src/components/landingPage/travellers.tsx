@@ -9,7 +9,7 @@ const Travellers = () => {
                 <div className="row align-items-center g-5 organizers">
                     <div className="right col-lg-6">
                         <h6 className="section-title bg-white text-center text-primary pe-3 ">
-                            Create and Share Your Adventures
+                            Create and Share Your Adventure
                         </h6>
                         <h1 className="mb-4">
                             Traveller

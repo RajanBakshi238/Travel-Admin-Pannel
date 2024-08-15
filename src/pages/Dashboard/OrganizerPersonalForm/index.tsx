@@ -21,10 +21,10 @@ const OrganizerPersonalForm = () => {
         agencyName: Yup.string().required("Agency name is required").trim(),
         email: Yup.string().email("Enter valid email").required("Agency name is required").trim(),
         address: Yup.string().required("Address is required").trim(),
-        website: Yup.string().required("Website is required").trim(),
+        // website: Yup.string().required("Website is required").trim(),
         contactNumber: Yup.string()
             .matches(/^\d+$/, 'Invalid contact number').required("Contact number is required"),
-        dialCode: Yup.string().required("Dial code is required"),
+        // dialCode: Yup.string().required("Dial code is required"),
         aadhaarNumber: Yup.string()
             .matches(/^\d+$/, 'Invalid addhar number').required("Addhaar number is required"),
         panNumber: Yup.string().required("Pancard is required"),
@@ -108,13 +108,13 @@ const OrganizerPersonalForm = () => {
                                 <CustomError name="address" />
                             </div>
                             <div>
-                                <Input name="website" label="Website *" type="text" />
+                                <Input name="website" label="Website" type="text" />
                                 <CustomError name="website" />
                             </div>
-                            <div>
+                            {/* <div>
                                 <Input name="dialCode" label="Dial Code *" type="text" />
                                 <CustomError name="dialCode" />
-                            </div>
+                            </div> */}
                             <div>
                                 <Input name="contactNumber" label="Contact Number *" type="text" />
                                 <CustomError name="contactNumber" />
@@ -128,7 +128,7 @@ const OrganizerPersonalForm = () => {
                                 <CustomError name="panNumber" />
                             </div>
                             <div>
-                                <Input name="gstNumber" label="Gst Number *" type="text" />
+                                <Input name="gstNumber" label="Gst Number" type="text" />
                                 <CustomError name="gstNumber" />
                             </div>
                             <div>
