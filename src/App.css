@@ -1,8 +1,6 @@
-
 .dropdown-toggle::after {
   content: none;
 }
-
 
 .user-icon-header {
   color: #fff;
@@ -85,4 +83,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.ty-ring {
+  padding: 15px;
+  border-radius: 350px;
+  border: 2px dashed;
+  max-width: 450px;
+  max-height: 450px;
+}
+
+.traveller-img {
+  border-radius: 350px;
 }
