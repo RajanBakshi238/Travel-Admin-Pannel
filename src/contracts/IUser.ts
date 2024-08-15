@@ -1,4 +1,5 @@
 import { TADMIN, TOrganizer, TUSER } from "./constants/roleConstant";
+import { IOrganizer } from "./IOrganizer";
 
 export interface IUser {
   _id: string;
@@ -12,4 +13,5 @@ export interface IUser {
   isVerified: boolean;
   isDeleted: boolean;
   isVerificationSubmitted: boolean;
+  organizer: IOrganizer;
 }

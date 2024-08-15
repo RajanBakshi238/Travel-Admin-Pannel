@@ -1,4 +1,6 @@
+import React, { useState } from "react";
 import "./style.scss"
+import { toast } from "react-toastify";
 
 // const tableRow = {
 //     id: "ID",
@@ -91,9 +93,33 @@ interface ICommontable {
     tableRow: ITableRow;
     tableData: any[];
     noData?: string;
+    openDetail?: boolean
+    // openedContent?: React.ReactNode
 }
 
-const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData, noData }) => {
+const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData, noData, openDetail }) => {
+
+    const [showDetail, setShowDetail] = useState<number[]>([])
+
+
+    const toggleShow = (index: number, isVerificationSubmitted: boolean) => {
+        if (!isVerificationSubmitted) {
+            toast("Organizer has not completed the verification form.", {
+                type: "error",
+                theme: "colored"
+            })
+
+            return
+        }
+        if (showDetail.includes(index)) {
+            const updated = showDetail?.filter(n => n != index);
+            setShowDetail(updated)
+        } else {
+            setShowDetail([...showDetail, index])
+        }
+    }
+
+    const isOpened = (index: number) => showDetail.includes(index)
 
     return <div className="common-table">
         <table style={{
@@ -105,17 +131,34 @@ const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData, noData }) =>
                     {Object.entries(tableRow).map(([_key, value]: [string, string], index: number) => {
                         return <th key={index}>{value}</th>;
                     })}
+                    {openDetail && <>
+                        <th>View</th>
+                    </>}
                 </tr>
             </thead>
             <tbody>
                 {
-                    tableData.map((rowData: ITableRow, _index) => {
-                        return <tr>
+                    tableData.map((rowData: ITableRow, index) => {
+                        return <React.Fragment key={index}> <tr key={index}>
                             {Object.entries(tableRow).map(([key, _value]: [string, string], index: number) => {
                                 return <td key={index}>{rowData?.[key]}</td>;
                             })}
+                            {openDetail && <>
+                                <td className="view" onClick={() => toggleShow(index, !!rowData.isVerificationSubmitted as boolean)}>
+                                    {isOpened(index) ? <i className="fas fa-eye-slash"></i> : <i className="far fa-eye"></i>}
+                                </td>
+                            </>}
 
                         </tr>
+                            {isOpened(index) && <tr>
+                                <td className="td-content" colSpan={+Object.entries(tableRow)?.length + 1}>
+
+                                    {rowData?.openedContent}
+                                </td>
+                            </tr>}
+
+
+                        </React.Fragment>
                     })
                 }
                 {tableData.length === 0 && <tr className="no-data-row"><h4>
@@ -126,7 +169,7 @@ const CommonTable: React.FC<ICommontable> = ({ tableRow, tableData, noData }) =>
             </tbody>
 
         </table>
-    </div>
+    </div >
 }
 
 export default CommonTable
