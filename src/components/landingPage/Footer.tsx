@@ -14,9 +14,9 @@ const Footer = () => {
                     {/* </div> */}
                     <div className="col-lg-4 col-md-6">
                         <h4 className="text-white mb-3">Contact</h4>
-                        <p className="mb-2"><i className="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <p className="mb-2"><i className="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p className="mb-2"><i className="fa fa-envelope me-3"></i>info@example.com</p>
+                        {/* <p className="mb-2"><i className="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p> */}
+                        <p className="mb-2"><i className="fa fa-phone-alt me-3"></i>7814323403</p>
+                        <p className="mb-2"><i className="fa fa-envelope me-3"></i>travellyatris@gmail.com</p>
                         <div className="d-flex pt-2">
                             <a className="btn btn-outline-light btn-social" href=""><i className="fab fa-twitter"></i></a>
                             <a className="btn btn-outline-light btn-social" href=""><i className="fab fa-facebook-f"></i></a>

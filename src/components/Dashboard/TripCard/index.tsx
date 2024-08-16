@@ -91,7 +91,7 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
                     <div className="date-block">
                         <p className='card-date'> Date :</p>
                         <p className='card-date'>
-                            <span>{format(trip?.endDate as string, "LLL dd, yyyy")}</span>
+                            <span>{format(trip?.startDate as string, "LLL dd, yyyy")}</span>
                             {/* <span>Aug 23, 2024</span> */}
                         </p>
                         <p>-</p>

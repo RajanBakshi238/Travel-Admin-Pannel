@@ -1,9 +1,9 @@
-import { startOfDay, endOfDay } from "date-fns"
+import { startOfDay, endOfDay, compareAsc } from "date-fns"
 
 import CommonTable from "../../../components/common/Tables"
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse"
 import { IUser } from "../../../contracts/IUser"
-import { useGetBookingQuery } from "../../../redux/services/booking"
+import { useGetBookingQuery, useMarkTripAsStratedMutation } from "../../../redux/services/booking"
 import { format } from "date-fns"
 import { truncateString } from "../../../utils/truncateString"
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
@@ -13,30 +13,45 @@ import 'react-calendar/dist/Calendar.css';
 import "./style.scss"
 import { useState } from "react"
 import classNames from "classnames"
+import { useUserContext } from "../../../context/User"
+import { ADMIN, ORGANIZER, USER } from "../../../contracts/constants/roleConstant"
+import { toast } from "react-toastify"
 
 type ValuePiece = Date | null;
 
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-
-const tableRow = {
-    bookingStatus: "Status",
-    // organizerName: "Organizer",
-    place: "Trip",
-    // pickUp: "Pick up",
-    usersNo: "Users",
-    startDate: "Start",
-    endDate: "End",
-    booking: "Booking Date",
-    totalCost: "Price",
-    razorpayPaymentId: "Payment id"
+export function compareDate(date1: string, date2: string) {
+    const d1 = startOfDay(date1)
+    const d2 = startOfDay(date2)
+    return compareAsc(d1, d2)
 }
+
 const GetBooking = () => {
     const [query, setQuery] = useState<{ dateRange: Value, search: string }>({
         dateRange: [startOfDay(new Date()), endOfDay(new Date())],
         search: ""
     })
     const { data } = useGetBookingQuery({ ...query })
+    const [startTripTrigger] = useMarkTripAsStratedMutation()
+    const { user } = useUserContext()
+
+
+    const tableRow = {
+        bookingStatus: "Status",
+        // organizerName: "Organizer",
+        place: "Trip",
+        // pickUp: "Pick up",
+        usersNo: "Users",
+        startDate: "Start",
+        endDate: "End",
+        booking: "Booking Date",
+        totalCost: "Price",
+        razorpayPaymentId: "Payment id",
+        ...((user && user.role === USER) ? { startTrip: "Start Trip" } : {}),
+        ...((user && (user.role === ADMIN || user.role === ORGANIZER)) ? { tripStatus: "Trip Status" } : {})
+
+    }
 
     const tableData = data?.data?.map((data) => {
         return {
@@ -52,6 +67,33 @@ const GetBooking = () => {
             startDate: format((data?.tripId as IGetTripResponse)?.startDate as string, "LLL dd, yyyy") ?? '-',
             endDate: format((data?.tripId as IGetTripResponse)?.endDate as string, "LLL dd, yyyy") ?? '-',
             booking: format((data?.createdAt) as string, "LLL dd, yyyy") ?? '-',
+            ...((user && user.role === USER) ?
+                {
+                    startTrip: data?.tripStarted ?
+                        <span className="table-text">{format(data?.tripStarted as string, "LLL dd, yyyy") ?? '-'}</span> :
+                        <button
+                            className="btn btn-primary table-btn"
+                            disabled={0 != compareDate('' + (new Date()), (data?.tripId as IGetTripResponse)?.startDate)}
+                            onClick={() => startTripTrigger({ bookingId: data?._id }).unwrap().then((res) => {
+                                toast(res.message, {
+                                    type: "success",
+                                    theme: "colored"
+                                })
+                            }).catch((error) => {
+                                toast(error.message, {
+                                    type: "error",
+                                    theme: "colored"
+                                })
+                            })}>
+                            Start Trip
+                        </button>
+                } : {}),
+            ...((user && (user.role === ADMIN || user.role === ORGANIZER)) ?
+                {
+                    tripStatus: data?.tripStarted ?
+                        <span className="success-badge">STARTED</span> :
+                        < span className="warning-badge"> PENDING</span>
+                } : {})
 
         }
     })

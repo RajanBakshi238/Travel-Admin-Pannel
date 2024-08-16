@@ -69,7 +69,7 @@ export const AdminOrganizerList = () => {
                 </div>
                 <div>
                     <h5>Pan Card:</h5> 
-                    <img src={`${import.meta.env.VITE_BACKEND_URL}${tableRow?.organizer?.adhaarImage?.path}`} alt="adhar image" />
+                    <img src={`${import.meta.env.VITE_BACKEND_URL}${tableRow?.organizer?.panImage?.path}`} alt="adhar image" />
                 </div>
                 <div>
                     <h5>Gst Number:</h5> <p>{tableRow?.organizer?.gstNumber || "NA"}</p>

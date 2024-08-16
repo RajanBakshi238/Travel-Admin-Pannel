@@ -15,6 +15,7 @@ export interface IBooking {
   razorpayOrderId: number;
   orderCreationId: number;
   razorpayPaymentId: number;
+  tripStarted: string;
 }
 
 interface IOrder {
