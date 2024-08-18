@@ -208,12 +208,12 @@ const BookingModal: React.FC<IBookingModal> = ({ show, handleClose, trip }) => {
                                 </div>
                                 <div>
                                     <label>Cost per user</label>
-                                    <h5>$ {trip?.price}</h5>
+                                    <h5>&#8377; {trip?.price}</h5>
                                 </div>
 
                                 <div className="pricing-total">
                                     <label>Total: </label>
-                                    <h5>$ {trip?.price * values.users.length}</h5>
+                                    <h5>&#8377; {trip?.price * values.users.length}</h5>
                                 </div>
 
                             </div>

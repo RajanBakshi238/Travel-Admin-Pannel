@@ -2,7 +2,7 @@ import { useGetTripQuery } from '../../../redux/services/trip'
 
 import "./style.scss"
 import TripDetailModel from '../../../components/Dashboard/Modals/TripDetailModel'
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import TripCard from '../../../components/Dashboard/TripCard'
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse'
 
@@ -69,9 +69,9 @@ const GetTrip = () => {
                 <div className='ty-trip-card-list'>
 
                     {data?.map((trip, index) => {
-                        return <>
+                        return <React.Fragment key={index}>
                             <TripCard key={index} trip={trip} singleTripRef={singleTripRef} setCurrentTrip={setCurrentTrip} />
-                        </>
+                        </React.Fragment>
                     })}
                 </div>
             </> : <>

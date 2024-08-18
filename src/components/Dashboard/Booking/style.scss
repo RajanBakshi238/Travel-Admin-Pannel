@@ -118,3 +118,15 @@
     }
   }
 }
+
+@media (max-width: 550px) {
+  .booking-modal{
+    .user-details-fields{
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-block{
+      width: 58%;
+    }
+  }
+}

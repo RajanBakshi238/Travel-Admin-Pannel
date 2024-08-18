@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useGetTripQuery } from '../../../redux/services/trip'
 import { IChildRef } from '../GetTrip'
 import TripDetailModel from '../../../components/Dashboard/Modals/TripDetailModel'
@@ -13,15 +13,15 @@ const AllTrip = () => {
     const singleTripRef = useRef<IChildRef>()
 
     const [showBooking, setShowBooking] = useState(false);
-
+    console.log(">>>111111", showBooking, ">>>>>>>>>> showing booking", setShowBooking)
 
     return (
         <> {data?.length ? <>
             <div className='ty-trip-card-list'>
                 {data?.map((trip, index) => {
-                    return <>
+                    return <React.Fragment key={index}>
                         <TripCard key={index} trip={trip} singleTripRef={singleTripRef} setCurrentTrip={setCurrentTrip} />
-                    </>
+                    </React.Fragment>
                 })}
             </div>
 

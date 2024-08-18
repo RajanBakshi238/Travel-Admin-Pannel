@@ -9,7 +9,9 @@ const TripDetailModel = forwardRef(({ trip, setShowBooking }: { trip: IGetTripRe
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleShowBooking = () => {
+        console.log(setShowBooking, ">>>>>>>> set show bookin")
         if (setShowBooking) {
+            console.log(">>>>>>>>>> chomu")
             setShowBooking(true)
         }
     }

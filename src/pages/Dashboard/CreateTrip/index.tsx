@@ -29,7 +29,7 @@ const CreateTrip = () => {
         price: 0,
         inclusions: [''],
         exclusions: [''],
-        enquiryNumber: "",
+        // enquiryNumber: "",
         itinerary: [{ day: 1, description: [''] }],
         photos: [],
         pickUpPointLong: "",
@@ -61,7 +61,7 @@ const CreateTrip = () => {
         endDate: Yup.string().required("End date is required."),
         pickUp: Yup.string().min(3, "Minimum 3 characters").required("Pickup is required").trim(),
         price: Yup.number().integer("Price must be number").required("Price is required"),
-        enquiryNumber: Yup.number().required("Enquiry number is required"),
+        // enquiryNumber: Yup.number().required("Enquiry number is required"),
         inclusions: Yup.array(Yup.string().min(3, "Minimum 3 characters").required("Inclusion can't be empty")).min(1, "Minimum 1 inclusion is required.").required("Inclusion is required"),
         exclusions: Yup.array(Yup.string().required("Exclusion can't be empty")).min(1, "Minimum 1 exclusion is required."),
         termsAndConditions: Yup.array(Yup.string().required("Terms and condition can't be empty")).min(1, "Minimum 1 term and condition is required."),
@@ -126,7 +126,8 @@ const CreateTrip = () => {
                     resetForm();
                     navigate('/dashboard/all-trip')
                 }).catch((error) => {
-                    toast(error?.message ?? "Something went  wrong ..", {
+                    console.log(error, ">>>>>>>>>>>>>")
+                    toast(error?.data?.error?.message ?? "Something went  wrong ..", {
                         type: "error",
                         theme: "colored"
                     })
@@ -150,7 +151,7 @@ const CreateTrip = () => {
                 price: data.price,
                 inclusions: data.inclusions,
                 exclusions: data.exclusions,
-                enquiryNumber: data.enquiryNumber,
+                // enquiryNumber: data.enquiryNumber,
                 itinerary: data.itinerary,
                 pickUpPointLong: data.pickUpPointLong + "",
                 pickUpPointLat: data.pickUpPointLat + "",
@@ -200,10 +201,10 @@ const CreateTrip = () => {
                             <Input name="endDate" label="End Date *" type="date" />
                             <CustomError name="endDate" />
                         </div>
-                        <div>
+                        {/* <div>
                             <Input name="enquiryNumber" label="Enquiry Number *" type="text" />
                             <CustomError name="enquiryNumber" />
-                        </div>
+                        </div> */}
                         <div>
                             <Input name="price" label="Price *" type="text" />
                             <CustomError name="price" />
@@ -341,7 +342,7 @@ const CreateTrip = () => {
 
                         </div>
                         <div>
-                            <ImageInput name="photos" inputLabel='upload files' multiple={true} />
+                            <ImageInput name="photos" inputLabel='Upload photos' multiple={true} />
                             <CustomError name="photos" />
                         </div>
                         <div>

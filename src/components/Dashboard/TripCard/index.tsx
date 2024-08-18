@@ -34,9 +34,17 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
 
     const handleDelete = () => {
         deleteTrip({ id: trip?._id as string }).unwrap().then((res) => {
-            console.log(res, ">>>>>>>response ")
+            toast(res.message ?? "Trip can't be deleted as booking has been started...", {
+                type: "success",
+                theme: "colored"
+            })
+
+
         }).catch((error) => {
-            console.log(error, ">?>>>>>>>> error")
+            toast(error.message ?? "Trip can't be deleted as booking has been started.", {
+                type: "error",
+                theme: "colored"
+            })
         }).finally(() => {
             handleClose()
         })
@@ -81,7 +89,7 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
                     <img className='ty-card-img' src={`${import.meta.env.VITE_BACKEND_URL}${trip?.photos[0]?.path}`} />
                 </div>
                 <div className='ty-card-content'>
-                    <h3 className='card-heading'>{trip?.place} <span>${trip?.price}</span></h3>
+                    <h3 className='card-heading'>{trip?.place} <span>&#8377; {trip?.price}</span></h3>
                     <h3 className='seats-desc'>{trip?.leftSeats} <span>Seats Left</span> </h3>
                     {/* <p className='card-description'>Great place to visit (description)</p> */}
                     <p className='card-description'></p>

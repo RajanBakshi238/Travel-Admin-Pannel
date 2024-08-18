@@ -132,8 +132,9 @@ const Header = () => {
         <>
             <div className="container-fluid position-relative p-0" id="yatri-home">
                 <nav className={`navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 ${isSticky ? 'sticky-top shadow-sm' : ''}`}>
-                    <a href="" className="navbar-brand p-0">
-                        <h1 className="text-primary m-0"><i className="fa fa-map-marker-alt me-3"></i>Travel Yatri</h1>
+                    <a href="" className="navbar-brand p-0 home-site-logo" >
+                        {/* <h1 className="text-primary m-0"><i className="fa fa-map-marker-alt me-3"></i>Travel Yatri</h1> */}
+                        <img src="/img/logo/travel-yatri-logo-2.svg" alt="sit_logo"/>
                     </a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span className="fa fa-bars"></span>

@@ -22,6 +22,7 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
             })
             return
         }
+        
         handleShowBooking()
         handleClose();
     }
