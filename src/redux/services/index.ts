@@ -4,13 +4,18 @@ import { TRAVEL_YATRI_REDUCER_KEY } from "../reduxResourceTags";
 import { ILoginWithGoogleResponse } from "../../contracts/ILoginWithGoogleResponse";
 import { ILoginWithGoogleRequest } from "../../contracts/ILoginWithGoogleResquest";
 import { RootState } from "../store";
-import { GET_TRIP, GET_BOOKING, UPDATE_ME } from "../travelYatriApiTags";
+import {
+  GET_TRIP,
+  GET_BOOKING,
+  UPDATE_ME,
+  REVIEW_TAG,
+} from "../travelYatriApiTags";
 import { IAdminLoginResponse } from "../../contracts/IAdminLoginResponse";
 import { IAdminLoginRequest } from "../../contracts/IAdminLoginRequest";
 
 export const travelYatriApi = createApi({
   reducerPath: TRAVEL_YATRI_REDUCER_KEY,
-  tagTypes: [UPDATE_ME, GET_TRIP, GET_BOOKING],
+  tagTypes: [UPDATE_ME, GET_TRIP, GET_BOOKING, REVIEW_TAG],
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}api/v1/`,
     prepareHeaders: (headers, { getState }) => {
