@@ -1,4 +1,5 @@
 import { Carousel } from 'react-responsive-carousel';
+import * as Yup from 'yup';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "./style.scss"
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse';
@@ -12,7 +13,7 @@ import Input from '../../common/FormElements/Input';
 import CustomError from '../../common/FormElements/CustomError';
 import classNames from 'classnames';
 
-const RatingValue : {[key: number] : string} = {
+const RatingValue: { [key: number]: string } = {
     0: 'Terrible',
     1: 'Poor',
     2: 'Average',
@@ -21,8 +22,7 @@ const RatingValue : {[key: number] : string} = {
 }
 
 const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTripResponse, handleShowBooking: any, handleClose: any }) => {
-    const [initialValues, setInitialValues] = useState({})
-    const [rating, setRating] = useState(0)
+    const [initialValues, setInitialValues] = useState({ rating: 0, title: "", comment: "" })
 
 
     const handleBookTrip = () => {
@@ -41,10 +41,16 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
     const formik = useFormik({
         initialValues,
         enableReinitialize: true,
+        validationSchema: Yup.object().shape({
+            title: Yup.string().min(3, "Minimum 10 characters").required("Title is required") ,
+            comment: Yup.string().min(20,"Minimum 20 characters").required("Comment is required") 
+        }),
         onSubmit: () => {
 
         }
     })
+
+    const { setFieldValue, values, handleChange, handleBlur } = formik;
 
     return (
         <>
@@ -198,12 +204,12 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
                                                 <div className='rating-input '>
                                                     {[0, 1, 2, 3, 4].map((circle, index) => {
                                                         return <React.Fragment key={index}>
-                                                            <div onClick={() => setRating(circle)} className={classNames('empty', {
-                                                                "filled": circle <= rating
+                                                            <div onClick={() => setFieldValue('rating', circle)} className={classNames('empty', {
+                                                                "filled": circle <= values.rating
                                                             })}></div>
                                                         </React.Fragment>
                                                     })}
-                                                    <span>{RatingValue?.[rating]}</span>
+                                                    <span>{RatingValue?.[values?.rating]}</span>
                                                 </div>
                                             </div>
                                             <div>
@@ -213,11 +219,17 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
                                             <div>
                                                 <div className='ty-input'>
                                                     <label>Description *</label>
-                                                    <textarea placeholder='Review description'></textarea>
+                                                    <textarea
+                                                        name="comment"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        placeholder='Review description'></textarea>
+                                                    <CustomError name="comment" />
+
                                                 </div>
                                             </div>
                                             <div className='review-submit'>
-                                                <button className='btn btn-primary'>Submit</button>
+                                                <button type="submit" className='btn btn-primary'>Submit</button>
                                             </div>
                                         </div>
 
