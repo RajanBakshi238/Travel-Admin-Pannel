@@ -1,7 +1,10 @@
 import { travelYatriApi } from ".";
 import { ICommonRequest } from "../../contracts/ICommonRequest";
 import { ICommonResponse } from "../../contracts/ICommonResponse";
-import { ICreateTripRequest, IUpdateTripRequest } from "../../contracts/ICreateTripRequest";
+import {
+  ICreateTripRequest,
+  IUpdateTripRequest,
+} from "../../contracts/ICreateTripRequest";
 import { ITripResponse } from "../../contracts/ICreateTripResponse";
 import { IGetTripQuery } from "../../contracts/IGetTripQuery";
 import { IGetTripResponse } from "../../contracts/IGetTripResponse";
@@ -23,7 +26,9 @@ export const trip = travelYatriApi.injectEndpoints({
       providesTags: [GET_TRIP],
       query: (query) => {
         return {
-          url: `trip?place=${query?.place ?? ""}`,
+          url: `trip?date=${JSON.stringify(query?.dateRange)}&place=${
+            query?.place ?? ""
+          }`,
           method: "GET",
         };
       },
@@ -52,7 +57,7 @@ export const trip = travelYatriApi.injectEndpoints({
         return {
           url: `trip/${body._id}`,
           method: "POST",
-          body
+          body,
         };
       },
     }),
@@ -65,5 +70,5 @@ export const {
   useDeleteTripMutation,
   useGetTripByIdQuery,
   useEditTripMutation,
-  useLazyGetTripQuery
+  useLazyGetTripQuery,
 } = trip;

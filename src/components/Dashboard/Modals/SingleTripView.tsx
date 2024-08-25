@@ -7,22 +7,38 @@ import RenderContent from '../../Authentication/RenderContent';
 import { USER } from '../../../contracts/constants/roleConstant';
 
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
 import Input from '../../common/FormElements/Input';
 import CustomError from '../../common/FormElements/CustomError';
 import classNames from 'classnames';
 import { useCreateReviewMutation } from '../../../redux/services/review';
-import { ICanCreateReviewResponse } from '../../../contracts/ICanCreateReviewResponse';
+import { ICanCreateReviewResponse, IReview } from '../../../contracts/ICanCreateReviewResponse';
 import { IGetReviewOfTripResponse } from '../../../contracts/IGetReviewOfTripResponse';
+import { format } from 'date-fns';
 
 const RatingValue: { [key: number]: string } = {
-    0: 'Terrible',
-    1: 'Poor',
-    2: 'Average',
-    3: 'Good',
-    4: 'Excellent'
+    1: 'Terrible',
+    2: 'Poor',
+    3: 'Average',
+    4: 'Good',
+    5: 'Excellent'
 }
+
+const getCircleStyle = (index: number, score: number) => {
+    // Determine if the circle should be fully or partially filled
+    if (index + 1 <= Math.floor(score)) {
+        return 'filled'; // Fully filled
+    } else if (index < score) {
+        return 'partially'; // Partially filled
+    }
+
+    return ''
+    // else {
+    //     return 'empty'; // Empty circle
+    // }
+};
+
 
 const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview, reviewData }:
     {
@@ -32,7 +48,7 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview,
         handleShowBooking: any,
         handleClose: any
     }) => {
-    const [initialValues, setInitialValues] = useState({ rating: 0, title: "", comment: "" })
+    const [initialValues, _setInitialValues] = useState({ rating: 1, title: "", comment: "" })
 
     const [createReview] = useCreateReviewMutation()
 
@@ -48,6 +64,21 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview,
         handleShowBooking()
         handleClose();
     }
+    const review = useMemo(() => {
+        return canCreateReview?.data?.review as IReview
+    }, [canCreateReview])
+
+    const stats = useMemo(() => {
+        const ratingDistribution = Object.keys(RatingValue).map((key) => {
+            return {
+                title: RatingValue[+key],
+                count: canCreateReview?.data?.stats?.ratingDistribution.find((dist) => dist.rating == +key)?.count ?? 0
+            }
+        })
+
+        console.log(ratingDistribution, ">>>>>>>")
+        return { ...canCreateReview?.data?.stats ?? {}, ratingDistribution }
+    }, [canCreateReview])
 
     const formik = useFormik({
         initialValues,
@@ -65,7 +96,6 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview,
                     type: "success",
                     theme: "colored"
                 })
-                console.log(response, ">>>>>>>>>>")
                 resetForm();
             }).catch((error) => {
                 toast(error?.message ?? "Something went  wrong ..", {
@@ -178,44 +208,37 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview,
                     <div className='review-details'>
                         <div className='review-container-left'>
                             <div className='review-circle'>
-                                <span className='score'>4.5</span>
-                                <div>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="partially"></span>
-                                    <span className="empty"></span>
-                                </div>
+                                {(reviewData?.data?.length || canCreateReview?.data?.review) && <><span className='score'>{stats?.averageRating}</span>
+                                    <div>
+                                        {Array.from({ length: 5 }).map((_, index) => (
+                                            <span key={index} className={`empty ${getCircleStyle(index, stats?.averageRating ?? 0)}`}></span>
+                                        ))}
+
+                                        {/* <span className="filled"></span>
+                                        <span className="filled"></span>
+                                        <span className="filled"></span>
+                                        <span className="partially"></span>
+                                        <span className="empty"></span> */}
+                                    </div>
+
+
+                                </>}
                                 <span>
-                                    3 reviews
+                                    {stats?.totalReviews} reviews
                                 </span>
                             </div>
                             <div className='review-bars'>
-                                <div>
-                                    <span className='review-text'>Excellent</span>
-                                    <div className='bar'></div>
-                                    <span className='review-number'>0</span>
-                                </div>
-                                <div>
-                                    <span className='review-text'>Good</span>
-                                    <div className='bar'></div>
-                                    <span className='review-number'>0</span>
-                                </div>
-                                <div>
-                                    <span className='review-text'>Average</span>
-                                    <div className='bar'></div>
-                                    <span className='review-number'>0</span>
-                                </div>
-                                <div>
-                                    <span className='review-text'>Poor</span>
-                                    <div className='bar'></div>
-                                    <span className='review-number'>0</span>
-                                </div>
-                                <div>
-                                    <span className='review-text'>Terrible</span>
-                                    <div className='bar'></div>
-                                    <span className='review-number'>0</span>
-                                </div>
+                                {stats?.ratingDistribution?.reverse()?.map((review, index) => {
+                                    return <div key={index}>
+                                        <span className='review-text'>{review?.title}</span>
+                                        <div className='bar'>
+                                            <div className='bar-fill' style={{
+                                                width: `${(review?.count / (stats?.totalReviews ?? 1))*100}%`
+                                            }}></div>
+                                        </div>
+                                        <span className='review-number'>{review?.count}</span>
+                                    </div>
+                                })}
 
                             </div>
                             {canCreateReview && canCreateReview?.data?.canCreate && !canCreateReview?.data?.review && <FormikProvider value={formik}>
@@ -228,7 +251,7 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview,
                                             <div className='ty-input'>
                                                 <label>How would you rate your experience?</label>
                                                 <div className='rating-input '>
-                                                    {[0, 1, 2, 3, 4].map((circle, index) => {
+                                                    {[1, 2, 3, 4, 5].map((circle, index) => {
                                                         return <React.Fragment key={index}>
                                                             <div onClick={() => setFieldValue('rating', circle)} className={classNames('empty', {
                                                                 "filled": circle <= values.rating
@@ -264,72 +287,63 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview,
                             </FormikProvider>}
                         </div>
                         <div className='review-container-right'>
-                            <div className='review-content'>
+                            {canCreateReview?.data?.review && <div className='review-content'>
                                 <div className='review-header'>
-                                    <div className='symbol'>R</div>
+                                    <div className='symbol'>{review.user?.fullName?.charAt(0)}</div>
                                     <div className='user-detail'>
-                                        <span>Zarna gohil</span>
-                                        <span>Aug,23</span>
+                                        <span>{review.user?.fullName}</span>
+                                        <span>{format(review?.createdAt as string, "LLL dd, yyyy")}</span>
                                     </div>
                                 </div>
                                 <div className='rating-circle'>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="partially"></span>
-                                    <span className="empty"></span>
+                                    {Array.from({ length: 5 }).map((_, index) => (
+                                        <span className={classNames("empty", {
+                                            "filled": index < review.rating
+                                        })}></span>
+
+                                    ))}
                                 </div>
                                 <div className='review-description'>
-                                    <h5>Love himalayan frontiers</h5>
-                                    <p>I haven't done just this spiti tour, I have been in other packages as well with himalayan frontiers ; they had an amazing staff ; who will make sure to provide you the best experience, safety (which is very important) and comfort. In this trip from our leader khem to driver and mechanic all were very active, especially khem was connecting with every one personally, they had provide us very comfortable stay, delicious food and other services.I'll prefer to go with this company again and again, and also I can suggest my people to take their experience from himalayan frontiers with full confidenc</p>
+                                    <h5>{review.title}</h5>
+                                    <p>{review.comment}</p>
                                 </div>
-                            </div>
-                            <div className='review-content'>
-                                <div className='review-header'>
-                                    <div className='symbol'>R</div>
-                                    <div className='user-detail'>
-                                        <span>Zarna gohil</span>
-                                        <span>Aug,23</span>
+                            </div>}
+                            {
+                                reviewData?.data?.length ? reviewData?.data?.map((review, index) => {
+                                    return <div className='review-content' key={index}>
+                                        <div className='review-header'>
+                                            <div className='symbol'>{review.user?.fullName?.charAt(0)}</div>
+                                            <div className='user-detail'>
+                                                <span>{review.user?.fullName}</span>
+                                                <span>{format(review?.createdAt as string, "LLL dd, yyyy")}</span>
+                                            </div>
+                                        </div>
+                                        <div className='rating-circle'>
+                                            {Array.from({ length: 5 }).map((_, index) => (
+                                                <span className={classNames("empty", {
+                                                    "filled": index < review.rating
+                                                })}></span>
+
+                                            ))}
+                                        </div>
+                                        <div className='review-description'>
+                                            <h5>{review.title}</h5>
+                                            <p>{review.comment}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className='rating-circle'>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="partially"></span>
-                                    <span className="empty"></span>
-                                </div>
-                                <div className='review-description'>
-                                    <h5>Love himalayan frontiers</h5>
-                                    <p>I haven't done just this spiti tour, I have been in other packages as well with himalayan frontiers ; they had an amazing staff ; who will make sure to provide you the best experience, safety (which is very important) and comfort. In this trip from our leader khem to driver and mechanic all were very active, especially khem was connecting with every one personally, they had provide us very comfortable stay, delicious food and other services.I'll prefer to go with this company again and again, and also I can suggest my people to take their experience from himalayan frontiers with full confidenc</p>
-                                </div>
-                            </div>
-                            <div className='review-content'>
-                                <div className='review-header'>
-                                    <div className='symbol'>R</div>
-                                    <div className='user-detail'>
-                                        <span>Zarna gohil</span>
-                                        <span>Aug,23</span>
-                                    </div>
-                                </div>
-                                <div className='rating-circle'>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="filled"></span>
-                                    <span className="partially"></span>
-                                    <span className="empty"></span>
-                                </div>
-                                <div className='review-description'>
-                                    <h5>Love himalayan frontiers</h5>
-                                    <p>I haven't done just this spiti tour, I have been in other packages as well with himalayan frontiers ; they had an amazing staff ; who will make sure to provide you the best experience, safety (which is very important) and comfort. In this trip from our leader khem to driver and mechanic all were very active, especially khem was connecting with every one personally, they had provide us very comfortable stay, delicious food and other services.I'll prefer to go with this company again and again, and also I can suggest my people to take their experience from himalayan frontiers with full confidenc</p>
-                                </div>
-                            </div>
+                                })
+                                    : <>
+                                        {!canCreateReview?.data?.review && <>
+                                            <h5 className='no-review'>No one reviewed yet !</h5>
+                                        </>}
+                                    </>
+                            }
                         </div>
                     </div>
                 </div>
 
 
-            </div>
+            </div >
 
 
 

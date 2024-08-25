@@ -186,6 +186,12 @@
     margin-left: 30px;
     margin-right: 20px;
     margin-bottom: 20px;
+    .no-review {
+      text-align: center;
+      margin-top: 60px;
+      font-weight: 600;
+    }
+
     .heading {
       font-size: 22px;
       font-weight: 700;
@@ -263,6 +269,13 @@
               height: 12px;
               width: 100%;
               border-radius: 30px;
+
+              .bar-fill {
+                // width: 100%
+                border-radius: 30px;
+                height: 100%;
+                background: $review-green;
+              }
             }
           }
         }
@@ -274,7 +287,7 @@
               margin-bottom: 10px;
             }
 
-            .rating-input{
+            .rating-input {
               margin-top: 10px;
               display: flex !important;
               gap: 4px;
@@ -419,6 +432,17 @@
         .bus-top {
           left: 127px;
         }
+      }
+    }
+
+    .review-details {
+      flex-direction: column;
+
+      .review-container-left {
+        width: 100% !important;
+      }
+      .review-container-right {
+        width: 100% !important;
       }
     }
   }

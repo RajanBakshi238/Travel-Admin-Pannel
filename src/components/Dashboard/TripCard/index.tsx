@@ -30,8 +30,8 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip, ca
         if (singleTripRef?.current) {
             singleTripRef?.current?.handleShow();
             setCurrentTrip(trip as IGetTripResponse)
-            getReviewTrigger({tripId: trip?._id})
-            canCreateReview({tripId: trip?._id})
+            getReviewTrigger({ tripId: trip?._id })
+            canCreateReview({ tripId: trip?._id })
         }
     }
 

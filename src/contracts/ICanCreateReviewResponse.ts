@@ -4,8 +4,18 @@ export interface ICanCreateReviewResponse {
   data: {
     canCreate: boolean;
     review: IReview;
+    stats: IStats;
   };
 }
+
+export interface IStats{
+    totalReviews: number,
+    averageRating: number,
+    ratingDistribution: [{
+        rating: number,
+        count: number
+    }]
+}   
 
 export interface IReview {
   _id: string;
