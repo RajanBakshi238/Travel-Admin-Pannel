@@ -15,7 +15,7 @@ export const review = travelYatriApi.injectEndpoints({
         query: (body) => {
           return {
             url: "review",
-            mehod: "POST",
+            method: "POST",
             body,
           };
         },
@@ -40,7 +40,7 @@ export const review = travelYatriApi.injectEndpoints({
       providesTags: [REVIEW_TAG],
       query: (query) => {
         return {
-          url: `can-create/${query.tripId}`,
+          url: `review/can-create/${query.tripId}`,
           method: "GET",
         };
       },

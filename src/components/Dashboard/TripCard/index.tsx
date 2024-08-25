@@ -14,10 +14,11 @@ interface ITripCard {
     singleTripRef: MutableRefObject<IChildRef | undefined>,
     trip?: IGetTripResponse,
     setCurrentTrip: Dispatch<SetStateAction<IGetTripResponse | null>>
-
+    getReviewTrigger?: any,
+    canCreateReview?: any
 }
 
-const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) => {
+const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip, canCreateReview, getReviewTrigger }) => {
     const [showModal, setShowModal] = useState(false);
     const [deleteTrip] = useDeleteTripMutation()
     const navigate = useNavigate();
@@ -29,6 +30,8 @@ const TripCard: React.FC<ITripCard> = ({ singleTripRef, trip, setCurrentTrip }) 
         if (singleTripRef?.current) {
             singleTripRef?.current?.handleShow();
             setCurrentTrip(trip as IGetTripResponse)
+            getReviewTrigger({tripId: trip?._id})
+            canCreateReview({tripId: trip?._id})
         }
     }
 

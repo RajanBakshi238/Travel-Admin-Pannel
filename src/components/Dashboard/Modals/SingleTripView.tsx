@@ -12,6 +12,9 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import Input from '../../common/FormElements/Input';
 import CustomError from '../../common/FormElements/CustomError';
 import classNames from 'classnames';
+import { useCreateReviewMutation } from '../../../redux/services/review';
+import { ICanCreateReviewResponse } from '../../../contracts/ICanCreateReviewResponse';
+import { IGetReviewOfTripResponse } from '../../../contracts/IGetReviewOfTripResponse';
 
 const RatingValue: { [key: number]: string } = {
     0: 'Terrible',
@@ -21,9 +24,17 @@ const RatingValue: { [key: number]: string } = {
     4: 'Excellent'
 }
 
-const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTripResponse, handleShowBooking: any, handleClose: any }) => {
+const SingleTripView = ({ trip, handleShowBooking, handleClose, canCreateReview, reviewData }:
+    {
+        trip: IGetTripResponse,
+        canCreateReview: ICanCreateReviewResponse | undefined
+        reviewData: IGetReviewOfTripResponse | undefined,
+        handleShowBooking: any,
+        handleClose: any
+    }) => {
     const [initialValues, setInitialValues] = useState({ rating: 0, title: "", comment: "" })
 
+    const [createReview] = useCreateReviewMutation()
 
     const handleBookTrip = () => {
         if (trip.leftSeats == 0) {
@@ -42,11 +53,26 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
         initialValues,
         enableReinitialize: true,
         validationSchema: Yup.object().shape({
-            title: Yup.string().min(3, "Minimum 10 characters").required("Title is required") ,
-            comment: Yup.string().min(20,"Minimum 20 characters").required("Comment is required") 
+            title: Yup.string().min(3, "Minimum 10 characters").required("Title is required"),
+            comment: Yup.string().min(20, "Minimum 20 characters").required("Comment is required")
         }),
-        onSubmit: () => {
-
+        onSubmit: async (values, { resetForm }) => {
+            createReview({
+                ...values,
+                tripId: trip._id
+            }).unwrap().then((response) => {
+                toast(response.message ?? "Trip updated successfully .", {
+                    type: "success",
+                    theme: "colored"
+                })
+                console.log(response, ">>>>>>>>>>")
+                resetForm();
+            }).catch((error) => {
+                toast(error?.message ?? "Something went  wrong ..", {
+                    type: "error",
+                    theme: "colored"
+                })
+            })
         }
     })
 
@@ -192,7 +218,7 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
                                 </div>
 
                             </div>
-                            <FormikProvider value={formik}>
+                            {canCreateReview && canCreateReview?.data?.canCreate && !canCreateReview?.data?.review && <FormikProvider value={formik}>
                                 <Form onSubmit={formik.handleSubmit}>
                                     <div className='write-review'>
                                         <h5>
@@ -235,7 +261,7 @@ const SingleTripView = ({ trip, handleShowBooking, handleClose }: { trip: IGetTr
 
                                     </div>
                                 </Form>
-                            </FormikProvider>
+                            </FormikProvider>}
                         </div>
                         <div className='review-container-right'>
                             <div className='review-content'>

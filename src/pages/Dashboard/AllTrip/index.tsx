@@ -5,27 +5,38 @@ import TripDetailModel from '../../../components/Dashboard/Modals/TripDetailMode
 import TripCard from '../../../components/Dashboard/TripCard'
 import { IGetTripResponse } from '../../../contracts/IGetTripResponse'
 import BookingModal from '../../../components/Dashboard/Booking/BookingModal'
+import { useLazyCanCreateReviewQuery, useLazyGetReviewOfTripQuery } from '../../../redux/services/review'
 
 const AllTrip = () => {
     const { data } = useGetTripQuery({})
     const [trip, setCurrentTrip] = useState<IGetTripResponse | null>(null)
-    console.log(data, ">>>>>>>")
     const singleTripRef = useRef<IChildRef>()
 
     const [showBooking, setShowBooking] = useState(false);
-    console.log(">>>111111", showBooking, ">>>>>>>>>> showing booking", setShowBooking)
+
+
+    // here  we will intialize both review lazy rtk hook and pass it in TripCard and call it from there
+    const [getReviewTrigger, { data: reviewData }] = useLazyGetReviewOfTripQuery()
+    const [canCreateReview, { data: createReview }] = useLazyCanCreateReviewQuery()
 
     return (
         <> {data?.length ? <>
             <div className='ty-trip-card-list'>
                 {data?.map((trip, index) => {
                     return <React.Fragment key={index}>
-                        <TripCard key={index} trip={trip} singleTripRef={singleTripRef} setCurrentTrip={setCurrentTrip} />
+                        <TripCard
+                            canCreateReview={canCreateReview}
+                            getReviewTrigger={getReviewTrigger}
+                            key={index}
+                            trip={trip}
+                            singleTripRef={singleTripRef}
+                            setCurrentTrip={setCurrentTrip}
+                        />
                     </React.Fragment>
                 })}
             </div>
 
-            <TripDetailModel setShowBooking={setShowBooking} ref={singleTripRef} trip={trip} />
+            <TripDetailModel reviewData={reviewData} createReview={createReview} setShowBooking={setShowBooking} ref={singleTripRef} trip={trip} />
 
             <BookingModal show={showBooking} trip={trip as IGetTripResponse} handleClose={() => setShowBooking(false)} />
         </> : <>

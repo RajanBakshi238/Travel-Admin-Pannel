@@ -98,7 +98,6 @@ const CreateTrip = () => {
                         type: "success",
                         theme: "colored"
                     })
-                    console.log(response, ">>>>>>>>>>")
                     resetForm();
                     navigate('/dashboard/all-trip')
                 }).catch((error) => {

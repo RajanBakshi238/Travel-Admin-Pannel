@@ -2,34 +2,38 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { Modal } from "react-bootstrap"
 import SingleTripView from "./SingleTripView";
 import { IGetTripResponse } from "../../../contracts/IGetTripResponse";
+import { ICanCreateReviewResponse } from "../../../contracts/ICanCreateReviewResponse";
+import { IGetReviewOfTripResponse } from "../../../contracts/IGetReviewOfTripResponse";
 
-const TripDetailModel = forwardRef(({ trip, setShowBooking }: { trip: IGetTripResponse | null, setShowBooking?: (asgs: boolean) => void }, ref) => {
+const TripDetailModel = forwardRef((
+    { trip, setShowBooking, createReview, reviewData }: {
+        trip: IGetTripResponse | null,
+        setShowBooking?: (asgs: boolean) => void,
+        createReview: ICanCreateReviewResponse | undefined,
+        reviewData: IGetReviewOfTripResponse | undefined
+    }, ref) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleShowBooking = () => {
-        console.log(setShowBooking, ">>>>>>>> set show bookin")
         if (setShowBooking) {
-            console.log(">>>>>>>>>> chomu")
             setShowBooking(true)
         }
     }
-    // const handleCloseBooking = () => setShowBooking(false)
     useImperativeHandle(ref, () => ({
         handleClose,
         handleShow,
-        // handleShowBooking,
-        // handleCloseBooking
     }))
 
-    console.log(trip, ">>>>>>>>>>>>>>> ref")
     return (
         <Modal className="trip-detail-model" size="lg" show={show} onHide={handleClose}>
-            {/* <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header> */}
-            <SingleTripView trip={trip as IGetTripResponse} handleShowBooking={handleShowBooking} handleClose={handleClose} />
+            <SingleTripView
+                canCreateReview={createReview}
+                reviewData={reviewData}
+                trip={trip as IGetTripResponse}
+                handleShowBooking={handleShowBooking}
+                handleClose={handleClose} />
         </Modal>
     )
 })
