@@ -6,21 +6,10 @@
 }
 
 .single-trip-view-modal {
-  //   @import "node_modules/bootstrap/scss/bootstrap";
-
-  //   padding: 40px 0;
-
   .itinerary-c {
-    // padding: 0px 40px 200px 40px;
     margin: auto;
     width: 80%;
-    // box-shadow: 3px 3px 17px 0px #d3cdcd;
-    // margin: auto;
     color: #222;
-    // margin-bottom: 20px; // to be commented
-    // min-height: 910px;
-    //   font-family: "circular";
-
     .image-carousel {
       width: 80%;
       margin: auto;
@@ -179,13 +168,6 @@
     }
   }
 
-  // .day-page-detail {
-  //   margin-top: 60px;
-  //   // display: flex;
-  //   // flex-direction: column;
-  //   // justify-content: space-between;
-  // }
-
   .book-trip-block {
     margin: 25px 20px;
     display: flex;
@@ -195,6 +177,186 @@
       border-radius: 10px;
       &:hover {
         opacity: 0.7;
+      }
+    }
+  }
+
+  .review {
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    .heading {
+      font-size: 22px;
+      font-weight: 700;
+      color: $ty-primary;
+      // color: $ty-black;
+    }
+    .review-details {
+      margin-top: 10px;
+      display: flex;
+      gap: 25px;
+
+      .filled,
+      .partially,
+      .empty {
+        border: 2px solid $review-green;
+        width: 14px;
+        height: 14px;
+        border-radius: 30px;
+        cursor: pointer;
+      }
+      .partially {
+        background: linear-gradient(to right, $review-green 50%, $white 50%);
+      }
+      .filled {
+        background: $review-green;
+      }
+
+      .review-container-left {
+        width: 30%;
+        .review-circle {
+          & > div {
+            display: flex;
+            gap: 2px;
+          }
+
+          .score {
+            color: $ty-black;
+            font-size: 18px;
+            font-weight: 600;
+          }
+
+          // .empty {
+
+          // }
+
+          display: flex;
+          gap: 10px;
+          // justify-content: space-between;
+          align-items: center;
+        }
+
+        .review-bars {
+          margin-top: 10px;
+          display: grid;
+          grid-template-columns: fit-content(calc(80% + 8px)) 1fr auto;
+          row-gap: 5px;
+          column-gap: 10px;
+          & > div {
+            // margin-top: 10px;
+            // display: flex;
+            // justify-content: space-between;
+            display: contents;
+            align-items: center;
+            .review-text {
+              font-size: 12px;
+              color: $ty-black;
+            }
+
+            .review-number {
+              font-size: 14px;
+            }
+
+            .bar {
+              background: $bar-bg;
+              height: 12px;
+              width: 100%;
+              border-radius: 30px;
+            }
+          }
+        }
+
+        .write-review {
+          margin-top: 20px;
+          .write-box {
+            & > div {
+              margin-bottom: 10px;
+            }
+
+            .rating-input{
+              margin-top: 10px;
+              display: flex !important;
+              gap: 4px;
+              align-items: center;
+              span {
+                margin-left: 5px;
+                font-size: 12px;
+              }
+            }
+
+            .ty-input {
+              gap: 0;
+              label {
+                font-weight: 600;
+                margin-bottom: 0px;
+              }
+            }
+            .review-submit {
+              button {
+                border-radius: 5px;
+              }
+            }
+          }
+        }
+      }
+
+      .review-container-right {
+        width: 70%;
+        .review-content {
+          margin-top: 10px;
+
+          .review-header {
+            display: flex;
+            gap: 15px;
+            .symbol {
+              width: 40px;
+              height: 40px;
+              border-radius: 100px;
+              background: $ty-primary;
+              color: $white;
+              font-size: 24px;
+              font-weight: 600;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding-top: 2px;
+            }
+            .user-detail {
+              display: flex;
+              flex-direction: column;
+              & :nth-child(1) {
+                color: $ty-black;
+                font-size: 18px;
+                font-weight: 600;
+              }
+              & :nth-child(2) {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .rating-circle {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-top: 15px;
+            margin-left: 5px;
+          }
+
+          .review-description {
+            margin-left: 5px;
+            margin-top: 10px;
+            h5 {
+              color: $ty-black;
+              font-size: 16px;
+              font-weight: 600;
+            }
+            p {
+              font-size: 12px;
+            }
+          }
+        }
       }
     }
   }
@@ -209,7 +371,8 @@
         font-weight: 700;
       }
 
-      .exclusions, .inclusions {
+      .exclusions,
+      .inclusions {
         margin-top: 15px;
         li {
           font-size: 16px;
@@ -230,36 +393,33 @@
         }
       }
 
-      .itinerary-road-map{
+      .itinerary-road-map {
         margin-top: 105px;
         margin-bottom: 150px;
-        .itinerary-map-item{
-          .left-item{
+        .itinerary-map-item {
+          .left-item {
             letter-spacing: 0px;
             font-size: 16px;
             font-weight: 500;
             width: 30%;
           }
 
-          .right-item{
+          .right-item {
             font-size: 14px;
             text-transform: uppercase;
             font-weight: 500;
             width: 50%;
           }
 
-          &:after{
+          &:after {
             left: 127px;
           }
         }
 
-        .bus-top{
+        .bus-top {
           left: 127px;
         }
       }
-
-
-
     }
   }
 }
